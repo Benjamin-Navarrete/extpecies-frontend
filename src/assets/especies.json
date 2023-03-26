@@ -1,0 +1,23 @@
+[
+    {
+        "nombreComun":"Pudú",
+        "nombreCientifico":"Pudu puda",
+        "categoriaConservacion":"Casi Amenazado",
+        "rangoGeografico":"Argentina; Chile",
+        "img":"https://www.informacionsobreanimales.com/wp-content/uploads/2015/08/Informaci%C3%B3n-sobre-el-pud%C3%BA-02.jpg"
+    },
+    {
+        "nombreComun":"Queule",
+        "nombreCientifico":"Gomortega keule",
+        "categoriaConservacion":"En peligro",
+        "rangoGeografico":"Chile (Biobío, Maule)",
+        "img":"https://c7.staticflickr.com/6/5024/5547078054_43a5acdf46_z.jpg"
+    },
+    {
+        "nombreComun":"Hualo",
+        "nombreCientifico":"Nothofagus glauca",
+        "categoriaConservacion":"Vulnerable",
+        "rangoGeografico":"Chile",
+        "img":"https://pbs.twimg.com/media/D1ifOG3WoAEqJ4j.jpg"
+    }
+]
