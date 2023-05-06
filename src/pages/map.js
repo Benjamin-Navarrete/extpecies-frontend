@@ -1,16 +1,37 @@
-import MapComponent from '../components/MapComponent';
 import Especies from '../assets/especies.json';
-
 import DefaultLayout from '@/layouts/DefaultLayout';
+import 'leaflet/dist/leaflet.css';
+import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+
+// Importa el componente LeafletMap solo en el lado del cliente
+const LeafletMap = dynamic(() => import('../components/LeafletMap'), {
+  ssr: false
+});
 
 const Mapa = () => {
+  const defaultCenter = [-33.045845, -71.619674]; // Coordenadas de Valparaíso, Chile
+  const defaultZoom = 8;
+
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   return (
     <DefaultLayout>
       <div className="bg-white shadow overflow-hidden rounded-lg">
         <div className="mt-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div>
-              <MapComponent />
+              {isMounted && (
+                <LeafletMap
+                  especies={Especies}
+                  defaultCenter={defaultCenter}
+                  defaultZoom={defaultZoom}
+                />
+              )}
             </div>
             <div className="mt-10">
               {Especies.map((dato, index) => {
