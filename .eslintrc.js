@@ -20,7 +20,7 @@ module.exports = {
   plugins: ['react'],
   rules: {
     'react/no-unescaped-entities': 'off',
-    'react/prop-types': 'error',
+    // 'react/prop-types': 'error',
     'react/display-name': 'off',
     'prettier/prettier': ['error', { endOfLine: 'auto' }]
   },

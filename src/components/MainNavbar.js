@@ -11,20 +11,20 @@ const routes = [
   { name: 'Inicio', url: '/' },
   { name: 'Mapa', url: '/map' },
   { name: 'Ponte a Prueba', url: '/test' },
-  { name: 'Sobre nosotros', url: '/about' },
+  { name: 'Sobre nosotros', url: '/about' }
 ];
 
 export default function MainNavbar() {
   const router = useRouter();
 
-  const isActive = (href) => router.pathname === href;
+  const isActive = href => router.pathname === href;
 
-  const linkClasses = (isActive) =>
+  const linkClasses = isActive =>
     isActive
       ? 'inline-flex items-center border-b-2 border-emerald-500 px-1 pt-1 text-sm font-medium text-gray-900'
       : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700';
 
-  const mobileLinkClasses = (isActive) =>
+  const mobileLinkClasses = isActive =>
     isActive
       ? 'block border-l-4 border-emerald-500 bg-emerald-50 py-2 pl-3 pr-4 text-base font-medium text-emerald-700 sm:pl-5 sm:pr-6'
       : 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 sm:pl-5 sm:pr-6';
@@ -60,7 +60,7 @@ export default function MainNavbar() {
                   />
                 </div>
                 <div className="hidden md:ml-6 md:flex md:space-x-8">
-                  {routes.map((route) => (
+                  {routes.map(route => (
                     <Link
                       key={route.url}
                       href={route.url}
@@ -98,7 +98,7 @@ export default function MainNavbar() {
 
           <Disclosure.Panel className="md:hidden">
             <div className="space-y-1 pt-2 pb-3">
-              {routes.map((route) => (
+              {routes.map(route => (
                 <Link key={route.url} href={route.url}>
                   <div className={mobileLinkClasses(isActive(route.url))}>
                     {route.name}
