@@ -1,8 +1,22 @@
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
-import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import data from '../assets/especiesCoordenadas.json';
 
+
+function Marcadores(e){
+   //esto si lo imprime, pero los marcadores no, por algun motivo
+  const coord = e.sitio;
+  const nomCom = e.nombreComun;
+  const nomCie = e.nombreCientifico;
+  console.log(coord,nomCom,nomCie)
+  return(
+    <Marker position={coord}>
+      <Popup>
+        {nomCom} <br /> {nomCie}
+      </Popup>
+    </Marker>
+  )
+}
 
 const Map = () => {
   return (
@@ -16,21 +30,9 @@ const Map = () => {
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {data.forEach((e) => {//no se marcan :C
-        const coordenadas = e.sitio;
-        console.log(coordenadas);
-        
-        <Marker position={coordenadas}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
+      {data.forEach(e => {
+        Marcadores(e);
       })}
-      <Marker position={data[8].sitio}>
-        <Popup>
-          {data[8].nombreComun} <br /> {data[8].nombreCientifico}
-        </Popup>
-      </Marker>
     </MapContainer>
   );
 };
