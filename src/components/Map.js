@@ -10,12 +10,12 @@ const Map = ({ especies }) => {
   const createIcon = imagen => {
     return L.icon({
       iconUrl: imagen,
-      iconSize: [50, 50],
-      iconAnchor: [25, 50],
-      popupAnchor: [0, -50]
+      iconSize: [40, 40],
+      iconAnchor: [30, 30],
+      popupAnchor: [0, -30],
+      className: 'rounded-full shadow-lg bg-white' // Agregar una clase para el icono circular
     });
   };
-
   // Función para crear un marcador por cada especie
   const createMarkers = () => {
     // Convertir el objeto json en un array de valores
@@ -35,9 +35,13 @@ const Map = ({ especies }) => {
             key={index}
           >
             <Popup>
-              <h3>{especie.nombreComun}</h3>
-              <p>{especie.nombreCientifico}</p>
-              <p>{especie.estadoConservacion}</p>
+              <div className="text-center">
+                <h3 className="font-semibold">{especie.nombreComun}</h3>
+
+                <span className="text-red-500 font-semibold">
+                  {especie.estadoConservacion}
+                </span>
+              </div>
             </Popup>
           </Marker>
         );
@@ -56,9 +60,9 @@ const Map = ({ especies }) => {
         attribution='© <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+
       {createMarkers()}
     </MapContainer>
   );
 };
-
 export default Map;
