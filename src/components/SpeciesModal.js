@@ -27,7 +27,8 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
           {/* Eliminar el span vacío que no tiene ninguna función */}
           {/* Usar un div con flex y justify-center para centrar el contenido */}
           <div className="flex justify-center items-center h-screen">
-            <div className="inline-block w-full max-w-3xl p-6 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+            {/* Agregar un margen superior e inferior de 8 al modal para que no ocupe toda la pantalla */}
+            <div className="inline-block w-full max-w-3xl p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
               {/* Mover el botón de cerrar al lado izquierdo y hacerlo más pequeño */}
               <div className="flex justify-between items-center">
                 {/* Usar un encabezado más grande para el título y centrarlo */}
@@ -60,7 +61,9 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
               </div>
               {/* Usar una condición para renderizar el contenido solo si especie es verdadero */}
               {especie && (
-                <div className=" items-center mt-4">
+                // Agregar un alto máximo de 80vh y un overflow-y auto al div que contiene el contenido del modal
+                // Así se podrá hacer scroll dentro del modal si el contenido es muy largo
+                <div className=" items-center mt-4 max-h-[80vh] overflow-y-auto">
                   <img
                     className="h-auto w-screen mb-4 rounded-lg"
                     src={imagen}
