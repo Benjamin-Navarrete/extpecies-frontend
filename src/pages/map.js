@@ -1,6 +1,6 @@
 // Archivo src\pages\map.js
 import MapLayout from '@/layouts/MapLayout';
-import especies from '../assets/especies600.json';
+import especies from '@/data/especies600.json';
 import dynamic from 'next/dynamic';
 import DefaultLayout from '@/layouts/DefaultLayout';
 
