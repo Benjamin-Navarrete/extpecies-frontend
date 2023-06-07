@@ -3,6 +3,10 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 
 const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
+  if (!especie) {
+    especie = {};
+  }
+
   // Usar la desestructuración de objetos para acceder a las propiedades del json
   // y asignar valores por defecto en caso de que no existan
   const {
