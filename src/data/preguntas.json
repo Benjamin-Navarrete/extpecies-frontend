@@ -5,7 +5,8 @@
     "a": "a) Una especie que solo se distribuye de forma natural en un área",
     "b": "b) Una especie que puede encontrarse en diversos países de forma natural",
     "c": "c) Una especie que se establece en un territorio diferente a su ecosistema original",
-    "d": "d) Una especie que se establece e invade el ecosistema de otras especies"
+    "d": "d) Una especie que se establece e invade el ecosistema de otras especies",
+    "correcta": "a"
   },
 
   {
@@ -14,7 +15,8 @@
     "a": "a) Sí, es endémico de Chile",
     "b": "b) Sí, es endémico de Chile y Argentina",
     "c": "c) No, es nativo de Chile y Argentina",
-    "d": "d) No, es endémico solo de Argentina"
+    "d": "d) No, es endémico solo de Argentina",
+    "correcta": "b"
   },
 
   {
@@ -23,7 +25,8 @@
     "a": "a) Sí, es endémico de la zona central de Chile",
     "b": "b) Sí, es nativo de Chile",
     "c": "c) No, es endémico de Estados Unidos",
-    "d": "d) No, es nativo de Brasil"
+    "d": "d) No, es nativo de Brasil",
+    "correcta": "c"
   },
 
   {
@@ -32,6 +35,7 @@
     "a": "a) No se distribuye de forma natural en el lugar en el que se encuentra",
     "b": "b) Se encuentra en los alrededores de su distribución natural",
     "c": "c) Puede de forma natural llegar a un lugar diferente al de su distribución natural",
-    "d": "d) Su dispersión es producto de la movilización humana sin cuidado"
+    "d": "d) Su dispersión es producto de la movilización humana sin cuidado",
+    "correcta": "b"
   }
 ]
