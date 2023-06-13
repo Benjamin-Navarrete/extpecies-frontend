@@ -13,6 +13,8 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
     nombreComun = '',
     nombreCientifico = '',
     imagen = '',
+    reino = '',
+    familia = '',
     estadoConservacion = '',
     descripcionGeografica = '',
     detallesAmenazas = ''
@@ -76,6 +78,20 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
                   {/* Usar una lista para mostrar los datos relevantes y darles más espacio */}
                   {/* Usar secciones con título y una línea gris divisoria para cada dato */}
                   <ul className="list-none list-inside ml-4">
+                    <li>
+                      <h2 className="text-lg font-semibold text-gray-800">
+                        Reino
+                      </h2>
+                      <p className="text-gray-600">{reino}</p>
+                      <hr className="my-2 border-gray-300" />
+                    </li>
+                    <li>
+                      <h2 className="text-lg font-semibold text-gray-800">
+                        Familia
+                      </h2>
+                      <p className="text-gray-600">{familia}</p>
+                      <hr className="my-2 border-gray-300" />
+                    </li>
                     <li>
                       <h2 className="text-lg font-semibold text-gray-800">
                         Estado de conservación
