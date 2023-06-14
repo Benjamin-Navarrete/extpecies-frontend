@@ -35,7 +35,6 @@ const countries = [
 ];
 
 export default function Register() {
-  // Esquema de validación con Yup
   const validationSchema = Yup.object({
     nombreCompleto: Yup.string().required('El nombre completo es obligatorio'),
     correoElectronico: Yup.string()
@@ -55,10 +54,8 @@ export default function Register() {
     boletinInformativo: Yup.boolean()
   });
 
-  // Función para enviar los datos al backend
   const handleSubmit = async (values, actions) => {
     try {
-      // Extraer los datos del formulario
       const {
         nombreCompleto,
         correoElectronico,
@@ -67,7 +64,6 @@ export default function Register() {
         boletinInformativo
       } = values;
 
-      // Enviar los datos al backend con axios
       const response = await axios.post(
         'http://localhost:3500/api/auth/signup',
         {
@@ -79,17 +75,14 @@ export default function Register() {
         }
       );
 
-      // Si la respuesta es exitosa, guardar el token en una cookie y mostrar un mensaje de éxito
       if (response.status === 201) {
         const token = response.data.token;
         Cookies.set('token', token);
         toast.success('Usuario creado exitosamente');
       }
     } catch (error) {
-      // Si hay un error, mostrar un mensaje de error con el contenido del error
       toast.error(error.response.data.message);
     } finally {
-      // Finalmente, resetear el formulario y el estado de envío
       actions.resetForm();
       actions.setSubmitting(false);
     }
@@ -113,7 +106,6 @@ export default function Register() {
           </div>
           <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
             <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-              {/* Usar Formik para manejar el estado y la validación del formulario */}
               <Formik
                 initialValues={{
                   nombreCompleto: '',
