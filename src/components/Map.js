@@ -72,9 +72,9 @@ const Map = ({ especies }) => {
   return (
     <>
       <MapContainer
-        center={[-41.573328, -70.921259]}
+        center={[-22.304787, -61.391037]}
         zoom={4}
-        scrollWheelZoom={false}
+        scrollWheelZoom={true}
         style={{ height: '100%', width: '100%' }}
       >
         <TileLayer
