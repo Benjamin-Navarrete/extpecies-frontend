@@ -1,9 +1,51 @@
+// Archivo src/pages/login.js
 import InputField from '@/components/Inputs/InputField';
 import SocialLoginButton from '@/components/SocialLoginButton';
 import DefaultLayout from '@/layouts/DefaultLayout';
 import { FaFacebook, FaTwitter, FaGithub } from 'react-icons/fa';
+import * as Yup from 'yup'; // Importar yup
+import axios from 'axios'; // Importar axios
+import Cookies from 'js-cookie'; // Importar js-cookie
+import { Formik, Form } from 'formik'; // Importar Formik y Form
+import { toast } from 'react-toastify'; // Importar toast
 
 export default function Login() {
+  // Crear el esquema de validación con yup
+  const validationSchema = Yup.object({
+    correoElectronico: Yup.string()
+      .email('El correo electrónico no es válido')
+      .required('El correo electrónico es obligatorio'),
+    password: Yup.string()
+      .min(8, 'La contraseña debe tener al menos 8 caracteres')
+      .required('La contraseña es obligatoria')
+  });
+
+  // Crear la función para manejar el envío del formulario con axios y js-cookie
+  const handleSubmit = async (values, actions) => {
+    try {
+      const { correoElectronico, password } = values;
+
+      const response = await axios.post(
+        'http://localhost:3500/api/auth/signin',
+        {
+          correoElectronico,
+          password
+        }
+      );
+
+      if (response.status === 200) {
+        const token = response.data.token;
+        Cookies.set('token', token);
+        toast.success('Usuario autenticado exitosamente');
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    } finally {
+      actions.resetForm();
+      actions.setSubmitting(false);
+    }
+  };
+
   return (
     <>
       <DefaultLayout>
@@ -16,32 +58,46 @@ export default function Login() {
 
           <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
             <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-              <form className=" " action="#" method="POST">
-                <InputField
-                  label="Correo electrónico"
-                  type="email"
-                  name="email"
-                  placeholder="Ingresa tu correo electrónico aquí"
-                  autoComplete="email"
-                />
+              <Formik
+                initialValues={{
+                  correoElectronico: '',
+                  password: ''
+                }}
+                validationSchema={validationSchema}
+                onSubmit={handleSubmit}
+              >
+                {({ isSubmitting }) => (
+                  <Form>
+                    <InputField
+                      label="Correo electrónico"
+                      type="email"
+                      name="correoElectronico"
+                      placeholder="Ingresa tu correo electrónico aquí"
+                      autoComplete="email"
+                    />
 
-                <InputField
-                  label="Contraseña"
-                  type="password"
-                  name="password"
-                  placeholder="Ingresa tu contraseña aquí"
-                  autoComplete="current-password"
-                />
+                    <InputField
+                      label="Contraseña"
+                      type="password"
+                      name="password"
+                      placeholder="Ingresa tu contraseña aquí"
+                      autoComplete="current-password"
+                    />
 
-                <div>
-                  <button
-                    type="submit"
-                    className="flex w-full justify-center rounded-md border border-transparent bg-emerald-600 mt-6 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
-                  >
-                    Iniciar sesión
-                  </button>
-                </div>
-              </form>
+                    <div>
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={`flex w-full justify-center rounded-md border border-transparent bg-emerald-600 mt-6 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 ${
+                          isSubmitting && 'opacity-50 cursor-not-allowed'
+                        }`}
+                      >
+                        Iniciar sesión
+                      </button>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
 
               <div className="mt-6">
                 <div className="relative">
