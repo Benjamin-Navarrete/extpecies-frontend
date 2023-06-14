@@ -76,7 +76,7 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
                     alt={nombreComun}
                   />
                   {/* Usar una lista para mostrar los datos relevantes y darles más espacio */}
-                  {/* Usar secciones con título y una línea gris divisoria para cada dato */}
+                  {/* Usar secciones con título y una línea gris divisoria para cada dato */ }
                   <ul className="list-none list-inside ml-4">
                     <li>
                       <h2 className="text-lg font-semibold text-gray-800">
