@@ -27,7 +27,7 @@ const SelectField = ({ label, name, children }) => {
         >
           {/* Agregar una opción vacía para que el usuario tenga que seleccionar una opción válida */}
           <option value="" disabled hidden>
-            Selecciona tu país
+            Seleccionar
           </option>
 
           {/* Renderizar los hijos del componente (las opciones del select) */}

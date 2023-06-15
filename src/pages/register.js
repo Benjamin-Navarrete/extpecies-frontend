@@ -12,26 +12,26 @@ import { toast } from 'react-toastify';
 import Cookies from 'js-cookie';
 
 const countries = [
-  { code: 'AR', name: 'Argentina' },
-  { code: 'BO', name: 'Bolivia' },
-  { code: 'BR', name: 'Brasil' },
-  { code: 'CL', name: 'Chile' },
-  { code: 'CO', name: 'Colombia' },
-  { code: 'CR', name: 'Costa Rica' },
-  { code: 'CU', name: 'Cuba' },
-  { code: 'DO', name: 'República Dominicana' },
-  { code: 'EC', name: 'Ecuador' },
-  { code: 'SV', name: 'El Salvador' },
-  { code: 'GT', name: 'Guatemala' },
-  { code: 'HN', name: 'Honduras' },
-  { code: 'MX', name: 'México' },
-  { code: 'NI', name: 'Nicaragua' },
-  { code: 'PA', name: 'Panamá' },
-  { code: 'PY', name: 'Paraguay' },
-  { code: 'PE', name: 'Perú' },
-  { code: 'PR', name: 'Puerto Rico' },
-  { code: 'UY', name: 'Uruguay' },
-  { code: 'VE', name: 'Venezuela' }
+  { code: 'Argentina', name: 'Argentina' },
+  { code: 'Bolivia', name: 'Bolivia' },
+  { code: 'Brasil', name: 'Brasil' },
+  { code: 'Chile', name: 'Chile' },
+  { code: 'Colombia', name: 'Colombia' },
+  { code: 'Costa Rica', name: 'Costa Rica' },
+  { code: 'Cuba', name: 'Cuba' },
+  { code: 'República Dominicana', name: 'República Dominicana' },
+  { code: 'Ecuador', name: 'Ecuador' },
+  { code: 'El Salvador', name: 'El Salvador' },
+  { code: 'Guatemala', name: 'Guatemala' },
+  { code: 'Honduras', name: 'Honduras' },
+  { code: 'México', name: 'México' },
+  { code: 'Nicaragua', name: 'Nicaragua' },
+  { code: 'Panamá', name: 'Panamá' },
+  { code: 'Paraguay', name: 'Paraguay' },
+  { code: 'Perú', name: 'Perú' },
+  { code: 'Puerto Rico', name: 'Puerto Rico' },
+  { code: 'Uruguay', name: 'Uruguay' },
+  { code: 'Venezuela', name: 'Venezuela' }
 ];
 
 export default function Register() {

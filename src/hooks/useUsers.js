@@ -1,6 +1,7 @@
 // Archivo src\hooks\useUsers.js
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify'; // Importar toast
 
 const useUsers = () => {
   const [data, setData] = useState([]);
@@ -78,17 +79,33 @@ const useUsers = () => {
   const handleSubmit = async values => {
     try {
       if (currentUser) {
-        await axios.put(
-          `http://localhost:3500/api/usuarios/${currentUser.id}`,
-          values
-        );
-        setData(data.map(user => (user.id === currentUser.id ? values : user)));
+        // Añadir un bloque then y catch para manejar la promesa devuelta por axios.put
+        await axios
+          .put(`http://localhost:3500/api/usuarios/${currentUser.id}`, values)
+          .then(() => {
+            // Si se resuelve correctamente, mostrar un mensaje de éxito y actualizar los datos
+            toast.success('Usuario actualizado correctamente.');
+            setData(
+              data.map(user => (user.id === currentUser.id ? values : user))
+            );
+          })
+          .catch(error => {
+            // Si hay un error, mostrar un mensaje de error con el error.response.data.error
+            toast.error(error.response.data.error);
+          });
       } else {
-        const { data: newUser } = await axios.post(
-          'http://localhost:3500/api/usuarios',
-          values
-        );
-        setData([...data, newUser]);
+        // Añadir un bloque then y catch para manejar la promesa devuelta por axios.post
+        await axios
+          .post('http://localhost:3500/api/usuarios', values)
+          .then(({ data: newUser }) => {
+            // Si se resuelve correctamente, mostrar un mensaje de éxito y añadir el nuevo usuario a los datos
+            toast.success('Usuario creado correctamente.');
+            setData([...data, newUser]);
+          })
+          .catch(error => {
+            // Si hay un error, mostrar un mensaje de error con el error.response.data.error
+            toast.error(error.response.data.error);
+          });
       }
       setIsOpen(false);
     } catch (error) {

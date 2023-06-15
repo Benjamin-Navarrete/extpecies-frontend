@@ -97,6 +97,17 @@ const UserForm = ({
               ))}
             </SelectField>
 
+            <SelectField
+              label="Rol"
+              name="nombre"
+              placeholder="Selecciona tu rol"
+            >
+              <option value="">Seleccione un rol</option>
+              <option value="usuario">Usuario</option>
+              <option value="administrador">Administrador</option>
+              <option value="editor">Editor</option>
+            </SelectField>
+
             <div className="flex justify-end">
               <button
                 type="submit"
