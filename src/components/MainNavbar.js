@@ -13,9 +13,9 @@ function classNames(...classes) {
 }
 
 const routes = [
-  { name: 'Inicio', url: '/', permiso: 'ANONYMOUS' },
+  { name: 'Inicio', url: '/', permiso: null },
   { name: 'Mapa', url: '/map', permiso: null },
-  { name: 'Ponte a Prueba', url: '/test', permiso: 'ANONYMOUS' },
+  { name: 'Ponte a Prueba', url: '/test', permiso: null },
   { name: 'Sobre nosotros', url: '/about', permiso: null },
   { name: 'Gestionar usuarios', url: '/manage-users', permiso: 'MEN_01' },
   { name: 'Gestionar especies', url: '/manage-species', permiso: 'MEN_02' }
@@ -59,11 +59,6 @@ export default function MainNavbar() {
     router.push('/');
   };
 
-  const filteredRoutes = routes.filter(
-    route =>
-      !route.permiso || !isAuthenticated || permisos.includes(route.permiso)
-  );
-
   return (
     <Disclosure as="nav" className="bg-white shadow">
       {({ open }) => (
@@ -95,15 +90,20 @@ export default function MainNavbar() {
                   />
                 </div>
                 <div className="hidden md:ml-6 md:flex md:space-x-8">
-                  {filteredRoutes.map(route => (
-                    <Link
-                      key={route.url}
-                      href={route.url}
-                      className={linkClasses(isActive(route.url))}
-                    >
-                      {route.name}
-                    </Link>
-                  ))}
+                  {routes
+                    .filter(
+                      route =>
+                        !route.permiso || permisos.includes(route.permiso)
+                    )
+                    .map(route => (
+                      <Link
+                        key={route.url}
+                        href={route.url}
+                        className={linkClasses(isActive(route.url))}
+                      >
+                        {route.name}
+                      </Link>
+                    ))}
                 </div>
               </div>
               <div className="flex items-center">
@@ -147,15 +147,19 @@ export default function MainNavbar() {
 
           <Disclosure.Panel className="md:hidden">
             <div className="space-y-1 pt-2 pb-3">
-              {filteredRoutes.map(route => (
-                <Link
-                  key={route.url}
-                  href={route.url}
-                  className={linkClasses(isActive(route.url))}
-                >
-                  {route.name}
-                </Link>
-              ))}
+              {routes
+                .filter(
+                  route => !route.permiso || permisos.includes(route.permiso)
+                )
+                .map(route => (
+                  <Link
+                    key={route.url}
+                    href={route.url}
+                    className={linkClasses(isActive(route.url))}
+                  >
+                    {route.name}
+                  </Link>
+                ))}
             </div>
           </Disclosure.Panel>
         </>
