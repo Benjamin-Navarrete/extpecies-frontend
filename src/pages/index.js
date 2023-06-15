@@ -1,5 +1,6 @@
 import DefaultLayout from '@/layouts/DefaultLayout';
 import Link from 'next/link';
+// import americaLatina from '../../public/img/americalatina.jpg';
 
 export default function Inicio() {
   return (
@@ -41,8 +42,8 @@ export default function Inicio() {
           <div className="relative lg:col-span-5 lg:-mr-8 xl:absolute xl:inset-0 xl:left-1/2 xl:mr-0">
             <img
               className="aspect-[3/2] w-full bg-gray-50 object-cover lg:absolute lg:inset-0 lg:aspect-auto lg:h-full"
-              src="https://placehold.co/500x1500?text=Imagen Mapa"
-              alt=""
+              src= "/img/americalatina.jpg"
+              alt= ""
             />
           </div>
         </div>
