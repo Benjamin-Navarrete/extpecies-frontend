@@ -37,5 +37,63 @@
     "c": "c) Puede de forma natural llegar a un lugar diferente al de su distribución natural",
     "d": "d) Su dispersión es producto de la movilización humana sin cuidado",
     "correcta": "b"
+  },
+
+  {
+    "pregunta": "5) Quinta pregunta",
+    "enunciado": "En los bosques de Araucaria (araucaria araucana), ¿Cuál es el signo más claro de degradación?",
+    "a": "a) Los incendios",
+    "b": "b) La actividad silvícola",
+    "c": "c) La presencia de urbanización cercana",
+    "d": "d) La falta de regeneración",
+    "correcta": "d"
+  },
+
+  {
+    "pregunta": "6) Sexta pregunta",
+    "enunciado": "¿Qué tipo de pesca afecta al tiburon toro (carcharhinus leucas)?",
+    "a": "a) La pesca industrial",
+    "b": "b) Solo a y d",
+    "c": "c) La pesca recreacional",
+    "d": "d) La pesca artesanal y recreacional",
+    "correcta": "b"
+  },
+{
+    "pregunta": "7) Séptima pregunta",
+    "enunciado": "¿Qué especies son parte de la familia Cactaceae?",
+    "a": "a) Parodia tenuicylindrica y Parodia arnostiana",
+    "b": "b) Discocactus ferricola y Discocactus diersianus",
+    "c": "c) Uebelmannia pectinifera y Discocactus pseudoinsignis",
+    "d": "d) Todas las anteriores",
+    "correcta": "d"
+
+  },
+{
+    "pregunta": "8) Octava pregunta",
+    "enunciado": "¿Qué alternativa señala en orden ascendente las amenazas que afectan al gato andino (leopardus jacobita) en la actualidad?",
+    "a": "a) Reducción de la población de sus presas; caza por parte de personas; degradación del hábitat y pérdida de hábitat",
+    "b": "b) Reducción de la población de sus presas; caza por parte de personas; pérdida del hábitat y degradación de hábitat",
+    "c": "c) Caza por parte de personas; reducción de la población de sus presas; pérdida del hábitat y degradación de hábitat",
+    "d": "d) Pérdida de hábitat; reducción de la población de sus presas; degradación del hábitat y caza por parte de personas",
+    "correcta": "a"
+  },
+{
+    "pregunta": "9) Novena pregunta",
+    "enunciado": "¿A qué se debe la degradación de hábitat de la ranita del Itatiaia (holoaden bradei)?",
+    "a": "a) La agricultura y ganadería",
+    "b": "b) El turismo, incendios y heladas",
+    "c": "c) Incendios y heladas",
+    "d": "d) Solo al turismo",
+    "correcta": "b"
+  },
+{
+    "pregunta": "10) Décima pregunta",
+    "enunciado": "¿Cuál es la distribución del oso de los Andes (Tremarctos ornatus)?",
+    "a": "a) Es endémico de la cordillera de los Andes Tropicales",
+    "b": "b) Se encuentra en Bolivia, Colombia, Ecuador, Perú y Venezuela.",
+    "c": "c) Letras a y b",
+    "d": "d) Venezuela, Perú y Argentina",
+    "correcta": "c"
   }
 ]
+
