@@ -43,7 +43,7 @@ export default function Login() {
         toast.success('Usuario autenticado exitosamente');
 
         // Redirigir al usuario a la página principal
-        router.push('/');
+        router.push('/map');
       }
     } catch (error) {
       toast.error(error.response.data.message);

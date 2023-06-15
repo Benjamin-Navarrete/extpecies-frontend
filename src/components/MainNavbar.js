@@ -1,3 +1,4 @@
+// Archivo src\components\MainNavbar.js
 import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
@@ -5,15 +6,16 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import jwtDecode from 'jwt-decode';
+import { toast } from 'react-toastify';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
 const routes = [
-  { name: 'Inicio', url: '/', permiso: null },
+  { name: 'Inicio', url: '/', permiso: 'ANONYMOUS' },
   { name: 'Mapa', url: '/map', permiso: null },
-  { name: 'Ponte a Prueba', url: '/test', permiso: null },
+  { name: 'Ponte a Prueba', url: '/test', permiso: 'ANONYMOUS' },
   { name: 'Sobre nosotros', url: '/about', permiso: null },
   { name: 'Gestionar usuarios', url: '/manage-users', permiso: 'MEN_01' },
   { name: 'Gestionar especies', url: '/manage-species', permiso: 'MEN_02' }
@@ -53,8 +55,14 @@ export default function MainNavbar() {
     Cookies.remove('token');
     setIsAuthenticated(false);
     setPermisos([]);
-    router.push('/'); // o redireccionar a la página que prefieras tras el logout
+    toast.success('Sesión cerrada con éxito');
+    router.push('/');
   };
+
+  const filteredRoutes = routes.filter(
+    route =>
+      !route.permiso || !isAuthenticated || permisos.includes(route.permiso)
+  );
 
   return (
     <Disclosure as="nav" className="bg-white shadow">
@@ -87,20 +95,15 @@ export default function MainNavbar() {
                   />
                 </div>
                 <div className="hidden md:ml-6 md:flex md:space-x-8">
-                  {routes
-                    .filter(
-                      route =>
-                        !route.permiso || permisos.includes(route.permiso)
-                    )
-                    .map(route => (
-                      <Link
-                        key={route.url}
-                        href={route.url}
-                        className={linkClasses(isActive(route.url))}
-                      >
-                        {route.name}
-                      </Link>
-                    ))}
+                  {filteredRoutes.map(route => (
+                    <Link
+                      key={route.url}
+                      href={route.url}
+                      className={linkClasses(isActive(route.url))}
+                    >
+                      {route.name}
+                    </Link>
+                  ))}
                 </div>
               </div>
               <div className="flex items-center">
@@ -144,19 +147,15 @@ export default function MainNavbar() {
 
           <Disclosure.Panel className="md:hidden">
             <div className="space-y-1 pt-2 pb-3">
-              {routes
-                .filter(
-                  route => !route.permiso || permisos.includes(route.permiso)
-                )
-                .map(route => (
-                  <Link
-                    key={route.url}
-                    href={route.url}
-                    className={linkClasses(isActive(route.url))}
-                  >
-                    {route.name}
-                  </Link>
-                ))}
+              {filteredRoutes.map(route => (
+                <Link
+                  key={route.url}
+                  href={route.url}
+                  className={linkClasses(isActive(route.url))}
+                >
+                  {route.name}
+                </Link>
+              ))}
             </div>
           </Disclosure.Panel>
         </>
