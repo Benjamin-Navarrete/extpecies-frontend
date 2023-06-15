@@ -88,7 +88,7 @@ export default function MainNavbar() {
                       type="button"
                       className="relative inline-flex items-center rounded-md border border-transparent bg-neutral-200 px-4 py-2 text-sm font-medium text-zinc-700 shadow-sm hover:bg-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2"
                     >
-                      <span>Login</span>
+                      <span>Iniciar Sesión</span>
                     </button>
                   </Link>
                 </div>
