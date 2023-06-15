@@ -1,6 +1,9 @@
-// Archivo src\components\Forms\UserForm.js
 import React from 'react';
 import Modal from 'react-modal';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import InputField from '@/components/Inputs/InputField';
+import CheckboxField from '@/components/Inputs/CheckBoxField';
 
 const UserForm = ({
   modalIsOpen,
@@ -10,101 +13,72 @@ const UserForm = ({
   handleSubmit,
   handleChange
 }) => {
+  const validationSchema = Yup.object({
+    nombres: Yup.string().required('El nombre es obligatorio'),
+    apellidos: Yup.string().required('El apellido es obligatorio'),
+    correo: Yup.string()
+      .email('El correo electrónico no es válido')
+      .required('El correo electrónico es obligatorio'),
+    telefono: Yup.string().required('El teléfono es obligatorio'),
+    password: Yup.string()
+      .min(8, 'La contraseña debe tener al menos 8 caracteres')
+      .required('La contraseña es obligatoria'),
+    pais: Yup.string().required('El país es obligatorio'),
+    boletinInformativo: Yup.boolean()
+  });
+
   return (
     <Modal isOpen={modalIsOpen} onRequestClose={handleCloseModal}>
       <h2 className="text-lg leading-6 font-medium text-gray-900 mb-4">
         {currentUser ? 'Editar' : 'Crear'} usuario
       </h2>
-      <form onSubmit={handleSubmit} className="space-y-3">
-        <label className="block">
-          <span className="text-gray-700">Nombres:</span>
-          <input
-            name="nombres"
-            value={userForm.nombres}
-            onChange={handleChange}
-            required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-        </label>
-        <label className="block">
-          <span className="text-gray-700">Apellidos:</span>
-          <input
-            name="apellidos"
-            value={userForm.apellidos}
-            onChange={handleChange}
-            required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-        </label>
-        <label className="block">
-          <span className="text-gray-700">Correo:</span>
-          <input
-            name="correo"
-            value={userForm.correo}
-            onChange={handleChange}
-            required
-            type="email"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-        </label>
-        <label className="block">
-          <span className="text-gray-700">Teléfono:</span>
-          <input
-            name="telefono"
-            value={userForm.telefono}
-            onChange={handleChange}
-            required
-            type="tel"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-        </label>
-        <label className="block">
-          <span className="text-gray-700">Contraseña:</span>
-          <input
-            name="password"
-            value={userForm.password}
-            onChange={handleChange}
-            required
-            type="password"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-        </label>
-        <label className="block">
-          <span className="text-gray-700">País:</span>
-          <input
-            name="pais"
-            value={userForm.pais}
-            onChange={handleChange}
-            required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-        </label>
-        <label className="block">
-          <span className="text-gray-700">Boletín informativo:</span>
-          <input
-            name="boletinInformativo"
-            checked={userForm.boletinInformativo}
-            onChange={handleChange}
-            type="checkbox"
-            className="mt-1 block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-        </label>
-        <div>
-          <button
-            type="submit"
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Guardar
-          </button>
-          <button
-            type="button"
-            onClick={handleCloseModal}
-            className="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Cancelar
-          </button>
-        </div>
-      </form>
+      <Formik
+        initialValues={userForm}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ isSubmitting }) => (
+          <Form className="space-y-3">
+            <InputField
+              label="Nombres"
+              type="text"
+              name="nombres"
+              autoComplete="name"
+            />
+            <InputField label="Apellidos" type="text" name="apellidos" />
+            <InputField
+              label="Correo"
+              type="email"
+              name="correo"
+              autoComplete="email"
+            />
+            <InputField label="Teléfono" type="tel" name="telefono" />
+            <InputField
+              label="Contraseña"
+              type="password"
+              name="password"
+              autoComplete="current-password"
+            />
+            <InputField label="País" type="text" name="pais" />
+
+            <div className="flex justify-end">
+              <button
+                type="submit"
+                className="ml-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Guardar
+              </button>
+              <button
+                type="button"
+                onClick={handleCloseModal}
+                className="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Cancelar
+              </button>
+            </div>
+          </Form>
+        )}
+      </Formik>
     </Modal>
   );
 };

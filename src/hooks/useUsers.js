@@ -1,3 +1,4 @@
+// Archivo src\hooks\useUsers.js
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -62,21 +63,18 @@ const useUsers = () => {
     setIsOpen(false);
   };
 
-  const handleSubmit = async event => {
-    event.preventDefault();
+  const handleSubmit = async values => {
     try {
       if (currentUser) {
         await axios.put(
           `http://localhost:3500/api/usuarios/${currentUser.id}`,
-          userForm
+          values
         );
-        setData(
-          data.map(user => (user.id === currentUser.id ? userForm : user))
-        );
+        setData(data.map(user => (user.id === currentUser.id ? values : user)));
       } else {
         const { data: newUser } = await axios.post(
           'http://localhost:3500/api/usuarios',
-          userForm
+          values
         );
         setData([...data, newUser]);
       }
