@@ -10,6 +10,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
 
 const countries = [
   { code: 'Argentina', name: 'Argentina' },
@@ -35,6 +36,8 @@ const countries = [
 ];
 
 export default function Register() {
+  const router = useRouter();
+
   const validationSchema = Yup.object({
     nombreCompleto: Yup.string().required('El nombre completo es obligatorio'),
     correoElectronico: Yup.string()
@@ -76,9 +79,9 @@ export default function Register() {
       );
 
       if (response.status === 201) {
-        const token = response.data.token;
-        Cookies.set('token', token);
         toast.success('Usuario creado exitosamente');
+
+        router.push('/login');
       }
     } catch (error) {
       toast.error(error.response.data.message);
