@@ -1,12 +1,35 @@
 // Archivo src\components\Forms\UserForm.js
-import React from 'react';
 import Modal from 'react-modal';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import InputField from '@/components/Inputs/InputField';
-import CheckboxField from '@/components/Inputs/CheckBoxField';
+import SelectField from '../Inputs/SelectField';
+
+const countries = [
+  { code: 'Argentina', name: 'Argentina' },
+  { code: 'Bolivia', name: 'Bolivia' },
+  { code: 'Brasil', name: 'Brasil' },
+  { code: 'Chile', name: 'Chile' },
+  { code: 'Colombia', name: 'Colombia' },
+  { code: 'Costa Rica', name: 'Costa Rica' },
+  { code: 'Cuba', name: 'Cuba' },
+  { code: 'República Dominicana', name: 'República Dominicana' },
+  { code: 'Ecuador', name: 'Ecuador' },
+  { code: 'El Salvador', name: 'El Salvador' },
+  { code: 'Guatemala', name: 'Guatemala' },
+  { code: 'Honduras', name: 'Honduras' },
+  { code: 'México', name: 'México' },
+  { code: 'Nicaragua', name: 'Nicaragua' },
+  { code: 'Panamá', name: 'Panamá' },
+  { code: 'Paraguay', name: 'Paraguay' },
+  { code: 'Perú', name: 'Perú' },
+  { code: 'Puerto Rico', name: 'Puerto Rico' },
+  { code: 'Uruguay', name: 'Uruguay' },
+  { code: 'Venezuela', name: 'Venezuela' }
+];
 
 const UserForm = ({
+  roles,
   modalIsOpen,
   userForm,
   currentUser,
@@ -20,7 +43,6 @@ const UserForm = ({
     correo: Yup.string()
       .email('El correo electrónico no es válido')
       .required('El correo electrónico es obligatorio'),
-    telefono: Yup.string().required('El teléfono es obligatorio'),
     password: Yup.string()
       .min(8, 'La contraseña debe tener al menos 8 caracteres')
       .required('La contraseña es obligatoria'),
@@ -29,7 +51,11 @@ const UserForm = ({
   });
 
   return (
-    <Modal isOpen={modalIsOpen} onRequestClose={handleCloseModal}>
+    <Modal
+      isOpen={modalIsOpen}
+      onRequestClose={handleCloseModal}
+      className="max-w-lg mx-auto bg-white rounded-lg p-4  shadow-xl mt-24 mb-24"
+    >
       <h2 className="text-lg leading-6 font-medium text-gray-900 mb-4">
         {currentUser ? 'Editar' : 'Crear'} usuario
       </h2>
@@ -53,14 +79,23 @@ const UserForm = ({
               name="correo"
               autoComplete="email"
             />
-            <InputField label="Teléfono" type="tel" name="telefono" />
             <InputField
               label="Contraseña"
               type="password"
               name="password"
               autoComplete="current-password"
             />
-            <InputField label="País" type="text" name="pais" />
+            <SelectField
+              label="País"
+              name="pais"
+              placeholder="Selecciona tu país"
+            >
+              {countries.map(country => (
+                <option key={country.code} value={country.code}>
+                  {country.name}
+                </option>
+              ))}
+            </SelectField>
 
             <div className="flex justify-end">
               <button

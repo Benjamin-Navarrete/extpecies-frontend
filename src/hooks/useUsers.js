@@ -7,6 +7,7 @@ const useUsers = () => {
   const [loading, setLoading] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [roles, setRoles] = useState([]);
   const [userForm, setUserForm] = useState({
     nombres: '',
     apellidos: '',
@@ -26,6 +27,17 @@ const useUsers = () => {
     };
 
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchRoles = async () => {
+      setLoading(true);
+      const result = await axios('http://localhost:3500/api/roles');
+      setRoles(result.data);
+      setLoading(false);
+    };
+
+    fetchRoles();
   }, []);
 
   const handleCreate = () => {
@@ -95,6 +107,7 @@ const useUsers = () => {
   };
 
   return {
+    roles,
     data,
     loading,
     modalIsOpen,

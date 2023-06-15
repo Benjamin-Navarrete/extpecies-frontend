@@ -15,6 +15,7 @@ const UsersPage = () => {
   const [loadingPermissions, setLoadingPermissions] = useState(true);
 
   const {
+    roles,
     data,
     loading,
     modalIsOpen,
@@ -90,6 +91,7 @@ const UsersPage = () => {
             handleCloseModal={handleCloseModal}
             handleSubmit={handleSubmit}
             handleChange={handleChange}
+            roles={roles}
           />
         </div>
       </div>

@@ -8,33 +8,33 @@ import { PencilSquareIcon, TrashIcon } from '@heroicons/react/20/solid';
 const UserTable = ({ data, loading, handleEdit, handleDelete }) => {
   const columns = [
     {
-      name: 'Rol',
-      selector: 'nombre',
-      sortable: true
-    },
-    {
       name: 'Nombre',
       selector: 'nombres',
-      sortable: true
+      sortable: true,
+      center: true
     },
     {
       name: 'Apellido',
       selector: 'apellidos',
-      sortable: true
+      sortable: true,
+      center: true
     },
     {
       name: 'Correo',
       selector: 'correo',
-      sortable: true
+      sortable: true,
+      center: true
     },
     {
       name: 'País',
       selector: 'pais',
-      sortable: true
+      sortable: true,
+      center: true
     },
     {
       name: 'Acciones',
       button: true,
+      center: true,
       cell: row => (
         <div className="flex space-x-2">
           <Tippy content="Editar">
