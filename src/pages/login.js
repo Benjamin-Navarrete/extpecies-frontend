@@ -8,8 +8,10 @@ import axios from 'axios'; // Importar axios
 import Cookies from 'js-cookie'; // Importar js-cookie
 import { Formik, Form } from 'formik'; // Importar Formik y Form
 import { toast } from 'react-toastify'; // Importar toast
+import { useRouter } from 'next/router'; // Importar useRouter
 
 export default function Login() {
+  const router = useRouter();
   // Crear el esquema de validación con yup
   const validationSchema = Yup.object({
     correoElectronico: Yup.string()
@@ -22,6 +24,8 @@ export default function Login() {
 
   // Crear la función para manejar el envío del formulario con axios y js-cookie
   const handleSubmit = async (values, actions) => {
+    // Crear una instancia del enrutador
+
     try {
       const { correoElectronico, password } = values;
 
@@ -37,6 +41,9 @@ export default function Login() {
         const token = response.data.token;
         Cookies.set('token', token);
         toast.success('Usuario autenticado exitosamente');
+
+        // Redirigir al usuario a la página principal
+        router.push('/');
       }
     } catch (error) {
       toast.error(error.response.data.message);
