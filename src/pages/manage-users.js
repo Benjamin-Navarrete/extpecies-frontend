@@ -1,3 +1,4 @@
+// Archivo src\pages\manage-users.js
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
@@ -6,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import DefaultLayout from '@/layouts/DefaultLayout';
 import UserForm from '@/components/Forms/UserForm';
-import UserTable from '@/components/UserTable';
+import UserTable from '@/components/Tables/UserTable';
 import useUsers from '@/hooks/useUsers';
 
 const UsersPage = () => {

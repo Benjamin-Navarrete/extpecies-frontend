@@ -29,13 +29,11 @@ const countries = [
 ];
 
 const UserForm = ({
-  roles,
   modalIsOpen,
   userForm,
   currentUser,
   handleCloseModal,
-  handleSubmit,
-  handleChange
+  handleSubmit
 }) => {
   const validationSchema = Yup.object({
     nombres: Yup.string().required('El nombre es obligatorio'),
@@ -64,7 +62,7 @@ const UserForm = ({
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ isSubmitting }) => (
+        {() => (
           <Form className="space-y-3">
             <InputField
               label="Nombres"

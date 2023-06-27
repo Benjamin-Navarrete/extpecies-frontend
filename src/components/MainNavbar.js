@@ -18,7 +18,11 @@ const routes = [
   { name: 'Ponte a Prueba', url: '/test', permiso: null },
   { name: 'Sobre nosotros', url: '/about', permiso: null },
   { name: 'Gestionar usuarios', url: '/manage-users', permiso: 'MEN_01' },
-  { name: 'Gestionar especies (en desarrollo)', url: '#', permiso: 'MEN_02' }
+  {
+    name: 'Gestionar especies',
+    url: '/manage-species',
+    permiso: 'MEN_02'
+  }
 ];
 
 export default function MainNavbar() {
