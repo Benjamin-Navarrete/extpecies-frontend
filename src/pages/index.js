@@ -1,6 +1,5 @@
 import DefaultLayout from '@/layouts/DefaultLayout';
 import Link from 'next/link';
-// import americaLatina from '../../public/img/americalatina.jpg';
 
 export default function Inicio() {
   return (
@@ -9,12 +8,6 @@ export default function Inicio() {
         <div className="mx-auto max-w-7xl lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8">
           <div className="px-6 pt-10 pb-24 sm:pb-32 lg:col-span-7 lg:px-0 lg:pt-24 lg:pb-56 xl:col-span-6">
             <div className="mx-auto max-w-2xl lg:mx-0">
-              {/* <img
-                className="h-11"
-                src="https://tailwindui.com/img/logos/mark.svg?color=emerald&shade=600"
-                alt="Your Company"
-              /> */}
-
               <h1 className="mt-5 text-4xl font-bold tracking-tight text-gray-900 sm:mt-10 sm:text-6xl">
                 Explora, Aprende y Protege
               </h1>
