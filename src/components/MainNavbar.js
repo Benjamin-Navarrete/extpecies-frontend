@@ -22,6 +22,11 @@ const routes = [
     name: 'Gestionar especies',
     url: '/manage-species',
     permiso: 'MEN_02'
+  },
+  {
+    name: 'Historial',
+    url: '/history',
+    permiso: 'MEN_03'
   }
 ];
 

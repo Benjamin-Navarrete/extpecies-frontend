@@ -1,4 +1,4 @@
-// Archivo src\components\Map.js
+// Archivo src/components/Map.js
 import L from 'leaflet';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -6,6 +6,9 @@ import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import 'leaflet-defaulticon-compatibility';
 import { useState } from 'react';
 import SpeciesModal from './SpeciesModal';
+import axios from 'axios'; // Importar axios
+import Cookies from 'js-cookie'; // Importar js-cookie
+import jwtDecode from 'jwt-decode'; // Importar jwt-decode
 
 const Map = ({ especies }) => {
   // Agregar estado para el modal y la especie seleccionada
@@ -13,9 +16,38 @@ const Map = ({ especies }) => {
   const [selectedSpecies, setSelectedSpecies] = useState(null);
 
   // Función para manejar el clic en un marcador
-  const handleMarkerClick = especie => {
-    setSelectedSpecies(especie);
-    setIsModalOpen(true);
+  const handleMarkerClick = async especie => {
+    try {
+      // Obtener el token desde la cookie
+      const token = Cookies.get('token');
+
+      // Verificar si el token existe
+      if (token) {
+        // Decodificar el token y obtener el id del usuario
+        const { id } = jwtDecode(token);
+
+        // Crear un objeto con los datos del historial
+        const historial = {
+          usuarioId: id,
+          fecha: new Date().toLocaleDateString(),
+          hora: new Date().toLocaleTimeString(),
+          especie: `${especie.nombreComun} (${especie.nombreCientifico})`,
+          informacion: `${especie.reino}, ${especie.familia}, ${especie.estadoConservacion}, ${especie.descripcionGeografica}, ${especie.detallesAmenazas}`
+        };
+
+        // Enviar una petición al servidor para guardar el historial con el token en el header
+        await axios.post('http://localhost:3500/api/historial', historial, {
+          headers: { 'x-access-token': token }
+        });
+      }
+
+      // Establecer la especie seleccionada y abrir el modal
+      setSelectedSpecies(especie);
+      setIsModalOpen(true);
+    } catch (error) {
+      // Mostrar un mensaje de error si algo falla
+      console.error('Error al guardar el historial: ', error);
+    }
   };
 
   // Función para cerrar el modal

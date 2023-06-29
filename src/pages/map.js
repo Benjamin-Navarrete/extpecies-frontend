@@ -26,8 +26,6 @@ export async function getServerSideProps() {
   } catch (error) {
     console.error('Error obteniendo las especies: ', error);
   }
-
-  console.log('Especies: ', especies);
   return { props: { especies } };
 }
 
