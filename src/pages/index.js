@@ -11,7 +11,7 @@ export default function Inicio() {
               <h1 className="mt-5 text-4xl font-bold tracking-tight text-gray-900 sm:mt-10 sm:text-6xl">
                 Explora, Aprende y Protege
               </h1>
-              <p className="mt-6 text-lg leading-8 text-gray-600">
+              <p className="mt-6 text-lg leading-8 text-justify text-gray-600">
                 Descubre especies en peligro de extinción de América Latina con
                 nuestro mapa interactivo, aumenta tus conocimientos y contribuye
                 a la conservación de nuestra biodiversidad. ¡Anímate a explorar!
