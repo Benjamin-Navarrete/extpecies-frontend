@@ -30,12 +30,10 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
         <div className="min-h-screen px-4 text-center">
           <Dialog.Overlay className="fixed inset-0 bg-black/50" />
 
-          {/* Eliminar el span vacío que no tiene ninguna función */}
           {/* Usar un div con flex y justify-center para centrar el contenido */}
           <div className="flex justify-center items-center h-screen">
             {/* Agregar un margen superior e inferior de 8 al modal para que no ocupe toda la pantalla */}
             <div className="inline-block w-full max-w-3xl p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-              {/* Mover el botón de cerrar al lado izquierdo y hacerlo más pequeño */}
               <div className="flex justify-between items-center">
                 {/* Usar un encabezado más grande para el título y centrarlo */}
                 <Dialog.Title
@@ -76,7 +74,7 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
                     alt={nombreComun}
                   />
                   {/* Usar una lista para mostrar los datos relevantes y darles más espacio */}
-                  {/* Usar secciones con título y una línea gris divisoria para cada dato */ }
+                  {/* Usar secciones con título y una línea gris divisoria para cada dato */}
                   <ul className="list-none list-inside ml-4">
                     <li>
                       <h2 className="text-lg font-semibold text-gray-800">
