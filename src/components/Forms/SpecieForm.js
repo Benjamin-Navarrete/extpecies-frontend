@@ -4,15 +4,43 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import InputField from '@/components/Inputs/InputField';
 import SelectField from '../Inputs/SelectField';
+import TextArea from '@/components/Inputs/TextArea';
 
 const conservationStatus = [
-  { code: 'LC', name: 'Preocupación menor' },
-  { code: 'NT', name: 'Casi amenazado' },
-  { code: 'VU', name: 'Vulnerable' },
-  { code: 'EN', name: 'En peligro' },
-  { code: 'CR', name: 'En peligro crítico' },
-  { code: 'EW', name: 'Extinto en estado silvestre' },
-  { code: 'EX', name: 'Extinto' }
+  { code: 'LC', name: 'Preocupación menor (LC)' },
+  { code: 'NT', name: 'Casi amenazado (NT)' },
+  { code: 'VU', name: 'Vulnerable (VU)' },
+  { code: 'EN', name: 'En peligro (EN)' },
+  { code: 'CR', name: 'En peligro crítico (CR)' },
+  { code: 'EW', name: 'Extinto en estado silvestre (EW)' },
+  { code: 'EX', name: 'Extinto (EX)' }
+];
+
+const kingdom = [
+  { name: 'Animalia' },
+  { name: 'Fungi' },
+  { name: 'Plantae' }
+];
+
+const phylum = [
+  { name: 'Basidiomycota' },
+  { name: 'Ascomycota' },
+  { name: 'Tracheophyta' },
+  { name: 'Bryophyta' },
+  { name: 'Marchantiophyta' },
+  { name: 'Rhodophyta' },
+  { name: 'Charophyta' },
+  { name: 'Anthocerotophyta' },
+  { name: 'Chlorophyta' },
+  { name: 'Chordata' },
+  { name: 'Arthropoda' },
+  { name: 'Mollusca' },
+  { name: 'Cnidaria' },
+  { name: 'Echinodermata' },
+  { name: 'Annelida' },
+  { name: 'Onychophora' },
+  { name: 'Nemertina' },
+  { name: 'Platyhelminthes' }
 ];
 
 const SpecieForm = ({
@@ -114,8 +142,28 @@ const SpecieForm = ({
               name="imagen"
               autoComplete="url"
             />
-            <InputField label="Reino" type="text" name="reino" />
-            <InputField label="Filo" type="text" name="filo" />
+            <SelectField
+              label="Reino"
+              name="reino"
+              placeholder="Selecciona el reino"
+            >
+              {kingdom.map(status => (
+                <option key={status.name} value={status.name}>
+                  {status.name}
+                </option>
+              ))}
+            </SelectField>
+            <SelectField
+              label="Filo"
+              name="filo"
+              placeholder="Selecciona el filo"
+            >
+              {phylum.map(status => (
+                <option key={status.name} value={status.name}>
+                  {status.name}
+                </option>
+              ))}
+            </SelectField>
             <InputField label="Clase" type="text" name="clase" />
             <InputField label="Orden" type="text" name="orden" />
             <InputField label="Familia" type="text" name="familia" />
@@ -147,7 +195,7 @@ const SpecieForm = ({
               type="number"
               name="limiteElevacionInferior"
             />
-            <InputField
+            <TextArea
               label="Descripción geográfica"
               type="text"
               name="descripcionGeografica"
@@ -157,7 +205,7 @@ const SpecieForm = ({
               type="text"
               name="tendenciaPoblacion"
             />
-            <InputField
+            <TextArea
               label="Detalles poblacionales"
               type="text"
               name="detallesPoblacion"
@@ -168,22 +216,22 @@ const SpecieForm = ({
               name="sistemaHabitat"
             />
             <InputField label="Tipos hábitat" type="text" name="tiposHabitat" />
-            <InputField
+            <TextArea
               label="Detalles hábitat"
               type="text"
               name="detallesHabitat"
             />
-            <InputField
+            <TextArea
               label="Detalles amenazas"
               type="text"
               name="detallesAmenazas"
             />
-            <InputField
+            <TextArea
               label="Acciones de conservación"
               type="text"
               name="accionesConservacion"
             />
-            <InputField label="Bibliografía" type="text" name="bibliografia" />
+            <TextArea label="Bibliografía" type="text" name="bibliografia" />
             <InputField label="Latitud (grados)" type="number" name="latitud" />
             <InputField
               label="Longitud (grados)"
