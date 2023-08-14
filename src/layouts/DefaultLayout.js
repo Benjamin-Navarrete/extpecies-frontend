@@ -1,7 +1,8 @@
+// Archivo src\layouts\DefaultLayout.js
 import Navbar from '@/components/MainNavbar';
 import Footer from '@/components/Footer';
 
-const DefaultLayout = (props) => {
+const DefaultLayout = props => {
   return (
     <>
       <Navbar />

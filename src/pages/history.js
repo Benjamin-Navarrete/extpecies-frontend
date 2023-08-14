@@ -55,7 +55,7 @@ const HistoryPage = () => {
     };
 
     checkPermissions();
-  }, []);
+  });
 
   // Usar un efecto para obtener los datos del historial cuando se monte el componente
   useEffect(() => {
@@ -74,7 +74,7 @@ const HistoryPage = () => {
       toast.error('Debes iniciar sesión para ver tu historial');
       router.push('/login');
     }
-  }, []); // No pasar ninguna dependencia al efecto
+  });
 
   // Si los permisos aún no han sido cargados, renderizar un componente de carga o nada
   if (loadingPermissions) {

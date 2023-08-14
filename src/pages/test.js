@@ -34,13 +34,13 @@ const Test = () => {
     // Mostramos un modal según el puntaje obtenido usando sweet alerts
     // Todas las respuestas son correctas
     if (puntaje == preguntas.length) {
-    Swal.fire({
-      title: 'Tu puntaje',
-      html: `${puntaje} de ${preguntas.length}.<br> <br> ¡Sabes mucho de biodiversidad y el cuidado de las especies!`,
-      icon: 'success',
-      confirmButtonText: 'Ok'
-    });
-    // Ninguna respuesta es correcta
+      Swal.fire({
+        title: 'Tu puntaje',
+        html: `${puntaje} de ${preguntas.length}.<br> <br> ¡Sabes mucho de biodiversidad y el cuidado de las especies!`,
+        icon: 'success',
+        confirmButtonText: 'Ok'
+      });
+      // Ninguna respuesta es correcta
     } else if (puntaje == 0) {
       Swal.fire({
         title: 'Tu puntaje',
@@ -48,8 +48,8 @@ const Test = () => {
         icon: 'error',
         confirmButtonText: 'Ok'
       });
-    // Al menos una respuesta es correcta
-    } else{
+      // Al menos una respuesta es correcta
+    } else {
       Swal.fire({
         title: 'Tu puntaje',
         html: `${puntaje} de ${preguntas.length}.<br> <br> ¡Puedes hacerlo mejor!`,

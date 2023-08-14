@@ -5,10 +5,10 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
 import 'leaflet-defaulticon-compatibility';
 import { useState } from 'react';
-import SpeciesModal from './SpeciesModal';
-import axios from 'axios'; // Importar axios
-import Cookies from 'js-cookie'; // Importar js-cookie
-import jwtDecode from 'jwt-decode'; // Importar jwt-decode
+import SpeciesModal from './Modals/SpeciesModal';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import jwtDecode from 'jwt-decode';
 
 const Map = ({ especies }) => {
   // Agregar estado para el modal y la especie seleccionada

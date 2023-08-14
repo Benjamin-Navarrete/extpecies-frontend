@@ -12,7 +12,6 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
   const {
     nombreComun = '',
     nombreCientifico = '',
-    imagen = '',
     reino = '',
     familia = '',
     estadoConservacion = '',
@@ -70,8 +69,8 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
                 <div className=" items-center mt-4 max-h-[80vh] overflow-y-auto">
                   <img
                     className="h-auto w-screen mb-4 rounded-lg"
-                    src={imagen}
-                    alt={nombreComun}
+                    src={especie.imagen}
+                    alt={especie.nombreComun}
                   />
                   {/* Usar una lista para mostrar los datos relevantes y darles más espacio */}
                   {/* Usar secciones con título y una línea gris divisoria para cada dato */}
