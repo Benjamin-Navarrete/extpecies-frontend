@@ -16,11 +16,7 @@ const conservationStatus = [
   { code: 'EX', name: 'Extinto (EX)' }
 ];
 
-const kingdom = [
-  { name: 'Animalia' },
-  { name: 'Fungi' },
-  { name: 'Plantae' }
-];
+const kingdom = [{ name: 'Animalia' }, { name: 'Fungi' }, { name: 'Plantae' }];
 
 const phylum = [
   { name: 'Basidiomycota' },

@@ -1,7 +1,6 @@
-// eslint-disable-next-line no-undef
 module.exports = {
   env: {
-    browser: true,
+    node: true,
     es2021: true
   },
   extends: [
@@ -11,25 +10,24 @@ module.exports = {
     'next'
   ],
   parserOptions: {
-    ecmaFeatures: {
-      jsx: true
-    },
     ecmaVersion: 12,
     sourceType: 'module'
   },
-  plugins: ['react'],
   rules: {
-    'react/no-unescaped-entities': 'off',
-    // 'react/prop-types': 'error',
-    'react/display-name': 'off',
-    'prettier/prettier': ['error', { endOfLine: 'auto' }]
+    'prettier/prettier': ['error', { endOfLine: 'auto' }],
+    'no-unused-vars': 'error',
+    'no-console': 'error',
+    'react/prop-types': 'error',
+    'react-hooks/exhaustive-deps': 'off', // quitar esta linea mas adelante
+    '@next/next/no-img-element': 'off' // quitar esta linea mas adelante
   },
+  globals: {
+    process: true
+  },
+  plugins: ['react'],
   settings: {
     react: {
       version: 'detect'
     }
-  },
-  globals: {
-    process: true
   }
 };
