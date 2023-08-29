@@ -1,3 +1,4 @@
+// Archivo src\components\Profile\Achievements.js
 const people = [
   {
     name: 'Leslie Alexander',

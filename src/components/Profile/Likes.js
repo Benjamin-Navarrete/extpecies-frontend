@@ -1,3 +1,4 @@
+// Archivo src\components\Profile\Likes.js
 import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/20/solid';
 
 const people = [
@@ -14,11 +15,10 @@ const people = [
 ];
 
 export default function Likes() {
-  console.log('people', people);
   return (
     <ul
       role="list"
-      className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+      className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
     >
       {people.map(person => (
         <li

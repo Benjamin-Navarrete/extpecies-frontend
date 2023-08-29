@@ -17,7 +17,6 @@ module.exports = {
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
     'no-unused-vars': 'error',
     'no-console': 'error',
-    'react/prop-types': 'error',
     'react-hooks/exhaustive-deps': 'off', // quitar esta linea mas adelante
     '@next/next/no-img-element': 'off' // quitar esta linea mas adelante
   },
