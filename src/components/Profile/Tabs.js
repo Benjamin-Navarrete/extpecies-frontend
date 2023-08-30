@@ -21,7 +21,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Example() {
+export default function Tabs() {
   const [currentTab, setCurrentTab] = useState(0);
   const [content, setContent] = useState(null);
 

@@ -1,24 +1,19 @@
-import { useState } from 'react';
-import { Switch } from '@headlessui/react';
+// Archivo src\pages\settings.js
+import React, { useState } from 'react';
 import {
   LockClosedIcon,
   KeyIcon,
   UserCircleIcon
 } from '@heroicons/react/24/outline';
 import DefaultLayout from '@/layouts/DefaultLayout';
-
-const user = {
-  name: 'Debbie Lewis',
-  handle: 'deblewis',
-  email: 'debbielewis@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=320&h=320&q=80'
-};
+import ProfileSettings from '@/components/Profile/ProfileSettings';
+import Security from '@/components/Profile/Security';
+import ChangePassword from '@/components/Profile/ChangePassword';
 
 const subNavigation = [
-  { name: 'Perfil', href: '#', icon: UserCircleIcon, current: true },
-  { name: 'Seguridad', href: '#', icon: LockClosedIcon, current: false },
-  { name: 'Contraseña', href: '#', icon: KeyIcon, current: false }
+  { name: 'Perfil', icon: UserCircleIcon, component: <ProfileSettings /> },
+  { name: 'Seguridad', icon: LockClosedIcon, component: <Security /> },
+  { name: 'Contraseña', icon: KeyIcon, component: <ChangePassword /> }
 ];
 
 function classNames(...classes) {
@@ -26,10 +21,16 @@ function classNames(...classes) {
 }
 
 export default function Example() {
-  const [availableToHire, setAvailableToHire] = useState(true);
-  const [privateAccount, setPrivateAccount] = useState(false);
-  const [allowCommenting, setAllowCommenting] = useState(true);
-  const [allowMentions, setAllowMentions] = useState(true);
+  // Estado del tab actual
+  const [currentTab, setCurrentTab] = useState(0);
+
+  // Función para cambiar el tab actual
+  const handleTabClick = index => {
+    setCurrentTab(index);
+  };
+
+  // Componente que se va a renderizar
+  const content = subNavigation[currentTab].component;
 
   return (
     <DefaultLayout>
@@ -39,21 +40,22 @@ export default function Example() {
             <div className="divide-y divide-gray-200 lg:grid lg:grid-cols-12 lg:divide-y-0 lg:divide-x">
               <aside className="py-6 lg:col-span-3">
                 <nav className="space-y-1">
-                  {subNavigation.map(item => (
+                  {subNavigation.map((item, index) => (
                     <a
                       key={item.name}
-                      href={item.href}
+                      href="#"
                       className={classNames(
-                        item.current
+                        index === currentTab
                           ? 'bg-emerald-50 border-emerald-500 text-emerald-700 hover:bg-emerald-50 hover:text-emerald-700'
                           : 'border-transparent text-gray-900 hover:bg-gray-50 hover:text-gray-900',
                         'group border-l-4 px-3 py-2 flex items-center text-sm font-medium'
                       )}
-                      aria-current={item.current ? 'page' : undefined}
+                      aria-current={index === currentTab ? 'page' : undefined}
+                      onClick={() => handleTabClick(index)}
                     >
                       <item.icon
                         className={classNames(
-                          item.current
+                          index === currentTab
                             ? 'text-emerald-500 group-hover:text-emerald-500'
                             : 'text-gray-400 group-hover:text-gray-500',
                           'flex-shrink-0 -ml-1 mr-3 h-6 w-6'
@@ -65,7 +67,8 @@ export default function Example() {
                   ))}
                 </nav>
               </aside>
-              form
+              {/* Aqui se debe renderizar el componente */}
+              <div className="p-4 lg:col-span-9">{content}</div>
             </div>
           </div>
         </div>
