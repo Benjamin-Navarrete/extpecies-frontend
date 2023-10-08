@@ -1,15 +1,14 @@
 // Archivo src\components\Profile\Likes.js
-import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/20/solid';
+import { HeartIcon, EyeIcon } from '@heroicons/react/20/solid';
 
 const people = [
   {
-    name: 'Jane Cooper',
-    title: 'Paradigm Representative',
-    role: 'Admin',
+    name: 'Especie 1',
+    title: 'Descripción de la especie 1',
+    role: 'Estado de conservación 1',
     email: 'janecooper@example.com',
     telephone: '+1-202-555-0170',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60'
+    imageUrl: 'https://placehold.co/50x50'
   }
   // More people...
 ];
@@ -50,25 +49,25 @@ export default function Likes() {
               <div className="flex w-0 flex-1">
                 <a
                   href={`mailto:${person.email}`}
-                  className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-bl-lg border border-transparent py-4 text-sm font-medium text-gray-700 hover:text-gray-500"
+                  className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-bl-lg border border-transparent py-4 px-2 text-sm font-medium text-gray-700 hover:text-gray-500"
                 >
-                  <EnvelopeIcon
+                  <HeartIcon
                     className="h-5 w-5 text-gray-400"
                     aria-hidden="true"
                   />
-                  <span className="ml-3">Email</span>
+                  <span className="ml-3">Me gusta</span>
                 </a>
               </div>
               <div className="-ml-px flex w-0 flex-1">
                 <a
                   href={`tel:${person.telephone}`}
-                  className="relative inline-flex w-0 flex-1 items-center justify-center rounded-br-lg border border-transparent py-4 text-sm font-medium text-gray-700 hover:text-gray-500"
+                  className="relative inline-flex w-0 flex-1 items-center justify-center rounded-br-lg border border-transparent py-4 px-2 text-sm font-medium text-gray-700 hover:text-gray-500"
                 >
-                  <PhoneIcon
+                  <EyeIcon
                     className="h-5 w-5 text-gray-400"
                     aria-hidden="true"
                   />
-                  <span className="ml-3">Call</span>
+                  <span className="ml-3">Ver especie</span>
                 </a>
               </div>
             </div>

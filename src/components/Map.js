@@ -13,7 +13,7 @@ import jwtDecode from 'jwt-decode';
 const Map = ({ especies }) => {
   // Agregar estado para el modal y la especie seleccionada
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedSpecies, setSelectedSpecies] = useState(null);
+  const [selectedSpecie, setSelectedSpecie] = useState(null);
 
   // Función para manejar el clic en un marcador
   const handleMarkerClick = async especie => {
@@ -42,7 +42,7 @@ const Map = ({ especies }) => {
       }
 
       // Establecer la especie seleccionada y abrir el modal
-      setSelectedSpecies(especie);
+      setSelectedSpecie(especie);
       setIsModalOpen(true);
     } catch (error) {
       // Mostrar un mensaje de error si algo falla
@@ -117,11 +117,10 @@ const Map = ({ especies }) => {
         {createMarkers()}
       </MapContainer>
 
-      {/* Agregar el SpeciesModal aquí */}
       <SpeciesModal
         isOpen={isModalOpen}
         closeModal={closeModal}
-        especie={selectedSpecies}
+        especie={selectedSpecie}
       />
     </>
   );

@@ -9,7 +9,7 @@ const initialValues = {
   firstName: 'Debbie',
   lastName: 'Lewis',
   email: 'debbielewis@example.com',
-  country: '',
+  country: 'Chile',
   imageUrl: 'https://placehold.co/150x150'
 };
 
@@ -54,7 +54,7 @@ const ProfileSettings = () => {
                     />
                   </div>
                   <div className="ml-5 rounded-md shadow-sm">
-                    <div className="group relative flex items-center justify-center rounded-md border border-gray-300 py-2 px-3 focus-within:ring-2 focus-within:ring-sky-500 focus-within:ring-offset-2 hover:bg-gray-50">
+                    <div className="group relative flex items-center justify-center rounded-md border border-gray-300 py-2 px-3 focus-within:ring-2 focus-within:ring-emerald-500 focus-within:ring-offset-2 hover:bg-gray-50">
                       <label
                         htmlFor="mobile-user-photo"
                         className="pointer-events-none relative text-sm font-medium leading-4 text-gray-700"
@@ -111,7 +111,7 @@ const ProfileSettings = () => {
                     type="text"
                     name="username"
                     id="username"
-                    className="flex-1 focus:ring-sky-500 focus:border-sky-500 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
+                    className="flex-1 focus:ring-emerald-500 focus:border-emerald-500 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                   />
                 </div>
               </div>
@@ -128,7 +128,7 @@ const ProfileSettings = () => {
                     id="about"
                     name="about"
                     rows={3}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm"
                     defaultValue={''}
                   />
                 </div>
@@ -165,7 +165,7 @@ const ProfileSettings = () => {
                 <div className="flex text-sm text-gray-600">
                   <label
                     htmlFor="file-upload"
-                    className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
+                    className="relative cursor-pointer rounded-md bg-white font-medium text-emerald-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-emerald-500 focus-within:ring-offset-2 hover:text-emerald-500"
                   >
                     <span>Sube una imagen</span>
                     <input
@@ -195,7 +195,7 @@ const ProfileSettings = () => {
                 name="firstName"
                 id="first-name"
                 autoComplete="given-name"
-                className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-emerald-500 sm:text-sm"
               />
             </div>
 
@@ -211,7 +211,7 @@ const ProfileSettings = () => {
                 name="email"
                 id="correo"
                 autoComplete="email"
-                className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-emerald-500 sm:text-sm"
               />
             </div>
 
@@ -227,11 +227,12 @@ const ProfileSettings = () => {
                 name="lastName"
                 id="last-name"
                 autoComplete="family-name"
-                className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-emerald-500 sm:text-sm"
               />
             </div>
 
             <div className="col-span-6 sm:col-span-6">
+              {/* // TODO: reemplazar select */}
               <label
                 htmlFor="country"
                 className="block text-sm font-medium text-gray-700"
@@ -243,9 +244,8 @@ const ProfileSettings = () => {
                 name="country"
                 id="country"
                 autoComplete="country"
-                className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-emerald-500 sm:text-sm"
               >
-                <option value="">Selecciona tu país</option>
                 {countries.map(country => (
                   <option key={country.code} value={country.code}>
                     {country.name}
@@ -258,15 +258,15 @@ const ProfileSettings = () => {
           <div className="mt-4 flex justify-end py-4 px-4 sm:px-6">
             <button
               type="button"
-              className="inline-flex justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
+              className="inline-flex justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
             >
-              Cancel
+              Cancelar
             </button>
             <button
               type="submit"
-              className="ml-5 inline-flex justify-center rounded-md border border-transparent bg-sky-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
+              className="ml-5 inline-flex justify-center rounded-md border border-transparent bg-emerald-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
             >
-              Save
+              Guardar
             </button>
           </div>
         </div>

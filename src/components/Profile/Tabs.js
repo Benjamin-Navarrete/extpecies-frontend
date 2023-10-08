@@ -43,7 +43,7 @@ export default function Tabs() {
 
   return (
     <div className="mt-5">
-      <div className="sm:hidden p-4 ">
+      <div className="sm:hidden p-4">
         <h3 className="text-lg py-3 leading-6 font-medium text-gray-900">
           Seleccione una pestaña
         </h3>

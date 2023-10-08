@@ -4,49 +4,49 @@ import React from 'react';
 // Asumo que tienes un objeto JSON con las listas y sus clientes, algo así:
 const lists = [
   {
-    title: 'Latest Customers',
+    title: 'Lista 1',
     customers: [
       {
-        name: 'Neil Sims',
-        email: 'email@windster.com',
-        image: '/docs/images/people/profile-picture-1.jpg',
+        name: 'Especie 1',
+        email: 'Descripción de la especie 1',
+        image: 'https://placehold.co/50x50',
         amount: 320
       },
       {
-        name: 'Bonnie Green',
-        email: 'email@windster.com',
-        image: '/docs/images/people/profile-picture-3.jpg',
-        amount: 3467
+        name: 'Especie 2',
+        email: 'Descripción de la especie 2',
+        image: 'https://placehold.co/50x50',
+        amount: 320
       }
       // ... otros clientes
     ]
   },
   {
-    title: 'Best Customers',
+    title: 'Lista 2',
     customers: [
       {
-        name: 'Lana Byrd',
-        email: 'email@windster.com',
-        image: '/docs/images/people/profile-picture-4.jpg',
-        amount: 367
+        name: 'Especie 1',
+        email: 'Descripción de la especie 1',
+        image: 'https://placehold.co/50x50',
+        amount: 320
       },
       {
-        name: 'Thomes Lean',
-        email: 'email@windster.com',
-        image: '/docs/images/people/profile-picture-5.jpg',
-        amount: 2367
+        name: 'Especie 2',
+        email: 'Descripción de la especie 2',
+        image: 'https://placehold.co/50x50',
+        amount: 320
       }
       // ... otros clientes
     ]
   },
   {
-    title: 'New Customers',
+    title: 'Lista 3',
     customers: [
       {
-        name: 'Michael Gough',
-        email: 'email@windster.com',
-        image: '/docs/images/people/profile-picture-2.jpg',
-        amount: 67
+        name: 'Especie 1',
+        email: 'Descripción de la especie 1',
+        image: 'https://placehold.co/50x50',
+        amount: 320
       }
       // ... otros clientes
     ]
@@ -69,9 +69,9 @@ const Customer = ({ name, email, image, amount }) => {
           <p className="text-sm font-medium text-gray-900 truncate ">{name}</p>
           <p className="text-sm text-gray-500 truncate ">{email}</p>
         </div>
-        <div className="inline-flex items-center text-base font-semibold text-gray-900">
+        {/* <div className="inline-flex items-center text-base font-semibold text-gray-900">
           ${amount}
-        </div>
+        </div> */}
       </div>
     </li>
   );
@@ -89,7 +89,7 @@ const List = ({ title, customers }) => {
           href="#"
           className="text-sm font-medium text-emerald-600 hover:underline "
         >
-          View all
+          Ver completa
         </a>
       </div>
       <div className="flow-root">

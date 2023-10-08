@@ -12,7 +12,7 @@ import ChangePassword from '@/components/Profile/ChangePassword';
 
 const subNavigation = [
   { name: 'Perfil', icon: UserCircleIcon, component: <ProfileSettings /> },
-  { name: 'Seguridad', icon: LockClosedIcon, component: <Security /> },
+  { name: 'Privacidad', icon: LockClosedIcon, component: <Security /> },
   { name: 'Contraseña', icon: KeyIcon, component: <ChangePassword /> }
 ];
 
