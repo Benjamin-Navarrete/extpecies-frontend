@@ -1,7 +1,7 @@
 // Archivo src\hooks\useUsers.js
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify'; // Importar toast
+import { toast } from 'react-toastify';
 
 const useUsers = () => {
   const [data, setData] = useState([]);

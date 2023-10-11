@@ -3,7 +3,6 @@ import { useState } from 'react';
 import QuestionCard from '@/components/QuestionCard';
 import DefaultLayout from '@/layouts/DefaultLayout';
 import preguntas from '@/data/preguntas.json';
-// Importamos el paquete de sweet alerts
 import Swal from 'sweetalert2';
 
 const Test = () => {

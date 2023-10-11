@@ -3,12 +3,12 @@ import InputField from '@/components/Inputs/InputField';
 import SocialLoginButton from '@/components/SocialLoginButton';
 import DefaultLayout from '@/layouts/DefaultLayout';
 import { FaFacebook, FaTwitter, FaGithub } from 'react-icons/fa';
-import * as Yup from 'yup'; // Importar yup
-import axios from 'axios'; // Importar axios
-import Cookies from 'js-cookie'; // Importar js-cookie
-import { Formik, Form } from 'formik'; // Importar Formik y Form
-import { toast } from 'react-toastify'; // Importar toast
-import { useRouter } from 'next/router'; // Importar useRouter
+import * as Yup from 'yup';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { Formik, Form } from 'formik';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 export default function Login() {
   const router = useRouter();

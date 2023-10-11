@@ -7,8 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import DefaultLayout from '@/layouts/DefaultLayout';
 import HistoryTable from '@/components/Tables/HistoryTable';
-import axios from 'axios'; // Importar axios
-import jwtDecode from 'jwt-decode'; // Importar jwt-decode
+import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 
 const HistoryPage = () => {
   const router = useRouter();
