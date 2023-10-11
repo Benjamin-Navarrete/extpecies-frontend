@@ -37,7 +37,7 @@ const About = () => {
             />
           </div>
         </div>
-        <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+        <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
         <div className="gap-16 items-center py-4 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2  lg:px-6">
           <div className="font-light text-gray-500 sm:text-lg dark:text-gray-400">
             <h2 className="mt-5 text-2xl font-bold tracking-tight text-gray-900 sm:mt-10 sm:text-6xl">
@@ -59,31 +59,31 @@ const About = () => {
               amenazas. Existen 3 grandes categorías de conservación, con varias
               subcategorías:
             </p>
-            <ul class="space-y-4 text-gray-500 list-disc list-inside">
+            <ul className="space-y-4 text-gray-500 list-disc list-inside">
               <li>
                 <span className="font-semibold">Bajo Riesgo</span>
-                <ul class="pl-5 mt-2 space-y-1 list-inside">
-                  <div class="flex items-center space-x-4">
-                    <div class="flex-shrink-0">
+                <ul className="pl-5 mt-2 space-y-1 list-inside">
+                  <div className="flex items-center space-x-4">
+                    <div className="flex-shrink-0">
                       <img
-                        class="w-8 h-8 rounded-full"
+                        className="w-8 h-8 rounded-full"
                         src="/img/categoriasConservacion/LC.png"
                         alt="Least Concern"
                       />
                     </div>
-                    <div class="flex-1 min-w-0">
+                    <div className="flex-1 min-w-0">
                       <li>Preocupación Menor (LC)</li>
                     </div>
                   </div>
-                  <div class="flex items-center space-x-4">
-                    <div class="flex-shrink-0">
+                  <div className="flex items-center space-x-4">
+                    <div className="flex-shrink-0">
                       <img
-                        class="w-8 h-8 rounded-full"
+                        className="w-8 h-8 rounded-full"
                         src="/img/categoriasConservacion/NT.png"
                         alt="Near Threatened"
                       />
                     </div>
-                    <div class="flex-1 min-w-0">
+                    <div className="flex-1 min-w-0">
                       <li>Casi amenazada (NT)</li>
                     </div>
                   </div>
@@ -91,40 +91,40 @@ const About = () => {
               </li>
               <li>
                 <span className="font-semibold">Amenazada</span>
-                <ul class="pl-5 mt-2 space-y-1 list-inside">
-                  <div class="flex items-center space-x-4">
-                    <div class="flex-shrink-0">
+                <ul className="pl-5 mt-2 space-y-1 list-inside">
+                  <div className="flex items-center space-x-4">
+                    <div className="flex-shrink-0">
                       <img
-                        class="w-8 h-8 rounded-full"
+                        className="w-8 h-8 rounded-full"
                         src="/img/categoriasConservacion/VU.png"
                         alt="Vulnerable"
                       />
                     </div>
-                    <div class="flex-1 min-w-0">
+                    <div className="flex-1 min-w-0">
                       <li>Vulnerable (VU)</li>
                     </div>
                   </div>
-                  <div class="flex items-center space-x-4">
-                    <div class="flex-shrink-0">
+                  <div className="flex items-center space-x-4">
+                    <div className="flex-shrink-0">
                       <img
-                        class="w-8 h-8 rounded-full"
+                        className="w-8 h-8 rounded-full"
                         src="/img/categoriasConservacion/EN.png"
                         alt="Endangered"
                       />
                     </div>
-                    <div class="flex-1 min-w-0">
+                    <div className="flex-1 min-w-0">
                       <li>En peligro (EN)</li>
                     </div>
                   </div>
-                  <div class="flex items-center space-x-4">
-                    <div class="flex-shrink-0">
+                  <div className="flex items-center space-x-4">
+                    <div className="flex-shrink-0">
                       <img
-                        class="w-8 h-8 rounded-full"
+                        className="w-8 h-8 rounded-full"
                         src="/img/categoriasConservacion/CR.png"
                         alt="Critically Endangered"
                       />
                     </div>
-                    <div class="flex-1 min-w-0">
+                    <div className="flex-1 min-w-0">
                       <li>En peligro crítico (CR)</li>
                     </div>
                   </div>
@@ -132,28 +132,28 @@ const About = () => {
               </li>
               <li>
                 <span className="font-semibold">Extinta</span>
-                <ul class="pl-5 mt-2 space-y-1 list-inside">
-                  <div class="flex items-center space-x-4">
-                    <div class="flex-shrink-0">
+                <ul className="pl-5 mt-2 space-y-1 list-inside">
+                  <div className="flex items-center space-x-4">
+                    <div className="flex-shrink-0">
                       <img
-                        class="w-8 h-8 rounded-full"
+                        className="w-8 h-8 rounded-full"
                         src="/img/categoriasConservacion/EW.png"
                         alt="Extinct in the Wild"
                       />
                     </div>
-                    <div class="flex-1 min-w-0">
+                    <div className="flex-1 min-w-0">
                       <li>Extinta en estado silvestre (EW)</li>
                     </div>
                   </div>
-                  <div class="flex items-center space-x-4">
-                    <div class="flex-shrink-0">
+                  <div className="flex items-center space-x-4">
+                    <div className="flex-shrink-0">
                       <img
-                        class="w-8 h-8 rounded-full"
+                        className="w-8 h-8 rounded-full"
                         src="/img/categoriasConservacion/EX.png"
                         alt="Extinct"
                       />
                     </div>
-                    <div class="flex-1 min-w-0">
+                    <div className="flex-1 min-w-0">
                       <li>Extinta (EX)</li>
                     </div>
                   </div>
