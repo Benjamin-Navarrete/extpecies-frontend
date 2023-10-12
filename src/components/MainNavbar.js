@@ -9,8 +9,12 @@ import jwtDecode from 'jwt-decode';
 import { toast } from 'react-toastify';
 import classnames from 'classnames';
 
+// Importar los iconos desde las librerías externas
 import { UserCircleIcon } from '@heroicons/react/24/outline';
 
+import { useQuery, useQueryClient } from 'react-query';
+
+// Definir las rutas del menú con sus nombres, urls y permisos
 const routes = [
   { name: 'Inicio', url: '/', permiso: null },
   { name: 'Mapa', url: '/map', permiso: null },
@@ -29,47 +33,76 @@ const routes = [
   }
 ];
 
+// Crear el componente MainNavbar que renderiza la barra de navegación principal
 export default function MainNavbar() {
+  // Obtener la instancia del enrutador de next.js
   const router = useRouter();
+  const queryClient = useQueryClient();
 
+  // Se extraen los datos del usuario con useQuery para utilizar en el menú
+  const { data: usuario } = useQuery('usuario');
+
+  // Crear una función que verifica si una ruta está activa según la ruta actual
   const isActive = href => router.pathname === href;
 
+  // Crear una función que devuelve las clases css para los enlaces según si están activos o no
   const linkClasses = isActive =>
     isActive
       ? 'inline-flex items-center border-b-2 border-emerald-500 px-1 pt-1 text-sm font-medium text-gray-900'
       : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700';
 
+  // Crear un estado para almacenar los permisos del usuario
   const [permisos, setPermisos] = useState([]);
 
+  // Crear un estado para verificar si el usuario está autenticado o no
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // Crear un estado para verificar si el componente está cargando o no
   const [isLoading, setIsLoading] = useState(true);
 
+  // Crear un efecto que se ejecuta cuando se monta el componente
   useEffect(() => {
+    // Obtener el token desde las cookies
     const token = Cookies.get('token');
     if (token) {
+      // Decodificar el token y obtener los permisos del usuario
       const decodedToken = jwtDecode(token);
       setPermisos(decodedToken.permisos || []);
+      // Actualizar el estado de autenticación a verdadero
       setIsAuthenticated(true);
     } else {
+      // Actualizar el estado de autenticación a falso
       setIsAuthenticated(false);
     }
-    // Cuando termine de cargar los permisos, actualiza el estado de carga
+    // Cuando termine de cargar los permisos, actualiza el estado de carga a falso
     setIsLoading(false);
   }, []);
 
-  // En la sección de renderizado
-  if (isLoading) {
-    return <p>Cargando...</p>; // Aquí puedes renderizar un spinner de carga o algo similar
-  }
-
+  // Crear una función para manejar el cierre de sesión del usuario
   const handleLogout = () => {
+    // Eliminar el token de las cookies
     Cookies.remove('token');
+    // Actualizar el estado de autenticación a falso
     setIsAuthenticated(false);
+    // Vaciar el estado de permisos
     setPermisos([]);
+
+    // Remover datos de usuario
+    queryClient.removeQueries('usuario');
+
+    // Mostrar un mensaje de éxito
     toast.success('Sesión cerrada con éxito');
+    // Redirigir al usuario a la página de inicio
     router.push('/');
   };
 
+  // En la sección de renderizado
+  if (isLoading) {
+    // Si el componente está cargando, mostrar un mensaje o un spinner
+    return <p>Cargando...</p>;
+  }
+
+  // Retornar el componente que renderiza la barra de navegación con los componentes de headless ui y heroicons
   return (
     <Disclosure as="nav" className="bg-white shadow">
       {({ open }) => (
@@ -101,12 +134,14 @@ export default function MainNavbar() {
                   />
                 </div>
                 <div className="hidden md:ml-6 md:flex md:space-x-8">
+                  {/* Iterar sobre las rutas del menú y filtrar las que tienen permiso o no requieren permiso */}
                   {routes
                     .filter(
                       route =>
                         !route.permiso || permisos.includes(route.permiso)
                     )
                     .map(route => (
+                      // Renderizar un enlace con el nombre y la url de la ruta, usando las clases css según si está activa o no
                       <Link
                         key={route.url}
                         href={route.url}
@@ -118,8 +153,10 @@ export default function MainNavbar() {
                 </div>
               </div>
               <div className="flex items-center">
+                {/* Verificar si el usuario no está autenticado */}
                 {!isAuthenticated ? (
                   <>
+                    {/* Renderizar los botones de registrarse y login */}
                     <div className="flex-shrink-0">
                       <Link href="/register">
                         <button
@@ -148,7 +185,8 @@ export default function MainNavbar() {
                       <div>
                         <Menu.Button className="flex rounded-full items-center bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                           <span className="text-sm font-medium text-gray-600 mr-3">
-                            Administrador
+                            {/* Reemplazar el texto "Administrador" por el nombre del usuario o un texto por defecto */}
+                            {usuario ? usuario.nombres : 'Usuario'}
                           </span>
                           <span className="sr-only">Open user menu</span>
                           <UserCircleIcon className="h-8 w-8 text-gray-600" />
