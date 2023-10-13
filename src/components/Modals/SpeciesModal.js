@@ -1,9 +1,13 @@
 // src/components/SpeciesModal.js
 import { Dialog, Transition, Listbox } from '@headlessui/react';
 import { Fragment, useState } from 'react';
+import { Tooltip } from 'react-tooltip';
 import {
   FaceSmileIcon as FaceSmileIconOutline,
-  PaperClipIcon
+  PaperClipIcon,
+  HeartIcon as HeartIconOutline,
+  DocumentPlusIcon,
+  LinkIcon
 } from '@heroicons/react/24/outline';
 
 import {
@@ -60,11 +64,6 @@ const moods = [
   }
 ];
 
-const stats = [
-  { label: 'Me gusta', value: 12 },
-  { label: 'Comentarios', value: 5 },
-  { label: 'Añadir a lista', value: null }
-];
 const announcements = [
   {
     id: 1,
@@ -149,7 +148,7 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
                       {/* Left column */}
                       <div className="grid grid-cols-1 gap-4 lg:col-span-2">
                         {/* Welcome panel */}
-                        <div className="overflow-hidden rounded-lg bg-white shadow">
+                        <div className="overflow-hidden mt-1 rounded-lg bg-white shadow">
                           <h2 className="sr-only" id="profile-overview-title">
                             Profile Overview
                           </h2>
@@ -184,21 +183,6 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
                                 </a>
                               </div> */}
                             </div>
-                          </div>
-                          <div className="grid grid-cols-1 divide-y divide-gray-200 border-t border-gray-200 bg-white sm:grid-cols-3 sm:divide-y-0 sm:divide-x">
-                            {stats.map(stat => (
-                              <div
-                                key={stat.label}
-                                className="px-6 py-5 text-center text-sm font-medium"
-                              >
-                                <span className="text-gray-900">
-                                  {stat.value}
-                                </span>{' '}
-                                <span className="text-gray-600">
-                                  {stat.label}
-                                </span>
-                              </div>
-                            ))}
                           </div>
                         </div>
 
@@ -268,8 +252,42 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
 
                       {/* Right column */}
                       <div className="grid grid-cols-1 gap-4">
+                        <div className="grid grid-cols-1 divide-y divide-gray-200 mt-1 border-separate border-gray-200 rounded-lg bg-white shadow sm:grid-cols-3 sm:divide-y-0 sm:divide-x">
+                          {/* Opciones arriba de los comentarios */}
+                          <div className="px-6 py-5 text-center text-sm font-medium ">
+                            <HeartIconOutline
+                              className="h-7 w-7 mx-auto"
+                              data-tooltip-id="tooltip-id"
+                              data-tooltip-content="Dar me gusta"
+                              data-tooltip-place="top"
+                            />
+                            <span className="text-gray-900">12 Me gusta</span>
+                          </div>
+                          <div className="px-6 py-5 text-center text-sm font-medium">
+                            <DocumentPlusIcon
+                              className="h-7 w-7 mx-auto"
+                              data-tooltip-id="tooltip-id"
+                              data-tooltip-content="Añadir a lista"
+                              data-tooltip-place="top"
+                            />
+                            <span className="text-gray-900">
+                              Añadir a lista
+                            </span>
+                          </div>
+                          <div className="px-6 py-5 text-center text-sm font-medium">
+                            <LinkIcon
+                              className="h-7 w-7 mx-auto"
+                              data-tooltip-id="tooltip-id"
+                              data-tooltip-content="Copiar enlace"
+                              data-tooltip-place="top"
+                            />
+                            <span className="text-gray-900">Copiar enlace</span>
+                          </div>
+
+                          <Tooltip id="tooltip-id" />
+                        </div>
                         {/* Escribir comentario */}
-                        <div className="flex items-start space-x-4">
+                        <div className="flex items-start space-x-4 p-2 rounded-lg bg-white shadow">
                           <div className="min-w-full flex-1 pt-2">
                             <form action="#">
                               <div className="border-b border-gray-200 focus-within:border-emerald-600">
@@ -416,7 +434,7 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
                               className="text-base font-medium text-gray-900"
                               id="announcements-title"
                             >
-                              Comentarios
+                              Comentarios (5)
                             </h2>
                             <div className="mt-6 flow-root">
                               <ul
