@@ -9,8 +9,9 @@ import SpeciesModal from './Modals/SpeciesModal';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import jwtDecode from 'jwt-decode';
+import { toast } from 'react-toastify';
 
-const Map = ({ especies }) => {
+const Map = ({ especies, isLoading, isError }) => {
   // Agregar estado para el modal y la especie seleccionada
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSpecie, setSelectedSpecie] = useState(null);
@@ -45,8 +46,8 @@ const Map = ({ especies }) => {
       setSelectedSpecie(especie);
       setIsModalOpen(true);
     } catch (error) {
-      // Mostrar un mensaje de error si algo falla
-      console.error('Error al guardar el historial: ', error);
+      // Mostrar un toast de error si algo falla
+      toast.error('Ha ocurrido un error al obtener el historial: ', error);
     }
   };
 
@@ -100,6 +101,17 @@ const Map = ({ especies }) => {
       }
     });
   };
+
+  // Verificar si los datos están cargando o si hay un error
+  if (isLoading) {
+    // Mostrar un mensaje o un spinner de carga
+    return <p>Cargando...</p>;
+  }
+
+  if (isError) {
+    // Mostrar un mensaje de error
+    return <p>Ha ocurrido un error al obtener las especies</p>;
+  }
 
   return (
     <>

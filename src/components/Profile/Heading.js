@@ -1,4 +1,5 @@
 import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/20/solid';
+import { useQuery } from 'react-query';
 
 const profile = {
   name: 'Ricardo Cooper',
@@ -18,6 +19,9 @@ const profile = {
 };
 
 export default function ProfileHeading() {
+  // Se extraen los datos del usuario con useQuery para utilizar en el menú
+  const { data: usuario } = useQuery('usuario');
+
   return (
     <div>
       <div>
@@ -39,7 +43,7 @@ export default function ProfileHeading() {
           <div className="mt-6 sm:flex sm:min-w-0 sm:flex-1 sm:items-center sm:justify-end sm:space-x-6 sm:pb-1">
             <div className="mt-6 min-w-0 flex-1 sm:hidden md:block">
               <h1 className="truncate text-2xl font-bold text-gray-900">
-                {profile.name}
+                {usuario.nombres} {usuario.apellidos}
               </h1>
             </div>
             <div className="justify-stretch text-gray-600 mt-8 flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4">

@@ -2,31 +2,34 @@
 import MapLayout from '@/layouts/MapLayout';
 import dynamic from 'next/dynamic';
 import DefaultLayout from '@/layouts/DefaultLayout';
-import axios from 'axios';
+import { getEspecies } from '@/api/specieApi';
+
+// Importar useQuery desde react-query
+import { useQuery } from 'react-query';
 
 const Map = dynamic(() => import('../components/Map'), { ssr: false });
 
-function MapPage({ especies }) {
+function MapPage() {
+  // Crear una consulta para obtener las especies desde el servidor
+  const {
+    data: especies,
+    isLoading,
+    isError
+  } = useQuery('especies', () =>
+    // Obtener las especies desde el servidor
+    getEspecies()
+  );
+
   return (
     <DefaultLayout>
       <MapLayout>
         <div className="w-full h-full">
-          <Map especies={especies} />
+          {/* Pasar el prop especies al componente Map */}
+          <Map especies={especies} isLoading={isLoading} isError={isError} />
         </div>
       </MapLayout>
     </DefaultLayout>
   );
-}
-
-export async function getServerSideProps() {
-  let especies = [];
-  try {
-    const response = await axios.get('http://localhost:3500/api/especies');
-    especies = response.data;
-  } catch (error) {
-    console.error('Error obteniendo las especies: ', error);
-  }
-  return { props: { especies } };
 }
 
 export default MapPage;
