@@ -125,6 +125,13 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
     detallesAmenazas = ''
   } = especie;
 
+  const [liked, setLiked] = useState(false);
+  const [added, setAdded] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [tooltipContent, setTooltipContent] = useState('Dar me gusta');
+  const [tooltipContent2, setTooltipContent2] = useState('Añadir a lista');
+  const [tooltipContent3, setTooltipContent3] = useState('Copiar enlace');
+
   return (
     <Transition show={isOpen} as={Fragment}>
       <Dialog
@@ -255,32 +262,88 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
                         <div className="grid grid-cols-1 divide-y divide-gray-200 mt-1 border-separate border-gray-200 rounded-lg bg-white shadow sm:grid-cols-3 sm:divide-y-0 sm:divide-x">
                           {/* Opciones arriba de los comentarios */}
                           <div className="px-6 py-5 text-center text-sm font-medium ">
-                            <HeartIconOutline
-                              className="h-7 w-7 mx-auto"
-                              data-tooltip-id="tooltip-id"
-                              data-tooltip-content="Dar me gusta"
-                              data-tooltip-place="top"
-                            />
+                            {liked ? (
+                              <HeartIconOutline
+                                className="h-7 w-7 mx-auto text-gray-900"
+                                data-tooltip-id="tooltip-id"
+                                data-tooltip-content={tooltipContent}
+                                data-tooltip-place="top"
+                                onClick={() => {
+                                  setLiked(!liked);
+                                  setTooltipContent(
+                                    liked ? 'Quitar me gusta' : 'Dar me gusta'
+                                  );
+                                }}
+                              />
+                            ) : (
+                              <HeartIcon
+                                className="h-7 w-7 mx-auto text-red-500"
+                                data-tooltip-id="tooltip-id"
+                                data-tooltip-content={tooltipContent}
+                                data-tooltip-place="top"
+                                onClick={() => {
+                                  setLiked(!liked);
+                                  setTooltipContent(
+                                    liked ? 'Quitar me gusta' : 'Dar me gusta'
+                                  );
+                                }}
+                              />
+                            )}
                             <span className="text-gray-900">12 Me gusta</span>
                           </div>
                           <div className="px-6 py-5 text-center text-sm font-medium">
-                            <DocumentPlusIcon
-                              className="h-7 w-7 mx-auto"
-                              data-tooltip-id="tooltip-id"
-                              data-tooltip-content="Añadir a lista"
-                              data-tooltip-place="top"
-                            />
+                            {added ? (
+                              <DocumentPlusIcon
+                                className="h-7 w-7 mx-auto text-gray-900"
+                                data-tooltip-id="tooltip-id"
+                                data-tooltip-content={tooltipContent2}
+                                data-tooltip-place="top"
+                                onClick={() => {
+                                  setAdded(!added);
+                                  setTooltipContent2(
+                                    added ? 'Quitar de lista' : 'Añadir a lista'
+                                  );
+                                }}
+                              />
+                            ) : (
+                              <XMarkIcon
+                                className="h-7 w-7 mx-auto text-red-500"
+                                data-tooltip-id="tooltip-id"
+                                data-tooltip-content={tooltipContent2}
+                                data-tooltip-place="top"
+                                onClick={() => {
+                                  setAdded(!added);
+                                  setTooltipContent2(
+                                    added ? 'Quitar de lista' : 'Añadir a lista'
+                                  );
+                                }}
+                              />
+                            )}
                             <span className="text-gray-900">
                               Añadir a lista
                             </span>
                           </div>
                           <div className="px-6 py-5 text-center text-sm font-medium">
                             <LinkIcon
-                              className="h-7 w-7 mx-auto"
+                              className={`h-7 w-7 mx-auto text-center text-sm font-medium ${
+                                !copied ? 'text-gray-900' : 'text-green-500'
+                              }`}
                               data-tooltip-id="tooltip-id"
-                              data-tooltip-content="Copiar enlace"
+                              data-tooltip-content={tooltipContent3}
                               data-tooltip-place="top"
+                              onClick={() => {
+                                // Aquí puedes usar alguna función para copiar el enlace al portapapeles
+                                // Por ejemplo, puedes usar la API de Clipboard que puedes leer aquí: https://developer.mozilla.org/es/docs/Web/API/Clipboard_API
+                                navigator.clipboard.writeText(
+                                  'https://www.example.com/post/123'
+                                );
+                                setCopied(!copied);
+                                setTooltipContent3(
+                                  copied ? 'Copiar enlace' : 'Copiado'
+                                );
+                              }}
                             />
+
                             <span className="text-gray-900">Copiar enlace</span>
                           </div>
 
