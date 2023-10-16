@@ -6,45 +6,36 @@ import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import 'leaflet-defaulticon-compatibility';
 import { useState } from 'react';
 import SpeciesModal from './Modals/SpeciesModal';
-import axios from 'axios';
-import Cookies from 'js-cookie';
-import jwtDecode from 'jwt-decode';
+import { useQuery } from 'react-query';
+import { getEspecieById } from '@/api/specieApi';
+
 import { toast } from 'react-toastify';
 
 const Map = ({ especies, isLoading, isError }) => {
-  // Agregar estado para el modal y la especie seleccionada
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedSpecie, setSelectedSpecie] = useState(null);
+  // // Agregar estado para el modal y la especie seleccionada
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  // Agregar estado para el id de la especie seleccionada
+  const [selectedSpecieId, setSelectedSpecieId] = useState(null);
+
+  // Crear una consulta para obtener los detalles de la especie seleccionada por id
+  const {
+    data: selectedSpecie,
+    isLoading: isLoadingSpecie,
+    isError: isErrorSpecie
+  } = useQuery(
+    ['especie', selectedSpecieId],
+    () => getEspecieById(selectedSpecieId),
+    {
+      // Deshabilitar la consulta si el id es nulo
+      enabled: selectedSpecieId !== null
+    }
+  );
 
   // Función para manejar el clic en un marcador
   const handleMarkerClick = async especie => {
     try {
-      // Obtener el token desde la cookie
-      const token = Cookies.get('token');
-
-      // Verificar si el token existe
-      if (token) {
-        // Decodificar el token y obtener el id del usuario
-        const { id } = jwtDecode(token);
-
-        // Crear un objeto con los datos del historial
-        const historial = {
-          usuarioId: id,
-          fecha: new Date().toLocaleDateString(),
-          hora: new Date().toLocaleTimeString(),
-          especie: `${especie.nombreComun} (${especie.nombreCientifico})`,
-          informacion: `${especie.reino}, ${especie.familia}, ${especie.estadoConservacion}, ${especie.descripcionGeografica}, ${especie.detallesAmenazas}`
-        };
-
-        // Enviar una petición al servidor para guardar el historial con el token en el header
-        await axios.post('http://localhost:3500/api/historial', historial, {
-          headers: { 'x-access-token': token }
-        });
-      }
-
-      // Establecer la especie seleccionada y abrir el modal
-      setSelectedSpecie(especie);
-      setIsModalOpen(true);
+      // Establecer el id de la especie seleccionada
+      setSelectedSpecieId(especie.id);
     } catch (error) {
       // Mostrar un toast de error si algo falla
       toast.error('Ha ocurrido un error al obtener el historial: ', error);
@@ -53,7 +44,10 @@ const Map = ({ especies, isLoading, isError }) => {
 
   // Función para cerrar el modal
   const closeModal = () => {
-    setIsModalOpen(false);
+    // // Cerrar modal
+    // setIsModalOpen(false);
+    // Limpiar el id de la especie seleccionada
+    setSelectedSpecieId(null);
   };
 
   // Función para crear un icono personalizado con la imagen de la especie
@@ -66,12 +60,11 @@ const Map = ({ especies, isLoading, isError }) => {
       className: 'rounded-full shadow-lg bg-white' // Agregar una clase para el icono circular
     });
   };
+
   // Función para crear un marcador por cada especie
   const createMarkers = () => {
-    // Convertir el objeto json en un array de valores
-    const especiesArray = Object.values(especies);
-    // Iterar sobre el array y crear un marcador por cada elemento
-    return especiesArray.map((especie, index) => {
+    // Iterar sobre el objeto de especies y crear un marcador por cada elemento
+    return Object.entries(especies).map(([id, especie]) => {
       // Verificar si la especie tiene latitud y longitud definidas
       if (especie.latitud && especie.longitud) {
         // Crear un icono personalizado con la imagen de la especie
@@ -82,7 +75,7 @@ const Map = ({ especies, isLoading, isError }) => {
           <Marker
             position={[especie.latitud, especie.longitud]}
             icon={icon}
-            key={index}
+            key={id}
             eventHandlers={{
               click: () => handleMarkerClick(especie)
             }}
@@ -129,10 +122,14 @@ const Map = ({ especies, isLoading, isError }) => {
         {createMarkers()}
       </MapContainer>
 
+      {/* Pasar el prop selectedSpecie al componente SpeciesModal */}
+
       <SpeciesModal
-        isOpen={isModalOpen}
+        isOpen={selectedSpecieId !== null}
         closeModal={closeModal}
         especie={selectedSpecie}
+        isLoading={isLoadingSpecie}
+        isError={isErrorSpecie}
       />
     </>
   );
