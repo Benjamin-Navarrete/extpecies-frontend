@@ -4,18 +4,29 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
 import 'leaflet-defaulticon-compatibility';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SpeciesModal from './Modals/SpeciesModal';
 import { useQuery } from 'react-query';
 import { getEspecieById } from '@/api/specieApi';
 
+// Importar useRouter desde next/router
+import { useRouter } from 'next/router';
+
 import { toast } from 'react-toastify';
 
-const Map = ({ especies, isLoading, isError }) => {
-  // // Agregar estado para el modal y la especie seleccionada
-  // const [isModalOpen, setIsModalOpen] = useState(false);
+const Map = ({ especies, isLoading, isError, initialSpecie }) => {
+  // Usar useRouter para obtener el objeto router
+  const router = useRouter();
   // Agregar estado para el id de la especie seleccionada
   const [selectedSpecieId, setSelectedSpecieId] = useState(null);
+
+  useEffect(() => {
+    // Verificar si el parámetro de consulta initialSpecie está definido
+    if (initialSpecie) {
+      // Actualizar el estado con el id de la especie seleccionada
+      setSelectedSpecieId(initialSpecie);
+    }
+  }, [initialSpecie]);
 
   // Crear una consulta para obtener los detalles de la especie seleccionada por id
   const {
@@ -34,8 +45,11 @@ const Map = ({ especies, isLoading, isError }) => {
   // Función para manejar el clic en un marcador
   const handleMarkerClick = async especie => {
     try {
-      // Establecer el id de la especie seleccionada
       setSelectedSpecieId(especie.id);
+      // Usar el método push del router para actualizar la URL con el id de la especie seleccionada
+      router.push(`/map?especieId=${especie.id}`, undefined, {
+        shallow: true
+      });
     } catch (error) {
       // Mostrar un toast de error si algo falla
       toast.error('Ha ocurrido un error al obtener el historial: ', error);
@@ -44,10 +58,11 @@ const Map = ({ especies, isLoading, isError }) => {
 
   // Función para cerrar el modal
   const closeModal = () => {
-    // // Cerrar modal
-    // setIsModalOpen(false);
-    // Limpiar el id de la especie seleccionada
     setSelectedSpecieId(null);
+    // Usar el método replace del router para eliminar el parámetro de consulta de la URL
+    router.replace('/map', undefined, {
+      shallow: true
+    });
   };
 
   // Función para crear un icono personalizado con la imagen de la especie
@@ -123,6 +138,7 @@ const Map = ({ especies, isLoading, isError }) => {
       </MapContainer>
 
       {/* Pasar el prop selectedSpecie al componente SpeciesModal */}
+      {/* Usar el prop selectedSpecieId para determinar si el modal está abierto o no */}
 
       <SpeciesModal
         isOpen={selectedSpecieId !== null}
