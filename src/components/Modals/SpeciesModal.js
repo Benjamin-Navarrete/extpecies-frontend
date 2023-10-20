@@ -177,7 +177,9 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
           // Actualizar la variable de estado con false, indicando que no hay like
           setLiked(false);
         }
-      }
+      },
+      // Esta opción proporciona un valor inicial para la query mientras se resuelve
+      initialData: null // Un valor null indica que no hay ningún like
     }
   );
 
@@ -193,7 +195,7 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
       // Actualizar la variable de estado con el resultado de la verificación
       setLiked(hasLiked);
     }
-  }, [isOpen]); // El hook se ejecuta solo cuando cambia el valor de isOpen
+  }, [isOpen, userLikes]); // El hook se ejecuta solo cuando cambia el valor de isOpen o de userLikes
 
   // Hook para crear o eliminar un like según el valor de liked
   const { mutate: toggleLike } = useMutation(

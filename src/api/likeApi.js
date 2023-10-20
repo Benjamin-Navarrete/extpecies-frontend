@@ -38,6 +38,5 @@ export const getLikeByUserAndEspecie = async (id_usuario, id_especie) => {
     `likes/users/${id_usuario}/especies/${id_especie}`
   );
 
-  console.log('response', response.data);
   return response.data;
 };
