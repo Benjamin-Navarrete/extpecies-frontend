@@ -13,9 +13,9 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <QueryClientProvider client={queryClient}>
+        <ToastContainer style={{ zIndex: 9999 }} />
         <ReactQueryDevtools initialIsOpen={false} />
         <Component {...pageProps} />
-        <ToastContainer />
       </QueryClientProvider>
     </>
   );

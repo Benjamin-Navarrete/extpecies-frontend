@@ -1,6 +1,6 @@
 // src/components/SpeciesModal.js
 import { Dialog, Transition, Listbox } from '@headlessui/react';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Tooltip } from 'react-tooltip';
 import {
   FaceSmileIcon as FaceSmileIconOutline,
@@ -18,6 +18,14 @@ import {
   HeartIcon,
   XMarkIcon
 } from '@heroicons/react/20/solid';
+import {
+  darLike,
+  getLikeByUserAndEspecie,
+  getLikesCountByEspecie,
+  quitarLike
+} from '@/api/likeApi';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { toast } from 'react-toastify';
 
 const moods = [
   {
@@ -107,17 +115,15 @@ function classNames(...classes) {
 }
 
 const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
-  if (!especie) {
-    especie = {};
-  }
-
-  const [selected, setSelected] = useState(moods[5]);
+  // if (!especie) {
+  //   especie = {};
+  // }
 
   // Usar la desestructuración de objetos para acceder a las propiedades del json
   // y asignar valores por defecto en caso de que no existan
   const {
-    nombreComun = '',
-    nombreCientifico = '',
+    // nombreComun = '',
+    // nombreCientifico = '',
     reino = '',
     familia = '',
     estadoConservacion = '',
@@ -125,19 +131,107 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
     detallesAmenazas = ''
   } = especie;
 
+  const [selected, setSelected] = useState(moods[5]);
   const [liked, setLiked] = useState(false);
   const [added, setAdded] = useState(false);
   const [copied, setCopied] = useState(false);
   const [tooltipContent, setTooltipContent] = useState('Dar me gusta');
   const [tooltipContent2, setTooltipContent2] = useState('Añadir a lista');
   const [tooltipContent3, setTooltipContent3] = useState('Copiar enlace');
+  const queryClient = useQueryClient();
+
+  // Se extraen los datos del usuario con useQuery para utilizar en el menú
+  const { data: usuario } = useQuery('usuario');
+
+  // Hook para obtener la cantidad de likes de la especie
+  const {
+    data: likesCount
+    // isLoading,
+    // error
+  } = useQuery(
+    // El primer argumento es una clave única para identificar la query
+    ['likesCount', especie.id],
+    // El segundo argumento es una función que devuelve una promesa con los datos
+    () => getLikesCountByEspecie(especie.id),
+    // El tercer argumento son opciones para configurar la query
+    {
+      // Esta opción habilita o deshabilita la query según una condición
+      enabled: !!(isOpen && especie.id)
+      // La query solo se ejecutará si el modal está abierto y la especie tiene un id válido
+    }
+  );
+  // Se pueden usar las variables isLoading y error para mostrar un indicador de carga o un mensaje de error si ocurre
+
+  // Hook para obtener los likes del usuario por el id de la especie
+  const { data: userLikes } = useQuery(
+    ['userLikes', usuario?.id, especie.id], // Usar el operador ?. para acceder al id del usuario solo si existe
+    () => getLikeByUserAndEspecie(usuario?.id, especie.id),
+    {
+      enabled: !!(isOpen && usuario && especie.id),
+      // Esta opción configura cuántas veces se intentará reintentar una query si falla
+      retry: 1, // Solo se intentará una vez más después del primer error
+      // Esta opción ejecuta una función cuando la query falla
+      onError: error => {
+        // Si el error es un 404, significa que no se encontró el like
+        if (error.response.status === 404) {
+          // Actualizar la variable de estado con false, indicando que no hay like
+          setLiked(false);
+        }
+      }
+    }
+  );
+
+  // Hook para ejecutar una función cuando se abre el modal
+  useEffect(() => {
+    if (isOpen) {
+      // Verificar si el usuario ya le ha dado like a la especie
+      // La variable userLikes es un objeto con el like del usuario por el id de la especie
+      // Si el objeto es null, significa que no hay ningún like
+      // Si el objeto existe, significa que hay un like
+      const hasLiked = !!userLikes;
+
+      // Actualizar la variable de estado con el resultado de la verificación
+      setLiked(hasLiked);
+    }
+  }, [isOpen]); // El hook se ejecuta solo cuando cambia el valor de isOpen
+
+  // Hook para crear o eliminar un like según el valor de liked
+  const { mutate: toggleLike } = useMutation(
+    // El primer argumento es una función que recibe el valor de liked y devuelve una promesa con los datos
+    liked =>
+      liked
+        ? darLike(usuario.id, especie.id)
+        : quitarLike(usuario.id, especie.id),
+    // El segundo argumento son opciones para configurar la mutación
+    {
+      // Esta opción se ejecuta cuando se resuelve la promesa
+      onSuccess: data => {
+        // Mostrar un mensaje de éxito o error
+        toast.success(
+          `Se ${liked ? 'eliminó' : 'agregó'} el me gusta correctamente`
+        );
+      },
+      // Esta opción se ejecuta cuando se rechaza la promesa
+      onError: error => {
+        toast.error('Ocurrió un error al dar me gusta');
+      },
+      // Esta opción se ejecuta después de onSuccess o onError
+      onSettled: (data, error) => {
+        // Invalidar la caché de la query para refetchear los datos actualizados
+        queryClient.invalidateQueries(['likesCount', especie.id]);
+      }
+    }
+  );
 
   return (
     <Transition show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="fixed inset-0 z-[9999] overflow-y-auto"
-        onClose={closeModal}
+        className="fixed inset-0 z-[9998] overflow-y-auto"
+        onClose={() => {
+          closeModal();
+          setLiked(false);
+        }}
       >
         <div className="min-h-screen px-4 text-center">
           <Dialog.Overlay className="fixed inset-0 bg-black/50" />
@@ -263,33 +357,65 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
                           {/* Opciones arriba de los comentarios */}
                           <div className="px-6 py-5 text-center text-sm font-medium ">
                             {liked ? (
-                              <HeartIconOutline
-                                className="h-7 w-7 mx-auto text-gray-900"
-                                data-tooltip-id="tooltip-id"
-                                data-tooltip-content={tooltipContent}
-                                data-tooltip-place="top"
-                                onClick={() => {
-                                  setLiked(!liked);
-                                  setTooltipContent(
-                                    liked ? 'Quitar me gusta' : 'Dar me gusta'
-                                  );
-                                }}
-                              />
-                            ) : (
                               <HeartIcon
                                 className="h-7 w-7 mx-auto text-red-500"
                                 data-tooltip-id="tooltip-id"
                                 data-tooltip-content={tooltipContent}
                                 data-tooltip-place="top"
                                 onClick={() => {
-                                  setLiked(!liked);
-                                  setTooltipContent(
-                                    liked ? 'Quitar me gusta' : 'Dar me gusta'
-                                  );
+                                  if (usuario) {
+                                    // Invertir el valor de liked
+                                    const newLiked = !liked;
+                                    setLiked(newLiked);
+
+                                    // Cambiar el contenido del tooltip según el nuevo valor de liked
+                                    setTooltipContent(
+                                      newLiked
+                                        ? 'Quitar me gusta'
+                                        : 'Dar me gusta'
+                                    );
+
+                                    // Llamar a la función toggleLike pasándole el nuevo valor de liked
+                                    toggleLike(newLiked);
+                                  } else {
+                                    toast.error(
+                                      'Debes iniciar sesión para dar me gusta'
+                                    );
+                                  }
+                                }}
+                              />
+                            ) : (
+                              <HeartIconOutline
+                                className="h-7 w-7 mx-auto text-gray-900"
+                                data-tooltip-id="tooltip-id"
+                                data-tooltip-content={tooltipContent}
+                                data-tooltip-place="top"
+                                onClick={() => {
+                                  if (usuario) {
+                                    // Invertir el valor de liked
+                                    const newLiked = !liked;
+                                    setLiked(newLiked);
+
+                                    // Cambiar el contenido del tooltip según el nuevo valor de liked
+                                    setTooltipContent(
+                                      newLiked
+                                        ? 'Quitar me gusta'
+                                        : 'Dar me gusta'
+                                    );
+
+                                    // Llamar a la función toggleLike pasándole el nuevo valor de liked
+                                    toggleLike(newLiked);
+                                  } else {
+                                    toast.error(
+                                      'Debes iniciar sesión para dar me gusta'
+                                    );
+                                  }
                                 }}
                               />
                             )}
-                            <span className="text-gray-900">12 Me gusta</span>
+                            <span className="text-gray-900">
+                              {likesCount} Me gusta
+                            </span>
                           </div>
                           <div className="px-6 py-5 text-center text-sm font-medium">
                             {added ? (
@@ -544,7 +670,10 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
                     {/* Usar un div con flex y justify-end para alinear el botón */}
                     <div className="flex justify-end mt-4">
                       <button
-                        onClick={closeModal}
+                        onClose={() => {
+                          closeModal();
+                          setLiked(false);
+                        }}
                         className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none"
                       >
                         Cerrar
