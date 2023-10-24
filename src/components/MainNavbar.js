@@ -45,19 +45,8 @@ export default function MainNavbar() {
   // Crear una función que verifica si una ruta está activa según la ruta actual
   const isActive = href => router.pathname === href;
 
-  // Crear una función que devuelve las clases css para los enlaces según si están activos o no
-  const linkClasses = isActive =>
-    isActive
-      ? 'inline-flex items-center border-b-2 border-emerald-500 px-1 pt-1 text-sm font-medium text-gray-900'
-      : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700';
-
-  // Crear un estado para almacenar los permisos del usuario
   const [permisos, setPermisos] = useState([]);
-
-  // Crear un estado para verificar si el usuario está autenticado o no
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  // Crear un estado para verificar si el componente está cargando o no
   const [isLoading, setIsLoading] = useState(true);
 
   // Crear un efecto que se ejecuta cuando se monta el componente
@@ -95,6 +84,12 @@ export default function MainNavbar() {
     // Redirigir al usuario a la página de inicio
     router.push('/');
   };
+
+  // Crear una función que devuelve las clases css para los enlaces según si están activos o no
+  const linkClasses = isActive =>
+    isActive
+      ? 'inline-flex items-center border-b-2 border-emerald-500 px-1 pt-1 text-sm font-medium text-gray-900'
+      : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700';
 
   // En la sección de renderizado
   if (isLoading) {

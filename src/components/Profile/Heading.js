@@ -1,4 +1,4 @@
-import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/20/solid';
+// Archivo src\components\Profile\Heading.js
 import { useQuery } from 'react-query';
 
 const profile = {

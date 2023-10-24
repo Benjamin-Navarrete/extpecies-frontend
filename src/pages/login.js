@@ -17,15 +17,6 @@ import { useMutation, useQueryClient } from 'react-query';
 
 export default function Login() {
   const router = useRouter();
-  // Crear el esquema de validación con yup
-  const validationSchema = Yup.object({
-    correoElectronico: Yup.string()
-      .email('El correo electrónico no es válido')
-      .required('El correo electrónico es obligatorio'),
-    password: Yup.string()
-      .min(8, 'La contraseña debe tener al menos 8 caracteres')
-      .required('La contraseña es obligatoria')
-  });
 
   // Crear una instancia del cliente de react query
   const queryClient = useQueryClient();
@@ -54,6 +45,16 @@ export default function Login() {
       }
     }
   );
+
+  // Crear el esquema de validación con yup
+  const validationSchema = Yup.object({
+    correoElectronico: Yup.string()
+      .email('El correo electrónico no es válido')
+      .required('El correo electrónico es obligatorio'),
+    password: Yup.string()
+      .min(8, 'La contraseña debe tener al menos 8 caracteres')
+      .required('La contraseña es obligatoria')
+  });
 
   // Crear la función para manejar el envío del formulario con la mutación de react query
   const handleSubmit = (values, actions) => {

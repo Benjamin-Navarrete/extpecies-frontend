@@ -32,8 +32,10 @@ export default function Likes() {
   if (!likes || likes.length === 0) {
     return (
       <>
-        <div className="flex flex-col items-center justify-center">
-          <p className="text-gray-500 text-lg">No existen likes</p>
+        <div className="col-span-1 flex flex-col p-12 divide-y divide-gray-200 rounded-lg bg-white text-center shadow">
+          <p className="text-gray-500 text-2xl font-medium">
+            No existen me gusta.
+          </p>
         </div>
       </>
     );
