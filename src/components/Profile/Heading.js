@@ -1,5 +1,5 @@
 // Archivo src\components\Profile\Heading.js
-import { useQuery } from 'react-query';
+import useAuth from '@/hooks/useAuth';
 
 const profile = {
   name: 'Ricardo Cooper',
@@ -19,25 +19,12 @@ const profile = {
 };
 
 export default function ProfileHeading() {
-  // Crear un efecto que se ejecuta cuando se monta el componente
-  useEffect(() => {
-    // Obtener el token desde el local storage
-    const token = Cookies.get('token');
-    if (token) {
-      // Decodificar el token y obtener los permisos y los datos del usuario
-      const decodedToken = jwtDecode(token);
-      setPermisos(decodedToken.permisos || []);
-      queryClient.setQueryData('usuario', decodedToken.usuario);
+  // Usar el hook useAuth para acceder al usuario autenticado
+  const { usuario } = useAuth();
 
-      // Actualizar el estado de autenticación a verdadero
-      setIsAuthenticated(true);
-    } else {
-      // Actualizar el estado de autenticación a falso
-      setIsAuthenticated(false);
-    }
-    // Cuando termine de cargar los permisos, actualiza el estado de carga a falso
-    setIsLoading(false);
-  }, []);
+  if (!usuario) {
+    return null;
+  }
 
   return (
     <div>

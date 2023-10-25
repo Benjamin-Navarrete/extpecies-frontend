@@ -4,57 +4,13 @@ import SocialLoginButton from '@/components/SocialLoginButton';
 import DefaultLayout from '@/layouts/DefaultLayout';
 import { FaFacebook, FaTwitter, FaGithub } from 'react-icons/fa';
 import * as Yup from 'yup';
-import Cookies from 'js-cookie';
 import { Formik, Form } from 'formik';
-import { toast } from 'react-toastify';
-import { useRouter } from 'next/router';
 
-// Importar la función login desde userApi
-import { login } from '@/api/userApi';
-
-// Importar los hooks de react query
-import { useMutation, useQueryClient } from 'react-query';
+import useAuth from '@/hooks/useAuth';
 
 export default function Login() {
-  const router = useRouter();
-
-  // Crear una instancia del cliente de react query
-  const queryClient = useQueryClient();
-
-  // Crear una mutación de react query para el login
-  const loginMutation = useMutation(
-    // Pasar la función login como argumento
-    values => login(values.correoElectronico, values.password),
-    {
-      // Manejar el éxito de la mutación
-      onSuccess: data => {
-        // Guardar el token en las cookies
-        const token = data.token;
-        Cookies.set('token', token);
-        toast.success('Usuario autenticado exitosamente');
-
-        // Guardar los datos del usuario en "usuario"
-        queryClient.setQueryData('usuario', data.usuario);
-
-        // Redirigir al usuario a la página principal
-        router.push('/map');
-      },
-      // Manejar el error de la mutación
-      onError: error => {
-        toast.error(error.response.data.message);
-      }
-    }
-  );
-
-  // Crear el esquema de validación con yup
-  const validationSchema = Yup.object({
-    correoElectronico: Yup.string()
-      .email('El correo electrónico no es válido')
-      .required('El correo electrónico es obligatorio'),
-    password: Yup.string()
-      .min(8, 'La contraseña debe tener al menos 8 caracteres')
-      .required('La contraseña es obligatoria')
-  });
+  // Usar el hook useAuth para acceder a la mutación del login
+  const { loginMutation } = useAuth();
 
   // Crear la función para manejar el envío del formulario con la mutación de react query
   const handleSubmit = (values, actions) => {
@@ -65,6 +21,16 @@ export default function Login() {
     actions.resetForm();
     actions.setSubmitting(false);
   };
+
+  // Crear el esquema de validación con yup
+  const validationSchema = Yup.object({
+    correoElectronico: Yup.string()
+      .email('El correo electrónico no es válido')
+      .required('El correo electrónico es obligatorio'),
+    password: Yup.string()
+      .min(8, 'La contraseña debe tener al menos 8 caracteres')
+      .required('La contraseña es obligatoria')
+  });
 
   return (
     <>

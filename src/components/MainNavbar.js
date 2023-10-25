@@ -3,16 +3,13 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Fragment, useEffect, useState } from 'react';
-import Cookies from 'js-cookie';
-import jwtDecode from 'jwt-decode';
-import { toast } from 'react-toastify';
+import { Fragment } from 'react';
 import classnames from 'classnames';
 
 // Importar los iconos desde las librerías externas
 import { UserCircleIcon } from '@heroicons/react/24/outline';
 
-import { useQuery, useQueryClient } from 'react-query';
+import useAuth from '@/hooks/useAuth';
 
 // Definir las rutas del menú con sus nombres, urls y permisos
 const routes = [
@@ -37,55 +34,13 @@ const routes = [
 export default function MainNavbar() {
   // Obtener la instancia del enrutador de next.js
   const router = useRouter();
-  const queryClient = useQueryClient();
 
-  // Se extraen los datos del usuario con useQuery para utilizar en el menú
-  const { data: usuario } = useQuery('usuario');
+  // Usar el hook useAuth para acceder a los valores y funciones relacionados con la autenticación
+  const { usuario, permisos, isAuthenticated, isLoading, handleLogout } =
+    useAuth();
 
   // Crear una función que verifica si una ruta está activa según la ruta actual
   const isActive = href => router.pathname === href;
-
-  const [permisos, setPermisos] = useState([]);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Crear un efecto que se ejecuta cuando se monta el componente
-  useEffect(() => {
-    // Obtener el token desde el local storage
-    const token = Cookies.get('token');
-    if (token) {
-      // Decodificar el token y obtener los permisos y los datos del usuario
-      const decodedToken = jwtDecode(token);
-      setPermisos(decodedToken.permisos || []);
-      queryClient.setQueryData('usuario', decodedToken.usuario);
-
-      // Actualizar el estado de autenticación a verdadero
-      setIsAuthenticated(true);
-    } else {
-      // Actualizar el estado de autenticación a falso
-      setIsAuthenticated(false);
-    }
-    // Cuando termine de cargar los permisos, actualiza el estado de carga a falso
-    setIsLoading(false);
-  }, []);
-
-  // Crear una función para manejar el cierre de sesión del usuario
-  const handleLogout = () => {
-    // Eliminar el token de las cookies
-    Cookies.remove('token');
-    // Actualizar el estado de autenticación a falso
-    setIsAuthenticated(false);
-    // Vaciar el estado de permisos
-    setPermisos([]);
-
-    // Remover datos de usuario
-    queryClient.removeQueries('usuario');
-
-    // Mostrar un mensaje de éxito
-    toast.success('Sesión cerrada con éxito');
-    // Redirigir al usuario a la página de inicio
-    router.push('/');
-  };
 
   // Crear una función que devuelve las clases css para los enlaces según si están activos o no
   const linkClasses = isActive =>
