@@ -19,8 +19,25 @@ const profile = {
 };
 
 export default function ProfileHeading() {
-  // Se extraen los datos del usuario con useQuery para utilizar en el menú
-  const { data: usuario } = useQuery('usuario');
+  // Crear un efecto que se ejecuta cuando se monta el componente
+  useEffect(() => {
+    // Obtener el token desde el local storage
+    const token = Cookies.get('token');
+    if (token) {
+      // Decodificar el token y obtener los permisos y los datos del usuario
+      const decodedToken = jwtDecode(token);
+      setPermisos(decodedToken.permisos || []);
+      queryClient.setQueryData('usuario', decodedToken.usuario);
+
+      // Actualizar el estado de autenticación a verdadero
+      setIsAuthenticated(true);
+    } else {
+      // Actualizar el estado de autenticación a falso
+      setIsAuthenticated(false);
+    }
+    // Cuando termine de cargar los permisos, actualiza el estado de carga a falso
+    setIsLoading(false);
+  }, []);
 
   return (
     <div>

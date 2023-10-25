@@ -51,12 +51,14 @@ export default function MainNavbar() {
 
   // Crear un efecto que se ejecuta cuando se monta el componente
   useEffect(() => {
-    // Obtener el token desde las cookies
+    // Obtener el token desde el local storage
     const token = Cookies.get('token');
     if (token) {
-      // Decodificar el token y obtener los permisos del usuario
+      // Decodificar el token y obtener los permisos y los datos del usuario
       const decodedToken = jwtDecode(token);
       setPermisos(decodedToken.permisos || []);
+      queryClient.setQueryData('usuario', decodedToken.usuario);
+
       // Actualizar el estado de autenticación a verdadero
       setIsAuthenticated(true);
     } else {
