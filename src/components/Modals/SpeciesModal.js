@@ -2,6 +2,7 @@
 import { Dialog, Transition, Listbox } from '@headlessui/react';
 import { Fragment, useEffect, useState } from 'react';
 import { Tooltip } from 'react-tooltip';
+import ListModal from './ListModal';
 import {
   FaceSmileIcon as FaceSmileIconOutline,
   PaperClipIcon,
@@ -115,12 +116,6 @@ function classNames(...classes) {
 }
 
 const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
-  // if (!especie) {
-  //   especie = {};
-  // }
-
-  // Usar la desestructuración de objetos para acceder a las propiedades del json
-  // y asignar valores por defecto en caso de que no existan
   const {
     // nombreComun = '',
     // nombreCientifico = '',
@@ -131,6 +126,8 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
     detallesAmenazas = ''
   } = especie;
 
+  // Este estado controla si el modal de crear lista está abierto o cerrado
+  const [isListModalOpen, setIsListModalOpen] = useState(false);
   const [selected, setSelected] = useState(moods[5]);
   const [liked, setLiked] = useState(false);
   const [added, setAdded] = useState(false);
@@ -140,16 +137,13 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
   const [tooltipContent3, setTooltipContent3] = useState('Copiar enlace');
   const queryClient = useQueryClient();
 
-  // Se extraen los datos del usuario con useQuery para utilizar en el menú
   const { data: usuario } = useQuery('usuario');
 
-  // Hook para obtener la cantidad de likes de la especie
   const {
     data: likesCount
     // isLoading,
     // error
   } = useQuery(
-    // El primer argumento es una clave única para identificar la query
     ['likesCount', especie.id],
     // El segundo argumento es una función que devuelve una promesa con los datos
     () => getLikesCountByEspecie(especie.id),
@@ -162,24 +156,20 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
   );
   // Se pueden usar las variables isLoading y error para mostrar un indicador de carga o un mensaje de error si ocurre
 
-  // Hook para obtener los likes del usuario por el id de la especie
   const { data: userLikes } = useQuery(
-    ['userLikes', usuario?.id, especie.id], // Usar el operador ?. para acceder al id del usuario solo si existe
+    ['userLikes', usuario?.id, especie.id],
     () => getLikeByUserAndEspecie(usuario?.id, especie.id),
     {
       enabled: !!(isOpen && usuario && especie.id),
       // Esta opción configura cuántas veces se intentará reintentar una query si falla
-      retry: 1, // Solo se intentará una vez más después del primer error
-      // Esta opción ejecuta una función cuando la query falla
+      retry: 1,
       onError: error => {
-        // Si el error es un 404, significa que no se encontró el like
         if (error.response.status === 404) {
-          // Actualizar la variable de estado con false, indicando que no hay like
           setLiked(false);
         }
       },
       // Esta opción proporciona un valor inicial para la query mientras se resuelve
-      initialData: null // Un valor null indica que no hay ningún like
+      initialData: null
     }
   );
 
@@ -197,23 +187,17 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
     }
   }, [isOpen, userLikes]); // El hook se ejecuta solo cuando cambia el valor de isOpen o de userLikes
 
-  // Hook para crear o eliminar un like según el valor de liked
   const { mutate: toggleLike } = useMutation(
-    // El primer argumento es una función que recibe el valor de liked y devuelve una promesa con los datos
     liked =>
       liked
         ? darLike(usuario.id, especie.id)
         : quitarLike(usuario.id, especie.id),
-    // El segundo argumento son opciones para configurar la mutación
     {
-      // Esta opción se ejecuta cuando se resuelve la promesa
       onSuccess: data => {
-        // Mostrar un mensaje de éxito o error
         toast.success(
           `Se ${liked ? 'eliminó' : 'agregó'} el me gusta correctamente`
         );
       },
-      // Esta opción se ejecuta cuando se rechaza la promesa
       onError: error => {
         toast.error('Ocurrió un error al dar me gusta');
       },
@@ -224,6 +208,23 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
       }
     }
   );
+
+  // Este efecto cierra el modal de crear lista cuando se cierra el modal de especie
+  useEffect(() => {
+    if (!isOpen) {
+      setIsListModalOpen(false);
+    }
+  }, [isOpen]);
+
+  // Esta función se pasa como prop al componente ListModal.js y se ejecuta cuando se cambia el valor del listbox
+  // Esta función recibe el id de la lista seleccionada como argumento
+  // y actualiza el estado del modal de especie con la lista seleccionada
+  const handleListSelected = listId => {
+    // Aquí debes agregar la lógica para agregar la especie a la lista usando la API
+    // Por ahora solo voy a mostrar un mensaje de éxito y cerrar el modal de crear lista
+    toast.success(`Se agregó la especie a la lista ${listId} correctamente`);
+    setIsListModalOpen(false);
+  };
 
   return (
     <Transition show={isOpen} as={Fragment}>
@@ -421,8 +422,8 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
                           </div>
                           <div className="px-6 py-5 text-center text-sm font-medium">
                             {added ? (
-                              <DocumentPlusIcon
-                                className="h-7 w-7 mx-auto text-gray-900"
+                              <XMarkIcon
+                                className="h-7 w-7 mx-auto text-red-500"
                                 data-tooltip-id="tooltip-id"
                                 data-tooltip-content={tooltipContent2}
                                 data-tooltip-place="top"
@@ -434,16 +435,14 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
                                 }}
                               />
                             ) : (
-                              <XMarkIcon
-                                className="h-7 w-7 mx-auto text-red-500"
+                              <DocumentPlusIcon
+                                className="h-7 w-7 mx-auto text-gray-900"
                                 data-tooltip-id="tooltip-id"
                                 data-tooltip-content={tooltipContent2}
                                 data-tooltip-place="top"
                                 onClick={() => {
-                                  setAdded(!added);
-                                  setTooltipContent2(
-                                    added ? 'Quitar de lista' : 'Añadir a lista'
-                                  );
+                                  setIsListModalOpen(true);
+                                  // setTooltipContent2(added ? 'Quitar de lista' : 'Añadir a lista');
                                 }}
                               />
                             )}
@@ -687,6 +686,12 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
             </div>
           </div>
         </div>
+        <ListModal
+          isOpen={isListModalOpen}
+          closeModal={() => setIsListModalOpen(false)}
+          especie={especie}
+          onListSelected={handleListSelected}
+        />
       </Dialog>
     </Transition>
   );
