@@ -7,21 +7,21 @@ import { useMutation, useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import { login } from '@/api/userApi';
 
-// Crear el hook useAuth que devuelve los valores y funciones relacionados con la autenticación
+// Hook useAuth que devuelve los valores y funciones relacionados con la autenticación
 export default function useAuth() {
   // Obtener la instancia del cliente de react query
   const queryClient = useQueryClient();
 
   const router = useRouter();
 
-  // Crear un estado para guardar los permisos del usuario
+  // Guardar los permisos del usuario
   const [permisos, setPermisos] = useState([]);
-  // Crear un estado para guardar el estado de autenticación del usuario
+  // Guardar el estado de autenticación del usuario
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  // Crear un estado para guardar el estado de carga de la sesión
+  // Guardar el estado de carga de la sesión
   const [isLoading, setIsLoading] = useState(true);
 
-  // Crear una función personalizada para cargar los datos del usuario con useCallback
+  // Cargar los datos del usuario con useCallback
   const loadUserData = useCallback(() => {
     // Obtener el token desde el local storage
     const token = Cookies.get('token');
@@ -39,7 +39,7 @@ export default function useAuth() {
     }
   }, [queryClient]);
 
-  // Crear una función personalizada para manejar el cierre de sesión del usuario con useCallback
+  // Manejar el cierre de sesión del usuario con useCallback
   const handleLogout = useCallback(() => {
     // Eliminar el token de las cookies
     Cookies.remove('token');
@@ -57,7 +57,7 @@ export default function useAuth() {
     router.push('/');
   }, [queryClient, router]);
 
-  // Crear una mutación de react query para el login
+  // Mutación de react query para el login
   const loginMutation = useMutation(
     // Pasar la función login como argumento
     values => login(values.correoElectronico, values.password),
@@ -82,7 +82,7 @@ export default function useAuth() {
     }
   );
 
-  // Crear un efecto que se ejecuta cuando se monta el componente
+  // Efecto que se ejecuta cuando se monta el componente
   useEffect(() => {
     // Llamar a la función loadUserData para cargar los datos del usuario
     loadUserData();
