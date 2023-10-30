@@ -3,6 +3,24 @@ import { Dialog, Transition, Listbox } from '@headlessui/react';
 import { Fragment, useEffect, useState } from 'react';
 import { Tooltip } from 'react-tooltip';
 import ListModal from './ListModal';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { toast } from 'react-toastify';
+import Comment from '../Comentario';
+
+import {
+  createComment,
+  deleteComment,
+  getCommentsByEspecie,
+  updateComment
+} from '@/api/commentApi';
+
+import {
+  darLike,
+  getLikeByUserAndEspecie,
+  getLikesCountByEspecie,
+  quitarLike
+} from '@/api/likeApi';
+
 import {
   FaceSmileIcon as FaceSmileIconOutline,
   PaperClipIcon,
@@ -19,14 +37,6 @@ import {
   HeartIcon,
   XMarkIcon
 } from '@heroicons/react/20/solid';
-import {
-  darLike,
-  getLikeByUserAndEspecie,
-  getLikesCountByEspecie,
-  quitarLike
-} from '@/api/likeApi';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { toast } from 'react-toastify';
 
 const moods = [
   {
@@ -73,44 +83,6 @@ const moods = [
   }
 ];
 
-const announcements = [
-  {
-    id: 1,
-    title: 'Comentario 1',
-    href: '#',
-    preview:
-      'Cum qui rem deleniti. Suscipit in dolor veritatis sequi aut. Vero ut earum quis deleniti. Ut a sunt eum cum ut repudiandae possimus. Nihil ex tempora neque cum consectetur dolores.'
-  },
-  {
-    id: 2,
-    title: 'Comentario 2',
-    href: '#',
-    preview:
-      'Alias inventore ut autem optio voluptas et repellendus. Facere totam quaerat quam quo laudantium cumque eaque excepturi vel. Accusamus maxime ipsam reprehenderit rerum id repellendus rerum. Culpa cum vel natus. Est sit autem mollitia.'
-  },
-  {
-    id: 3,
-    title: 'Comentario 3',
-    href: '#',
-    preview:
-      'Tenetur libero voluptatem rerum occaecati qui est molestiae exercitationem. Voluptate quisquam iure assumenda consequatur ex et recusandae. Alias consectetur voluptatibus. Accusamus a ab dicta et. Consequatur quis dignissimos voluptatem nisi.'
-  },
-  {
-    id: 4,
-    title: 'Comentario 4',
-    href: '#',
-    preview:
-      'Tenetur libero voluptatem rerum occaecati qui est molestiae exercitationem. Voluptate quisquam iure assumenda consequatur ex et recusandae. Alias consectetur voluptatibus. Accusamus a ab dicta et. Consequatur quis dignissimos voluptatem nisi.'
-  },
-  {
-    id: 5,
-    title: 'Comentario 5',
-    href: '#',
-    preview:
-      'Tenetur libero voluptatem rerum occaecati qui est molestiae exercitationem. Voluptate quisquam iure assumenda consequatur ex et recusandae. Alias consectetur voluptatibus. Accusamus a ab dicta et. Consequatur quis dignissimos voluptatem nisi.'
-  }
-];
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
@@ -126,6 +98,8 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
     detallesAmenazas = ''
   } = especie;
 
+  const queryClient = useQueryClient();
+
   // Este estado controla si el modal de crear lista está abierto o cerrado
   const [isListModalOpen, setIsListModalOpen] = useState(false);
   const [selected, setSelected] = useState(moods[5]);
@@ -135,9 +109,55 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
   const [tooltipContent, setTooltipContent] = useState('Dar me gusta');
   const [tooltipContent2, setTooltipContent2] = useState('Añadir a lista');
   const [tooltipContent3, setTooltipContent3] = useState('Copiar enlace');
-  const queryClient = useQueryClient();
+  // Estado para el contenido del nuevo comentario
+  const [content, setContent] = useState('');
+  // Estado para la paginación de los comentarios
+  const [page, setPage] = useState(1);
+
+  // Estado para la paginación de los comentarios
+  // Lo cambio a un objeto con dos propiedades: value y prevValue
+  const [limit, setLimit] = useState({ value: 5, prevValue: 5 });
+
+  // Efecto que se ejecute cuando se abre o se cierra el modal
+  useEffect(() => {
+    if (isOpen) {
+      // Guardo el valor actual del límite en prevValue
+      setLimit(limit => ({ ...limit, prevValue: limit.value }));
+      // Reseteo el valor del límite a 5
+      setLimit(limit => ({ ...limit, value: 5 }));
+    } else {
+      // Restauro el valor previo del límite
+      setLimit(limit => ({ ...limit, value: limit.prevValue }));
+    }
+  }, [isOpen]);
 
   const { data: usuario } = useQuery('usuario');
+
+  // Mutaciones de comentarios
+  // Query para obtener los comentarios de la especie seleccionada
+  const { data: comments, isLoading: isLoadingComments } = useQuery(
+    ['comments', especie.id, page, limit.value], // Uso limit.value como parámetro
+    () => getCommentsByEspecie(especie.id, page, limit.value), // Uso limit.value como argumento
+    {
+      enabled: !!especie.id // Solo ejecuto la query si hay una especie seleccionada
+    }
+  );
+
+  // Mutación para crear un nuevo comentario
+  const createCommentMutation = useMutation(createComment, {
+    onSuccess: data => {
+      // Invalido la cache de los comentarios en vez de usar setQueryData
+      queryClient.invalidateQueries(['comments', especie.id]);
+      // Limpio el contenido del comentario
+      setContent('');
+      // Muestro un mensaje de éxito
+      toast.success('Comentario agregado');
+    },
+    onError: error => {
+      // Muestro un mensaje de error
+      toast.error(error.response.data.message);
+    }
+  });
 
   const {
     data: likesCount
@@ -479,7 +499,24 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
                         {/* Escribir comentario */}
                         <div className="flex items-start space-x-4 p-2 rounded-lg bg-white shadow">
                           <div className="min-w-full flex-1 pt-2">
-                            <form action="#">
+                            <form
+                              onSubmit={e => {
+                                e.preventDefault();
+                                if (usuario) {
+                                  if (content) {
+                                    createCommentMutation.mutate({
+                                      content,
+                                      id_usuario: usuario.id,
+                                      id_especie: especie.id
+                                    });
+                                  }
+                                } else {
+                                  toast.error(
+                                    'Debes iniciar sesión para comentar'
+                                  );
+                                }
+                              }}
+                            >
                               <div className="border-b border-gray-200 focus-within:border-emerald-600">
                                 <label htmlFor="comment" className="sr-only">
                                   Escribir comentario
@@ -490,7 +527,8 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
                                   id="comment"
                                   className="block w-full resize-none border-0 border-b border-transparent p-0 pb-2 focus:border-emerald-600 focus:ring-0 sm:text-sm"
                                   placeholder="Escribir comentario..."
-                                  defaultValue={''}
+                                  value={content}
+                                  onChange={e => setContent(e.target.value)}
                                 />
                               </div>
                               <div className="flex justify-between pt-2">
@@ -624,44 +662,38 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
                               className="text-base font-medium text-gray-900"
                               id="announcements-title"
                             >
-                              Comentarios (5)
+                              Comentarios ({comments?.count || 0})
                             </h2>
                             <div className="mt-6 flow-root">
                               <ul
                                 role="list"
                                 className="-my-5 divide-y divide-gray-200"
                               >
-                                {announcements.map(announcement => (
-                                  <li key={announcement.id} className="py-5">
-                                    <div className="relative focus-within:ring-2 focus-within:ring-cyan-500">
-                                      <h3 className="text-sm font-semibold text-gray-800">
-                                        <a
-                                          href={announcement.href}
-                                          className="hover:underline focus:outline-none"
-                                        >
-                                          {/* Extend touch target to entire panel */}
-                                          <span
-                                            className="absolute inset-0"
-                                            aria-hidden="true"
-                                          />
-                                          {announcement.title}
-                                        </a>
-                                      </h3>
-                                      <p className="mt-1 text-sm text-gray-600 line-clamp-2">
-                                        {announcement.preview}
-                                      </p>
-                                    </div>
-                                  </li>
+                                {/* Muestro los comentarios usando el componente Comment */}
+                                {comments?.rows.map(comment => (
+                                  <Comment
+                                    key={comment.id}
+                                    comentario={comment}
+                                  />
                                 ))}
                               </ul>
                             </div>
                             <div className="mt-6">
-                              <a
-                                href="#"
-                                className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
-                              >
-                                Ver todos los comentarios
-                              </a>
+                              {/* Muestro un botón para mostrar más comentarios si hay más de 5 */}
+                              {comments?.count > limit.value && ( // Uso limit.value como condición
+                                <button
+                                  onClick={() => {
+                                    // Incremento el valor del límite en 5
+                                    setLimit(limit => ({
+                                      ...limit,
+                                      value: limit.value + 5
+                                    }));
+                                  }}
+                                  className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 mt-4"
+                                >
+                                  Ver todos los comentarios
+                                </button>
+                              )}
                             </div>
                           </div>
                         </div>
