@@ -1,32 +1,18 @@
 // src/components/SpeciesModal.js
 import { Dialog, Transition, Listbox } from '@headlessui/react';
 import { Fragment, useEffect, useState } from 'react';
-import { Tooltip } from 'react-tooltip';
 import ListModal from './ListModal';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { toast } from 'react-toastify';
 import Comment from '../Comentario';
 
-import {
-  createComment,
-  deleteComment,
-  getCommentsByEspecie,
-  updateComment
-} from '@/api/commentApi';
+import { createComment, getCommentsByEspecie } from '@/api/commentApi';
 
-import {
-  darLike,
-  getLikeByUserAndEspecie,
-  getLikesCountByEspecie,
-  quitarLike
-} from '@/api/likeApi';
+import { getLikeByUserAndEspecie } from '@/api/likeApi';
 
 import {
   FaceSmileIcon as FaceSmileIconOutline,
-  PaperClipIcon,
-  HeartIcon as HeartIconOutline,
-  DocumentPlusIcon,
-  LinkIcon
+  PaperClipIcon
 } from '@heroicons/react/24/outline';
 
 import {
@@ -37,6 +23,7 @@ import {
   HeartIcon,
   XMarkIcon
 } from '@heroicons/react/20/solid';
+import SpeciesActions from '../SpeciesActions';
 
 const moods = [
   {
@@ -105,10 +92,6 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
   const [selected, setSelected] = useState(moods[5]);
   const [liked, setLiked] = useState(false);
   const [added, setAdded] = useState(false);
-  const [copied, setCopied] = useState(false);
-  const [tooltipContent, setTooltipContent] = useState('Dar me gusta');
-  const [tooltipContent2, setTooltipContent2] = useState('Añadir a lista');
-  const [tooltipContent3, setTooltipContent3] = useState('Copiar enlace');
   // Estado para el contenido del nuevo comentario
   const [content, setContent] = useState('');
   // Estado para la paginación de los comentarios
@@ -159,23 +142,6 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
     }
   });
 
-  const {
-    data: likesCount
-    // isLoading,
-    // error
-  } = useQuery(
-    ['likesCount', especie.id],
-    // El segundo argumento es una función que devuelve una promesa con los datos
-    () => getLikesCountByEspecie(especie.id),
-    // El tercer argumento son opciones para configurar la query
-    {
-      // Esta opción habilita o deshabilita la query según una condición
-      enabled: !!(isOpen && especie.id)
-      // La query solo se ejecutará si el modal está abierto y la especie tiene un id válido
-    }
-  );
-  // Se pueden usar las variables isLoading y error para mostrar un indicador de carga o un mensaje de error si ocurre
-
   const { data: userLikes } = useQuery(
     ['userLikes', usuario?.id, especie.id],
     () => getLikeByUserAndEspecie(usuario?.id, especie.id),
@@ -206,28 +172,6 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
       setLiked(hasLiked);
     }
   }, [isOpen, userLikes]); // El hook se ejecuta solo cuando cambia el valor de isOpen o de userLikes
-
-  const { mutate: toggleLike } = useMutation(
-    liked =>
-      liked
-        ? darLike(usuario.id, especie.id)
-        : quitarLike(usuario.id, especie.id),
-    {
-      onSuccess: data => {
-        toast.success(
-          `Se ${liked ? 'eliminó' : 'agregó'} el me gusta correctamente`
-        );
-      },
-      onError: error => {
-        toast.error('Ocurrió un error al dar me gusta');
-      },
-      // Esta opción se ejecuta después de onSuccess o onError
-      onSettled: (data, error) => {
-        // Invalidar la caché de la query para refetchear los datos actualizados
-        queryClient.invalidateQueries(['likesCount', especie.id]);
-      }
-    }
-  );
 
   // Este efecto cierra el modal de crear lista cuando se cierra el modal de especie
   useEffect(() => {
@@ -376,126 +320,13 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
 
                       {/* Right column */}
                       <div className="grid grid-cols-1 gap-4">
-                        <div className="grid grid-cols-1 divide-y divide-gray-200 mt-1 border-separate border-gray-200 rounded-lg bg-white shadow sm:grid-cols-3 sm:divide-y-0 sm:divide-x">
-                          {/* Opciones arriba de los comentarios */}
-                          <div className="px-6 py-5 text-center text-sm font-medium ">
-                            {liked ? (
-                              <HeartIcon
-                                className="h-7 w-7 mx-auto text-red-500"
-                                data-tooltip-id="tooltip-id"
-                                data-tooltip-content={tooltipContent}
-                                data-tooltip-place="top"
-                                onClick={() => {
-                                  if (usuario) {
-                                    // Invertir el valor de liked
-                                    const newLiked = !liked;
-                                    setLiked(newLiked);
-
-                                    // Cambiar el contenido del tooltip según el nuevo valor de liked
-                                    setTooltipContent(
-                                      newLiked
-                                        ? 'Quitar me gusta'
-                                        : 'Dar me gusta'
-                                    );
-
-                                    // Llamar a la función toggleLike pasándole el nuevo valor de liked
-                                    toggleLike(newLiked);
-                                  } else {
-                                    toast.error(
-                                      'Debes iniciar sesión para dar me gusta'
-                                    );
-                                  }
-                                }}
-                              />
-                            ) : (
-                              <HeartIconOutline
-                                className="h-7 w-7 mx-auto text-gray-900"
-                                data-tooltip-id="tooltip-id"
-                                data-tooltip-content={tooltipContent}
-                                data-tooltip-place="top"
-                                onClick={() => {
-                                  if (usuario) {
-                                    // Invertir el valor de liked
-                                    const newLiked = !liked;
-                                    setLiked(newLiked);
-
-                                    // Cambiar el contenido del tooltip según el nuevo valor de liked
-                                    setTooltipContent(
-                                      newLiked
-                                        ? 'Quitar me gusta'
-                                        : 'Dar me gusta'
-                                    );
-
-                                    // Llamar a la función toggleLike pasándole el nuevo valor de liked
-                                    toggleLike(newLiked);
-                                  } else {
-                                    toast.error(
-                                      'Debes iniciar sesión para dar me gusta'
-                                    );
-                                  }
-                                }}
-                              />
-                            )}
-                            <span className="text-gray-900">
-                              {likesCount} Me gusta
-                            </span>
-                          </div>
-                          <div className="px-6 py-5 text-center text-sm font-medium">
-                            {added ? (
-                              <XMarkIcon
-                                className="h-7 w-7 mx-auto text-red-500"
-                                data-tooltip-id="tooltip-id"
-                                data-tooltip-content={tooltipContent2}
-                                data-tooltip-place="top"
-                                onClick={() => {
-                                  setAdded(!added);
-                                  setTooltipContent2(
-                                    added ? 'Quitar de lista' : 'Añadir a lista'
-                                  );
-                                }}
-                              />
-                            ) : (
-                              <DocumentPlusIcon
-                                className="h-7 w-7 mx-auto text-gray-900"
-                                data-tooltip-id="tooltip-id"
-                                data-tooltip-content={tooltipContent2}
-                                data-tooltip-place="top"
-                                onClick={() => {
-                                  setIsListModalOpen(true);
-                                  // setTooltipContent2(added ? 'Quitar de lista' : 'Añadir a lista');
-                                }}
-                              />
-                            )}
-                            <span className="text-gray-900">
-                              Añadir a lista
-                            </span>
-                          </div>
-                          <div className="px-6 py-5 text-center text-sm font-medium">
-                            <LinkIcon
-                              className={`h-7 w-7 mx-auto text-center text-sm font-medium ${
-                                !copied ? 'text-gray-900' : 'text-green-500'
-                              }`}
-                              data-tooltip-id="tooltip-id"
-                              data-tooltip-content={tooltipContent3}
-                              data-tooltip-place="top"
-                              onClick={() => {
-                                // Aquí puedes usar alguna función para copiar el enlace al portapapeles
-                                // Por ejemplo, puedes usar la API de Clipboard que puedes leer aquí: https://developer.mozilla.org/es/docs/Web/API/Clipboard_API
-                                navigator.clipboard.writeText(
-                                  'https://www.example.com/post/123'
-                                );
-                                setCopied(!copied);
-                                setTooltipContent3(
-                                  copied ? 'Copiar enlace' : 'Copiado'
-                                );
-                              }}
-                            />
-
-                            <span className="text-gray-900">Copiar enlace</span>
-                          </div>
-
-                          <Tooltip id="tooltip-id" />
-                        </div>
+                        <SpeciesActions
+                          especie={especie}
+                          usuario={usuario}
+                          added={added}
+                          setAdded={setAdded}
+                          setIsListModalOpen={setIsListModalOpen}
+                        />
                         {/* Escribir comentario */}
                         <div className="flex items-start space-x-4 p-2 rounded-lg bg-white shadow">
                           <div className="min-w-full flex-1 pt-2">
@@ -703,7 +534,7 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
                     {/* Usar un div con flex y justify-end para alinear el botón */}
                     <div className="flex justify-end mt-4">
                       <button
-                        onClose={() => {
+                        onClick={() => {
                           closeModal();
                           setLiked(false);
                         }}
