@@ -2,12 +2,11 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useEffect, useState } from 'react';
 import ListModal from './ListModal';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { toast } from 'react-toastify';
-import Comment from '../Comentario';
-import { createComment, getCommentsByEspecie } from '@/api/commentApi';
 import { getLikeByUserAndEspecie } from '@/api/likeApi';
 import SpeciesActions from '../SpeciesActions';
+import CommentSection from '../CommentSection';
+import { useQuery } from 'react-query';
 
 const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
   const {
@@ -20,61 +19,12 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
     detallesAmenazas = ''
   } = especie;
 
-  const queryClient = useQueryClient();
-
   // Este estado controla si el modal de crear lista está abierto o cerrado
   const [isListModalOpen, setIsListModalOpen] = useState(false);
   const [liked, setLiked] = useState(false);
   const [added, setAdded] = useState(false);
-  // Estado para el contenido del nuevo comentario
-  const [content, setContent] = useState('');
-  // Estado para la paginación de los comentarios
-  const [page, setPage] = useState(1);
-
-  // Estado para la paginación de los comentarios
-  // Lo cambio a un objeto con dos propiedades: value y prevValue
-  const [limit, setLimit] = useState({ value: 5, prevValue: 5 });
-
-  // Efecto que se ejecute cuando se abre o se cierra el modal
-  useEffect(() => {
-    if (isOpen) {
-      // Guardo el valor actual del límite en prevValue
-      setLimit(limit => ({ ...limit, prevValue: limit.value }));
-      // Reseteo el valor del límite a 5
-      setLimit(limit => ({ ...limit, value: 5 }));
-    } else {
-      // Restauro el valor previo del límite
-      setLimit(limit => ({ ...limit, value: limit.prevValue }));
-    }
-  }, [isOpen]);
 
   const { data: usuario } = useQuery('usuario');
-
-  // Mutaciones de comentarios
-  // Query para obtener los comentarios de la especie seleccionada
-  const { data: comments, isLoading: isLoadingComments } = useQuery(
-    ['comments', especie.id, page, limit.value], // Uso limit.value como parámetro
-    () => getCommentsByEspecie(especie.id, page, limit.value), // Uso limit.value como argumento
-    {
-      enabled: !!especie.id // Solo ejecuto la query si hay una especie seleccionada
-    }
-  );
-
-  // Mutación para crear un nuevo comentario
-  const createCommentMutation = useMutation(createComment, {
-    onSuccess: data => {
-      // Invalido la cache de los comentarios en vez de usar setQueryData
-      queryClient.invalidateQueries(['comments', especie.id]);
-      // Limpio el contenido del comentario
-      setContent('');
-      // Muestro un mensaje de éxito
-      toast.success('Comentario agregado');
-    },
-    onError: error => {
-      // Muestro un mensaje de error
-      toast.error(error.response.data.message);
-    }
-  });
 
   const { data: userLikes } = useQuery(
     ['userLikes', usuario?.id, especie.id],
@@ -253,94 +203,12 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
                           setAdded={setAdded}
                           setIsListModalOpen={setIsListModalOpen}
                         />
-                        {/* Escribir comentario */}
-                        <div className="flex items-start space-x-4 p-2 rounded-lg bg-white shadow">
-                          <div className="min-w-full flex-1 pt-2">
-                            <form
-                              onSubmit={e => {
-                                e.preventDefault();
-                                if (usuario) {
-                                  if (content) {
-                                    createCommentMutation.mutate({
-                                      content,
-                                      id_usuario: usuario.id,
-                                      id_especie: especie.id
-                                    });
-                                  }
-                                } else {
-                                  toast.error(
-                                    'Debes iniciar sesión para comentar'
-                                  );
-                                }
-                              }}
-                            >
-                              <div className="border-b border-gray-200 focus-within:border-emerald-600">
-                                <label htmlFor="comment" className="sr-only">
-                                  Escribir comentario
-                                </label>
-                                <textarea
-                                  rows={4}
-                                  name="comment"
-                                  id="comment"
-                                  className="block w-full resize-none border-0 border-b border-transparent p-0 pb-2 focus:border-emerald-600 focus:ring-0 sm:text-sm"
-                                  placeholder="Escribir comentario..."
-                                  value={content}
-                                  onChange={e => setContent(e.target.value)}
-                                />
-                              </div>
-                              <div className="flex justify-end pt-2">
-                                <button
-                                  type="submit"
-                                  className="inline-flex items-center rounded-md border border-transparent bg-emerald-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
-                                >
-                                  Comentar
-                                </button>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
                         {/* Comentarios */}
-                        <div className="overflow-hidden rounded-lg bg-white shadow">
-                          <div className="p-3">
-                            <h2
-                              className="text-base font-medium text-gray-900"
-                              id="announcements-title"
-                            >
-                              Comentarios ({comments?.count || 0})
-                            </h2>
-                            <div className="mt-6 flow-root">
-                              <ul
-                                role="list"
-                                className="-my-5 divide-y divide-gray-200"
-                              >
-                                {/* Muestro los comentarios usando el componente Comment */}
-                                {comments?.rows.map(comment => (
-                                  <Comment
-                                    key={comment.id}
-                                    comentario={comment}
-                                  />
-                                ))}
-                              </ul>
-                            </div>
-                            <div className="mt-6">
-                              {/* Muestro un botón para mostrar más comentarios si hay más de 5 */}
-                              {comments?.count > limit.value && ( // Uso limit.value como condición
-                                <button
-                                  onClick={() => {
-                                    // Incremento el valor del límite en 5
-                                    setLimit(limit => ({
-                                      ...limit,
-                                      value: limit.value + 5
-                                    }));
-                                  }}
-                                  className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 mt-4"
-                                >
-                                  Ver todos los comentarios
-                                </button>
-                              )}
-                            </div>
-                          </div>
-                        </div>
+                        <CommentSection
+                          especie={especie}
+                          usuario={usuario}
+                          isOpen={isOpen}
+                        />
                       </div>
                     </div>
                     {/* Agregar un botón para cerrar el modal en la parte de abajo a la derecha */}
