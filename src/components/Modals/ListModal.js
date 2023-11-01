@@ -3,7 +3,6 @@
 import { Dialog, Transition, Listbox } from '@headlessui/react';
 import { Fragment, useState } from 'react';
 import { toast } from 'react-toastify';
-import { Portal } from 'react-portal';
 
 const ListModal = ({ isOpen, closeModal, especie, onListSelected }) => {
   // Este estado guarda el nombre de la lista que se va a crear
@@ -50,7 +49,7 @@ const ListModal = ({ isOpen, closeModal, especie, onListSelected }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-full max-w-md p-6 my-8  text-left align-middle transition-all transform bg-white shadow-xl rounded-lg">
+              <div className="inline-block w-full max-w-md p-6 my-8 text-left align-middle transition-all transform bg-white shadow-xl rounded-lg">
                 <Dialog.Title
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"

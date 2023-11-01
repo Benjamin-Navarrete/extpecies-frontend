@@ -133,7 +133,7 @@ export default function MainNavbar() {
                 ) : (
                   <>
                     {/* Profile dropdown */}
-                    <Menu as="div" className="relative ml-3 z-[999]">
+                    <Menu as="div" className="relative ml-3 z-[420]">
                       <div>
                         <Menu.Button className="flex rounded-full items-center bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                           <span className="text-sm font-medium text-gray-600 mr-3">
