@@ -1,5 +1,6 @@
 // Archivo src\components\Profile\Lists.js
 import React from 'react';
+import AddListButton from './AddListButton';
 
 // Asumo que tienes un objeto JSON con las listas y sus clientes, algo así:
 const lists = [
@@ -105,11 +106,13 @@ const List = ({ title, customers }) => {
 
 // Creo un componente para mostrar todas las listas en una grilla responsiva
 const Grid = () => {
+  // Renderizo los componentes Grid y AddListButton debajo de él
   return (
     <div className="grid gap-3 mt-4 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
       {lists.map(list => (
         <List key={list.title} {...list} />
       ))}
+      <AddListButton />
     </div>
   );
 };
