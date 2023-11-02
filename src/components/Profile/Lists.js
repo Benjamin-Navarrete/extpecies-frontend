@@ -1,61 +1,11 @@
 // Archivo src\components\Profile\Lists.js
 import React from 'react';
 import AddListButton from './AddListButton';
-
-// Asumo que tienes un objeto JSON con las listas y sus clientes, algo así:
-const lists = [
-  {
-    title: 'Lista 1',
-    customers: [
-      {
-        name: 'Especie 1',
-        email: 'Descripción de la especie 1',
-        image: 'https://placehold.co/50x50',
-        amount: 320
-      },
-      {
-        name: 'Especie 2',
-        email: 'Descripción de la especie 2',
-        image: 'https://placehold.co/50x50',
-        amount: 320
-      }
-      // ... otros clientes
-    ]
-  },
-  {
-    title: 'Lista 2',
-    customers: [
-      {
-        name: 'Especie 1',
-        email: 'Descripción de la especie 1',
-        image: 'https://placehold.co/50x50',
-        amount: 320
-      },
-      {
-        name: 'Especie 2',
-        email: 'Descripción de la especie 2',
-        image: 'https://placehold.co/50x50',
-        amount: 320
-      }
-      // ... otros clientes
-    ]
-  },
-  {
-    title: 'Lista 3',
-    customers: [
-      {
-        name: 'Especie 1',
-        email: 'Descripción de la especie 1',
-        image: 'https://placehold.co/50x50',
-        amount: 320
-      }
-      // ... otros clientes
-    ]
-  }
-];
+import { useQuery } from 'react-query';
+import { getAllLists } from '@/api/listaApi';
 
 // Creo un componente para mostrar cada cliente
-const Customer = ({ name, email, image, amount }) => {
+const Customer = ({ name, email, image }) => {
   return (
     <li className="py-3 sm:py-4">
       <div className="flex items-center space-x-4">
@@ -78,13 +28,51 @@ const Customer = ({ name, email, image, amount }) => {
   );
 };
 
-// Creo un componente para mostrar cada lista
-const List = ({ title, customers }) => {
+// Defino el componente Grid
+const Grid = () => {
+  // Obtengo el id del usuario con el hook useQuery
+  const { data: usuario } = useQuery('usuario');
+
+  // Uso el hook useQuery para obtener las listas del usuario
+  const {
+    isLoading,
+    error,
+    data: listas
+  } = useQuery('listas', () => getAllLists(usuario.id), {
+    // Solo ejecuto la consulta si el usuario existe
+    enabled: !!usuario
+  });
+
+  // Manejo el estado de carga
+  if (isLoading) {
+    return <div className="text-center">Cargando...</div>;
+  }
+
+  // Manejo el estado de error
+  if (error) {
+    return (
+      <div className="text-center">Ha ocurrido un error: {error.message}</div>
+    );
+  }
+
+  // Renderizo los componentes List usando las listas obtenidas del api
   return (
-    <div className="w-full max-w-full p-4 bg-white border border-gray-200 rounded-lg shadow  sm:p-8 md:flex-grow md:flex-shrink">
+    <div className="grid gap-3 mt-4 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+      {listas.map(lista => (
+        <List key={lista.id} {...lista} />
+      ))}
+      <AddListButton />
+    </div>
+  );
+};
+
+// Creo un componente para mostrar cada lista
+const List = ({ nombre, especies }) => {
+  return (
+    <div className="w-full max-w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 md:flex-grow md:flex-shrink">
       <div className="flex items-center justify-between mb-4">
         <h5 className="text-xl font-bold leading-none text-gray-900 ">
-          {title}
+          {nombre}
         </h5>
         <a
           href="#"
@@ -95,24 +83,19 @@ const List = ({ title, customers }) => {
       </div>
       <div className="flow-root">
         <ul role="list" className="divide-y divide-gray-200 ">
-          {customers.map(customer => (
-            <Customer key={customer.name} {...customer} />
-          ))}
+          {/* Si hay especies en la lista, las muestro */}
+          {especies.length > 0 ? (
+            especies.map(especie => (
+              <Customer key={especies.nombre} {...especie} />
+            ))
+          ) : (
+            // Si no hay especies en la lista, muestro un mensaje
+            <li className="py-3 sm:py-4 text-center text-gray-500">
+              No hay especies en esta lista
+            </li>
+          )}
         </ul>
       </div>
-    </div>
-  );
-};
-
-// Creo un componente para mostrar todas las listas en una grilla responsiva
-const Grid = () => {
-  // Renderizo los componentes Grid y AddListButton debajo de él
-  return (
-    <div className="grid gap-3 mt-4 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-      {lists.map(list => (
-        <List key={list.title} {...list} />
-      ))}
-      <AddListButton />
     </div>
   );
 };

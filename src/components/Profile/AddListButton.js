@@ -18,7 +18,7 @@ const AddListButton = () => {
   };
 
   return (
-    <div className="flex justify-center mt-4">
+    <div className="flex justify-center p-12 xs:mt-4">
       {/* Creo un botón con un icono de más y un texto */}
       <button
         className="flex items-center px-4 py-2 text-sm font-medium text-white bg-emerald-600 border border-transparent rounded-md shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"

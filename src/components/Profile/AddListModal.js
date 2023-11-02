@@ -18,27 +18,34 @@ const AddListModal = ({ showModal, closeModal }) => {
   const { data: usuario } = useQuery('usuario');
 
   // Uso el hook useMutation para crear una mutación que llame a la función del api
-  const mutation = useMutation(createList, {
-    // Manejo el éxito de la mutación
-    onSuccess: data => {
-      // Cierro el modal
-      closeModal();
-      // Muestro un mensaje de éxito
-      alert('Se ha creado la lista ' + data.nombre);
+  const mutation = useMutation(
+    createList,
+    {
+      // Manejo el éxito de la mutación
+      onSuccess: data => {
+        // Cierro el modal
+        closeModal();
+        // Muestro un mensaje de éxito
+        alert('Se ha creado la lista ' + data.nombre);
+      },
+      // Manejo el error de la mutación
+      onError: error => {
+        // Muestro un mensaje de error
+        alert(error.response.data.message);
+      }
     },
-    // Manejo el error de la mutación
-    onError: error => {
-      // Muestro un mensaje de error
-      alert(error.response.data.message);
+    {
+      // Solo ejecuto la consulta si el usuario existe
+      enabled: !!usuario
     }
-  });
+  );
 
   return (
     // Uso el componente Dialog de headlessui para crear el modal
     <Transition show={showModal} as={React.Fragment}>
       <Dialog
         as="div"
-        className="fixed inset-0 z-10 overflow-y-auto"
+        className="fixed inset-0 z-[420] overflow-y-auto"
         onClose={closeModal}
       >
         {/* Creo un fondo oscuro semi-transparente */}
