@@ -23,7 +23,7 @@ const AddSpecieModal = ({ isOpen, onClose, usuario, especie }) => {
       // Manejo el error de la mutación
       onError: error => {
         // Muestro un mensaje de error
-        alert(error.response.data.message);
+        toast.error(error.response.data.message);
       },
       // Manejo el resultado de la mutación
       onSettled: (data, error) => {

@@ -6,6 +6,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import { useMutation, useQuery } from 'react-query';
 import { createList } from '@/api/listaApi';
+import { toast } from 'react-toastify';
 
 const AddListModal = ({ showModal, closeModal }) => {
   // Creo un esquema de validación con yup
@@ -26,12 +27,12 @@ const AddListModal = ({ showModal, closeModal }) => {
         // Cierro el modal
         closeModal();
         // Muestro un mensaje de éxito
-        alert('Se ha creado la lista ' + data.nombre);
+        toast.success('Se ha creado la lista ' + data.nombre);
       },
       // Manejo el error de la mutación
       onError: error => {
         // Muestro un mensaje de error
-        alert(error.response.data.message);
+        toast.error(error.response.data.message);
       }
     },
     {
