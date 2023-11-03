@@ -2,6 +2,8 @@
 import { Tooltip } from 'react-tooltip';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
+import AddSpecieModal from './Modals/AddSpecieModal';
 
 import {
   darLike,
@@ -19,23 +21,16 @@ import {
 import {
   HeartIcon as HeartIconSolid,
   XMarkIcon
-} from '@heroicons/react/20/solid';
-import { useEffect, useState } from 'react';
+} from '@heroicons/react/24/solid';
 
-const SpeciesActions = ({
-  especie,
-  usuario,
-  added,
-  setAdded,
-  setIsListModalOpen
-}) => {
+const SpeciesActions = ({ especie, usuario }) => {
   const queryClient = useQueryClient();
 
   const [liked, setLiked] = useState(false);
   const [copied, setCopied] = useState(false);
   const [tooltipContent, setTooltipContent] = useState('Dar me gusta');
-  const [tooltipContent2, setTooltipContent2] = useState('Añadir a lista');
   const [tooltipContent3, setTooltipContent3] = useState('Copiar enlace');
+  const [modalOpen, setModalOpen] = useState(false);
 
   const { data: likesCount } = useQuery(
     ['likesCount', especie.id],
@@ -85,6 +80,16 @@ const SpeciesActions = ({
     }
   );
 
+  // Creo una función para abrir el modal
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  // Creo una función para cerrar el modal
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <div className="grid grid-cols-1 divide-y divide-gray-200 mt-1 border-separate border-gray-200 rounded-lg bg-white shadow sm:grid sm:grid-cols-3 sm:divide-y-0 sm:divide-x">
       <div className="px-6 py-5 text-center text-sm font-medium ">
@@ -130,29 +135,19 @@ const SpeciesActions = ({
         <span className="text-gray-900">{likesCount} Me gusta</span>
       </div>
       <div className="px-6 py-5 text-center text-sm font-medium">
-        {added ? (
-          <XMarkIcon
-            className="h-7 w-7 mx-auto text-red-500"
-            data-tooltip-id="tooltip-id"
-            data-tooltip-content={tooltipContent2}
-            data-tooltip-place="top"
-            onClick={() => {
-              setAdded(!added);
-              setTooltipContent2(added ? 'Quitar de lista' : 'Añadir a lista');
-            }}
-          />
-        ) : (
-          <DocumentPlusIcon
-            className="h-7 w-7 mx-auto text-gray-900"
-            data-tooltip-id="tooltip-id"
-            data-tooltip-content={tooltipContent2}
-            data-tooltip-place="top"
-            onClick={() => {
-              setIsListModalOpen(true);
-              // setTooltipContent2(added ? 'Quitar de lista' : 'Añadir a lista');
-            }}
-          />
-        )}
+        <DocumentPlusIcon
+          className="h-7 w-7 mx-auto text-gray-900"
+          data-tooltip-id="tooltip-id"
+          data-tooltip-content={'Añadir a lista'}
+          data-tooltip-place="top"
+          onClick={() => {
+            if (usuario) {
+              openModal();
+            } else {
+              toast.error('Debes iniciar sesión para añadir a lista');
+            }
+          }}
+        />
         <span className="text-gray-900">Añadir a lista</span>
       </div>
       <div className="px-6 py-5 text-center text-sm font-medium">
@@ -172,6 +167,13 @@ const SpeciesActions = ({
 
         <span className="text-gray-900">Copiar enlace</span>
       </div>
+
+      <AddSpecieModal
+        isOpen={modalOpen}
+        onClose={closeModal}
+        usuario={usuario}
+        especie={especie}
+      />
 
       <Tooltip id="tooltip-id" />
     </div>

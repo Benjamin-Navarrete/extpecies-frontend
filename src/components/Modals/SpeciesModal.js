@@ -1,8 +1,6 @@
 // src/components/SpeciesModal.js
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useEffect, useState } from 'react';
-import ListModal from './ListModal';
-import { toast } from 'react-toastify';
 import { getLikeByUserAndEspecie } from '@/api/likeApi';
 import SpeciesActions from '../SpeciesActions';
 import CommentSection from '../CommentSection';
@@ -18,14 +16,9 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
     descripcionGeografica = '',
     detallesAmenazas = ''
   } = especie;
-
-  // Este estado controla si el modal de crear lista está abierto o cerrado
-  const [isListModalOpen, setIsListModalOpen] = useState(false);
   const [liked, setLiked] = useState(false);
   const [added, setAdded] = useState(false);
-
   const { data: usuario } = useQuery('usuario');
-
   const { data: userLikes } = useQuery(
     ['userLikes', usuario?.id, especie.id],
     () => getLikeByUserAndEspecie(usuario?.id, especie.id),
@@ -56,23 +49,6 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
       setLiked(hasLiked);
     }
   }, [isOpen, userLikes]); // El hook se ejecuta solo cuando cambia el valor de isOpen o de userLikes
-
-  // Este efecto cierra el modal de crear lista cuando se cierra el modal de especie
-  useEffect(() => {
-    if (!isOpen) {
-      setIsListModalOpen(false);
-    }
-  }, [isOpen]);
-
-  // Esta función se pasa como prop al componente ListModal.js y se ejecuta cuando se cambia el valor del listbox
-  // Esta función recibe el id de la lista seleccionada como argumento
-  // y actualiza el estado del modal de especie con la lista seleccionada
-  const handleListSelected = listId => {
-    // Aquí debes agregar la lógica para agregar la especie a la lista usando la API
-    // Por ahora solo voy a mostrar un mensaje de éxito y cerrar el modal de crear lista
-    toast.success(`Se agregó la especie a la lista ${listId} correctamente`);
-    setIsListModalOpen(false);
-  };
 
   return (
     <Transition show={isOpen} as={Fragment}>
@@ -201,7 +177,6 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
                           usuario={usuario}
                           added={added}
                           setAdded={setAdded}
-                          setIsListModalOpen={setIsListModalOpen}
                         />
                         {/* Comentarios */}
                         <CommentSection
@@ -230,12 +205,6 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
             </div>
           </div>
         </div>
-        <ListModal
-          isOpen={isListModalOpen}
-          closeModal={() => setIsListModalOpen(false)}
-          especie={especie}
-          onListSelected={handleListSelected}
-        />
       </Dialog>
     </Transition>
   );

@@ -5,7 +5,6 @@ import { updateComment, deleteComment } from '@/api/commentApi';
 import { toast } from 'react-toastify';
 
 const Comentario = ({ comentario }) => {
-  console.log('comentario', comentario);
   const queryClient = useQueryClient();
   const { data: usuario } = useQuery('usuario');
   const [editando, setEditando] = useState(false);
@@ -15,7 +14,7 @@ const Comentario = ({ comentario }) => {
     onSuccess: data => {
       toast.success('Comentario actualizado');
       // Invalido la cache de los comentarios en vez de usar setQueryData
-      queryClient.invalidateQueries(['comments', comentario.especieId]);
+      queryClient.invalidateQueries(['comments', comentario.especie_id]);
       setEditando(false);
     },
     onError: error => {
@@ -27,7 +26,7 @@ const Comentario = ({ comentario }) => {
     onSuccess: data => {
       toast.success('Comentario eliminado');
       // Invalido la cache de los comentarios en vez de usar setQueryData
-      queryClient.invalidateQueries(['comments', comentario.especieId]);
+      queryClient.invalidateQueries(['comments', comentario.especie_id]);
     },
     onError: error => {
       toast.error(error.response.data.message);
@@ -94,7 +93,7 @@ const Comentario = ({ comentario }) => {
         ) : (
           <p className="mt-2 text-sm text-gray-800">{comentario.contenido}</p>
         )}
-        {usuario?.id === comentario.usuarioId && !editando && (
+        {usuario?.id === comentario.usuario_id && !editando && (
           <div className="mt-2 flex justify-end space-x-2">
             <button
               type="button"

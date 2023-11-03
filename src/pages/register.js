@@ -79,7 +79,7 @@ export default function Register() {
       );
 
       if (response.status === 201) {
-        toast.success('Usuario creado exitosamente');
+        toast.success('Usuario registrado exitosamente');
 
         router.push('/login');
       }

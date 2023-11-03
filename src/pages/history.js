@@ -19,10 +19,10 @@ const HistoryPage = () => {
   const [data, setData] = useState([]);
 
   // Crear una función para obtener los datos del historial desde el servidor
-  const getHistorial = async usuarioId => {
+  const getHistorial = async usuario_id => {
     try {
       const response = await axios.get(
-        `http://localhost:3500/api/historial/${usuarioId}`
+        `http://localhost:3500/api/historial/${usuario_id}`
       );
       if (response.status === 200) {
         setData(response.data.data);

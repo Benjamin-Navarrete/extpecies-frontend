@@ -3,6 +3,8 @@ import React from 'react';
 import AddListButton from './AddListButton';
 import { useQuery } from 'react-query';
 import { getAllLists } from '@/api/listaApi';
+import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
+import { Tooltip } from 'react-tooltip';
 
 // Creo un componente para mostrar cada cliente
 const Customer = ({ name, email, image }) => {
@@ -92,9 +94,19 @@ const List = ({ nombre, especies }) => {
             // Si no hay especies en la lista, muestro un mensaje
             <li className="py-3 sm:py-4 text-center text-gray-500">
               No hay especies en esta lista
+              <QuestionMarkCircleIcon
+                className="h-5 w-5 inline-block ml-1 "
+                data-tooltip-id="tooltip-id"
+                data-tooltip-content={
+                  'En una especie pulse el botón de "Añadir a lista" y seleccione la lista deseada'
+                }
+                data-tooltip-place="top"
+                multiline={true}
+              />
             </li>
           )}
         </ul>
+        <Tooltip id="tooltip-id" />
       </div>
     </div>
   );

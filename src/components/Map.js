@@ -47,7 +47,7 @@ const Map = ({ especies, isLoading, isError, initialSpecie }) => {
     try {
       setSelectedSpecieId(especie.id);
       // Usar el método push del router para actualizar la URL con el id de la especie seleccionada
-      router.push(`/map?especieId=${especie.id}`, undefined, {
+      router.push(`/map?especie_id=${especie.id}`, undefined, {
         shallow: true
       });
     } catch (error) {

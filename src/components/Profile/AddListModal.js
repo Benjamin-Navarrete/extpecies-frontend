@@ -45,7 +45,7 @@ const AddListModal = ({ showModal, closeModal }) => {
     <Transition show={showModal} as={React.Fragment}>
       <Dialog
         as="div"
-        className="fixed inset-0 z-[420] overflow-y-auto"
+        className="fixed inset-0 z-[9999] overflow-y-auto"
         onClose={closeModal}
       >
         {/* Creo un fondo oscuro semi-transparente */}
@@ -94,7 +94,7 @@ const AddListModal = ({ showModal, closeModal }) => {
                 initialValues={{
                   nombre: '',
                   descripcion: '',
-                  usuarioId: usuario.id
+                  usuario_id: usuario?.id
                 }}
                 onSubmit={values => mutation.mutate(values)}
               >

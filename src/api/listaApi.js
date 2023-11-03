@@ -1,22 +1,31 @@
 // Archivo src\api\listaApi.js
 import axios from 'axios';
 
-// Creo una instancia de axios con la base URL
+// Instancia de axios con la base URL
 export const listaApi = axios.create({
   baseURL: 'http://localhost:3500/api/'
 });
 
-// Creo una función para hacer el post de una nueva lista con axios
+// Función para hacer el post de una nueva lista con axios
 export const createList = async data => {
   const response = await listaApi.post('listas', data);
   return response.data;
 };
 
-// Creo una función para hacer el post de todas las listas con axios
+// Función para hacer el post de todas las listas con axios
 export const getAllLists = async userId => {
   // Paso el id del usuario al cuerpo de la petición
   const response = await listaApi.post('listas/getLists', {
     userId
   });
+  return response.data;
+};
+
+// Función para hacer el put de una especie a una lista con axios
+export const addSpecieToList = async (listaId, especie_id) => {
+  // Paso los ids de la lista y de la especie como parámetros de la ruta
+  const response = await listaApi.put(
+    `listas/${listaId}/especies/${especie_id}`
+  );
   return response.data;
 };

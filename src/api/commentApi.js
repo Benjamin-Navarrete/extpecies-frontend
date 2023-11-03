@@ -7,8 +7,8 @@ export const commentApi = axios.create({
 
 export const createComment = async data => {
   const response = await commentApi.post('', {
-    usuarioId: data.id_usuario,
-    especieId: data.id_especie,
+    usuario_id: data.id_usuario,
+    id_especie: data.id_especie,
     contenido: data.content
   });
   return response.data;
@@ -16,14 +16,14 @@ export const createComment = async data => {
 
 export const deleteComment = async data => {
   const response = await commentApi.delete(`/${data.id_comentario}`, {
-    data: { usuarioId: data.id_usuario }
+    data: { usuario_id: data.id_usuario }
   });
   return response.data;
 };
 
 export const getCommentsByEspecie = async (id_especie, page, limit) => {
   const response = await commentApi.get('', {
-    params: { especieId: id_especie, page, limit }
+    params: { especie_id: id_especie, page, limit }
   });
   return response.data;
 };
@@ -31,7 +31,7 @@ export const getCommentsByEspecie = async (id_especie, page, limit) => {
 export const updateComment = async data => {
   const response = await commentApi.put(`/${data.id}`, {
     contenido: data.contenido,
-    usuarioId: data.id_usuario
+    usuario_id: data.id_usuario
   });
   return response.data;
 };

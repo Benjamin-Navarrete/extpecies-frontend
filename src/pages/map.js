@@ -40,11 +40,11 @@ function MapPage() {
     }
   );
 
-  // Usar useRouter para obtener el objeto router y el parámetro de consulta especieId
+  // Usar useRouter para obtener el objeto router y el parámetro de consulta especie_id
   const router = useRouter();
-  // TODO: validar que especieId sea un número
+  // TODO: validar que especie_id sea un número
   // TODO: si especie no es valida no asignarla al estado
-  const { especieId } = router.query;
+  const { especie_id } = router.query;
 
   return (
     <DefaultLayout>
@@ -55,7 +55,7 @@ function MapPage() {
             especies={especies}
             isLoading={isLoading}
             isError={isError}
-            initialSpecie={especieId}
+            initialSpecie={especie_id}
           />
         </div>
       </MapLayout>
