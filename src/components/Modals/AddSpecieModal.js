@@ -3,12 +3,13 @@ import { Dialog, Transition } from '@headlessui/react';
 import React, { useState } from 'react';
 import AddListModal from '../Profile/Listas/AddListModal';
 import { addSpecieToList, getAllLists } from '@/api/listaApi';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { toast } from 'react-toastify';
 
 const AddSpecieModal = ({ isOpen, onClose, usuario, especie }) => {
   // Creo un estado local para el modal de crear lista
   const [createListModalOpen, setCreateListModalOpen] = useState(false);
+  const queryClient = useQueryClient();
 
   // Creo una mutación con el hook useMutation y le paso la función addSpecieToList y las opciones de la mutación
   const mutation = useMutation(
@@ -17,6 +18,7 @@ const AddSpecieModal = ({ isOpen, onClose, usuario, especie }) => {
       // Manejo el éxito de la mutación
       onSuccess: data => {
         // Cierro el modal
+        queryClient.invalidateQueries(['listas', usuario?.id]);
         onClose();
         toast.success(data.message);
       },

@@ -1,7 +1,7 @@
 // Archivo src\components\Profile\AddListButton.js
 import React, { useState } from 'react';
 import { PlusIcon } from '@heroicons/react/24/solid';
-import AddListModal from './AddListModal';
+import AddListModal from '../AddListModal';
 
 const AddListButton = () => {
   // Creo un estado para manejar la visibilidad del modal
