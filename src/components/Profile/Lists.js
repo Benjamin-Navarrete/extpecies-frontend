@@ -1,5 +1,5 @@
 // Archivo src\components\Profile\Lists.js
-import React from 'react';
+import React, { useState } from 'react';
 import AddListButton from './AddListButton';
 import { useQuery } from 'react-query';
 import { getAllLists } from '@/api/listaApi';
@@ -81,6 +81,17 @@ const Grid = () => {
 
 // Creo un componente para mostrar cada lista
 const List = ({ nombre, especies }) => {
+  // Creo un estado local para almacenar el número de especies que se muestran
+  const [numEspecies, setNumEspecies] = useState(
+    // Inicializo el estado con el valor 4 o el número de especies que tenga la lista, el menor de los dos
+    Math.min(4, especies.length)
+  );
+
+  // Creo una función que incremente el estado en 4 cada vez que se pulse el botón de cargar más
+  const handleLoadMore = () => {
+    setNumEspecies(numEspecies + 4);
+  };
+
   return (
     <div className="w-full max-w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 md:flex-grow md:flex-shrink">
       <div className="flex items-center justify-between mb-4">
@@ -98,9 +109,12 @@ const List = ({ nombre, especies }) => {
         <ul role="list" className="divide-y divide-gray-200 ">
           {/* Si hay especies en la lista, las muestro */}
           {especies.length > 0 ? (
-            especies.map(especie => (
-              <Especie key={especie.nombreComun} {...especie} />
-            ))
+            // Filtro el array de especies para mostrar solo las que correspondan al estado actual
+            especies
+              .slice(0, numEspecies)
+              .map(especie => (
+                <Especie key={especie.nombreComun} {...especie} />
+              ))
           ) : (
             // Si no hay especies en la lista, muestro un mensaje
             <li className="py-3 sm:py-4 text-center text-gray-500">
@@ -118,6 +132,17 @@ const List = ({ nombre, especies }) => {
           )}
         </ul>
         <Tooltip id="tooltip-id" />
+        {/* Renderizo el botón de cargar más solo si el estado actual es menor que el número total de especies */}
+        {numEspecies < especies.length && (
+          <div className="flex justify-center mt-4">
+            <button
+              className="px-4 py-2 text-sm font-medium text-white bg-emerald-600 border border-transparent rounded-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
+              onClick={handleLoadMore}
+            >
+              Cargar más
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
