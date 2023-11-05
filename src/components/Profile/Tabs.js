@@ -8,7 +8,7 @@ import {
 } from '@heroicons/react/20/solid';
 import Achievements from './Achievements';
 import Likes from './Likes';
-import Lists from './Lists';
+import Lists from './Listas/Lists';
 
 const tabs = [
   { name: 'Logros', icon: TrophyIcon },

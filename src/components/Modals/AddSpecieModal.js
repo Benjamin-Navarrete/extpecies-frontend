@@ -1,7 +1,7 @@
 // Archivo src\components\Modals\AddSpecieModal.js
 import { Dialog, Transition } from '@headlessui/react';
 import React, { useState } from 'react';
-import AddListModal from '../Profile/AddListModal';
+import AddListModal from '../Profile/Listas/AddListModal';
 import { addSpecieToList, getAllLists } from '@/api/listaApi';
 import { useMutation, useQuery } from 'react-query';
 import { toast } from 'react-toastify';
