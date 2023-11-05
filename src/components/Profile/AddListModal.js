@@ -4,7 +4,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { createList } from '@/api/listaApi';
 import { toast } from 'react-toastify';
 
@@ -15,6 +15,7 @@ const AddListModal = ({ showModal, closeModal }) => {
     descripcion: yup.string().optional()
   });
 
+  const queryClient = useQueryClient();
   // Obtengo el id del usuario con el hook useQuery
   const { data: usuario } = useQuery('usuario');
 
@@ -28,6 +29,8 @@ const AddListModal = ({ showModal, closeModal }) => {
         closeModal();
         // Muestro un mensaje de éxito
         toast.success('Se ha creado la lista ' + data.nombre);
+        console.log(data);
+        queryClient.invalidateQueries(['listas', data.usuario_id]);
       },
       // Manejo el error de la mutación
       onError: error => {

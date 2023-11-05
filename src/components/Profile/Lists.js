@@ -3,28 +3,39 @@ import React from 'react';
 import AddListButton from './AddListButton';
 import { useQuery } from 'react-query';
 import { getAllLists } from '@/api/listaApi';
-import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
+import { EyeIcon, QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
 import { Tooltip } from 'react-tooltip';
 
 // Creo un componente para mostrar cada cliente
-const Customer = ({ name, email, image }) => {
+const Especie = props => {
   return (
     <li className="py-3 sm:py-4">
       <div className="flex items-center space-x-4">
         <div className="flex-shrink-0">
           <img
             className="w-8 h-8 rounded-full"
-            src={image}
-            alt={name + ' image'}
+            src={props.imagen}
+            alt={props.nombreComun + ' image'}
           />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-gray-900 truncate ">{name}</p>
-          <p className="text-sm text-gray-500 truncate ">{email}</p>
+          <p className="text-sm font-medium text-gray-900 truncate ">
+            {props.nombreComun}
+          </p>
+          <p className="text-sm text-gray-500 truncate ">
+            {props.estadoConservacion}
+          </p>
         </div>
-        {/* <div className="inline-flex items-center text-base font-semibold text-gray-900">
-          ${amount}
-        </div> */}
+
+        <div className="inline-flex items-center text-base font-semibold text-gray-600">
+          <EyeIcon
+            className="h-5 w-5"
+            data-tooltip-id="tooltip-ver"
+            data-tooltip-content="Ver especie"
+            data-tooltip-place="top"
+          />
+          <Tooltip id="tooltip-ver" />
+        </div>
       </div>
     </li>
   );
@@ -80,7 +91,7 @@ const List = ({ nombre, especies }) => {
           href="#"
           className="text-sm font-medium text-emerald-600 hover:underline "
         >
-          Ver completa
+          Acciones
         </a>
       </div>
       <div className="flow-root">
@@ -88,7 +99,7 @@ const List = ({ nombre, especies }) => {
           {/* Si hay especies en la lista, las muestro */}
           {especies.length > 0 ? (
             especies.map(especie => (
-              <Customer key={especies.nombre} {...especie} />
+              <Especie key={especie.nombreComun} {...especie} />
             ))
           ) : (
             // Si no hay especies en la lista, muestro un mensaje
