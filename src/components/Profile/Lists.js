@@ -5,6 +5,8 @@ import { useQuery } from 'react-query';
 import { getAllLists } from '@/api/listaApi';
 import { EyeIcon, QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
 import { Tooltip } from 'react-tooltip';
+import { Menu } from '@headlessui/react';
+import { EllipsisVerticalIcon } from '@heroicons/react/24/solid';
 
 // Creo un componente para mostrar cada cliente
 const Especie = props => {
@@ -98,12 +100,66 @@ const List = ({ nombre, especies }) => {
         <h5 className="text-xl font-bold leading-none text-gray-900 ">
           {nombre}
         </h5>
-        <a
-          href="#"
-          className="text-sm font-medium text-emerald-600 hover:underline "
-        >
-          Acciones
-        </a>
+        {/* Reemplazo el elemento a por el componente Menu */}
+        <Menu as="div" className="relative inline-block text-left">
+          <Menu.Button className="text-sm font-medium text-emerald-600 hover:underline flex items-center">
+            {/* Añado el icono de tres puntos verticales al lado del texto */}
+            Opciones
+            <EllipsisVerticalIcon className="h-5 w-5 ml-1" />
+          </Menu.Button>
+          {/* Creo el elemento Menu.Items con el estilo de un menú desplegable */}
+          <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            {/* Creo los elementos Menu.Item con el texto de cada opción */}
+            <Menu.Item>
+              {({ active }) => (
+                <a
+                  href="#"
+                  className={`${
+                    active ? 'bg-emerald-600 text-white' : 'text-gray-900'
+                  } group flex items-center px-4 py-2 text-sm`}
+                >
+                  Editar
+                </a>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <a
+                  href="#"
+                  className={`${
+                    active ? 'bg-emerald-600 text-white' : 'text-gray-900'
+                  } group flex items-center px-4 py-2 text-sm`}
+                >
+                  Eliminar lista
+                </a>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <a
+                  href="#"
+                  className={`${
+                    active ? 'bg-emerald-600 text-white' : 'text-gray-900'
+                  } group flex items-center px-4 py-2 text-sm`}
+                >
+                  Compartir
+                </a>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <a
+                  href="#"
+                  className={`${
+                    active ? 'bg-emerald-600 text-white' : 'text-gray-900'
+                  } group flex items-center px-4 py-2 text-sm`}
+                >
+                  Ver completa
+                </a>
+              )}
+            </Menu.Item>
+          </Menu.Items>
+        </Menu>
       </div>
       <div className="flow-root">
         <ul role="list" className="divide-y divide-gray-200 ">
