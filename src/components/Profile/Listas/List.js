@@ -5,9 +5,13 @@ import Especie from './EspecieRow';
 import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
 import { Tooltip } from 'react-tooltip';
 import { EllipsisVerticalIcon } from '@heroicons/react/24/solid';
+import EditListModal from './EditListModal';
 
 // Componente para mostrar cada lista
-const List = ({ nombre, especies }) => {
+const List = ({ nombre, especies, descripcion }) => {
+  // Creo una variable de estado para controlar si el modal está abierto o cerrado
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   // Estado local para almacenar el número de especies que se muestran
   const [numEspecies, setNumEspecies] = useState(
     // Inicializo el estado con el valor 4 o el número de especies que tenga la lista, el menor de los dos
@@ -18,6 +22,16 @@ const List = ({ nombre, especies }) => {
   const handleLoadMore = () => {
     setNumEspecies(numEspecies + 4);
   };
+
+  // Creo una función para abrir el modal
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  // // Creo una función para cerrar el modal
+  // const closeModal = () => {
+  //   setIsModalOpen(false);
+  // };
 
   return (
     <div className="w-full max-w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 md:flex-grow md:flex-shrink">
@@ -43,18 +57,6 @@ const List = ({ nombre, especies }) => {
                     active ? 'bg-emerald-600 text-white' : 'text-gray-900'
                   } group flex items-center px-4 py-2 text-sm`}
                 >
-                  Editar
-                </a>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="#"
-                  className={`${
-                    active ? 'bg-emerald-600 text-white' : 'text-gray-900'
-                  } group flex items-center px-4 py-2 text-sm`}
-                >
                   Eliminar lista
                 </a>
               )}
@@ -71,16 +73,17 @@ const List = ({ nombre, especies }) => {
                 </a>
               )}
             </Menu.Item>
+            {/* Creo el elemento Menu.Item con el componente EditListModal como hijo */}
             <Menu.Item>
               {({ active }) => (
-                <a
-                  href="#"
+                <button
                   className={`${
                     active ? 'bg-emerald-600 text-white' : 'text-gray-900'
-                  } group flex items-center px-4 py-2 text-sm`}
+                  } group flex items-center px-4 py-2 text-sm w-full text-left`}
+                  onClick={openModal}
                 >
-                  Ver completa
-                </a>
+                  Editar o ver
+                </button>
               )}
             </Menu.Item>
           </Menu.Items>
@@ -125,6 +128,13 @@ const List = ({ nombre, especies }) => {
           </div>
         )}
       </div>
+      <EditListModal
+        nombre={nombre}
+        descripcion={descripcion}
+        especies={especies}
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+      />
     </div>
   );
 };
