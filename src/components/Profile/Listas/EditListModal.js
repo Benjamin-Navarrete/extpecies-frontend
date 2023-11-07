@@ -2,7 +2,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 
 // Importo el componente SearchBox que me permite buscar especies
 // import SearchBox from './SearchBox';
@@ -10,20 +10,19 @@ import { Fragment, useState } from 'react';
 // Importo el componente EspecieRow que me permite mostrar cada especie
 import EspecieRow from './EspecieRow';
 import { XMarkIcon } from '@heroicons/react/24/solid';
+import { useMutation, useQueryClient } from 'react-query';
+import { updateList } from '@/api/listaApi';
+import { toast } from 'react-toastify';
 
 // Creo el componente EditListModal
 const EditListModal = ({
+  id,
   nombre,
   descripcion,
   especies,
   isOpen,
   setIsOpen
 }) => {
-  // Creo una función para cerrar el modal
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-
   // Creo un esquema de yup para validar los campos del formulario
   const validationSchema = yup.object().shape({
     nombre: yup
@@ -32,16 +31,35 @@ const EditListModal = ({
       .max(50, 'El nombre no puede tener más de 50 caracteres'),
     descripcion: yup
       .string()
-      .required('La descripción es obligatoria')
       .max(200, 'La descripción no puede tener más de 200 caracteres')
   });
 
+  const queryClient = useQueryClient();
+
+  // Creo una función para cerrar el modal
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  // Creo una mutación con react query para actualizar la lista
+  const { mutate, isLoading, isError, isSuccess, error } = useMutation(
+    data => updateList(id, data), // Paso el id de la lista y los datos al método updateList
+    {
+      onSuccess: data => {
+        // Si la mutación tiene éxito, muestro un mensaje de éxito
+        queryClient.invalidateQueries('listas');
+        toast.success(data.message || 'Lista actualizada correctamente');
+      },
+      onError: error => {
+        // Si la mutación tiene error, muestro un mensaje de error
+        toast.error(error.message);
+      }
+    }
+  );
+
   // Creo una función para enviar el formulario
   const handleSubmit = values => {
-    // Aquí debes hacer la lógica para actualizar la lista con los nuevos valores
-    // Por ejemplo, podrías usar react query para hacer una mutación con axios
-    // También debes cerrar el modal al terminar
-    console.log(values);
+    mutate(values);
     closeModal();
   };
 
@@ -87,7 +105,7 @@ const EditListModal = ({
               <hr className="my-4" />
               {/* Creo el componente Formik para crear el formulario */}
               <Formik
-                initialValues={{ nombre, descripcion }}
+                initialValues={{ id, nombre, descripcion }} // Paso el id de la lista como valor inicial
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
               >

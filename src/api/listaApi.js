@@ -37,3 +37,8 @@ export const deleteList = async listaId => {
   // Devuelvo la respuesta del servidor
   return response.data;
 };
+
+export const updateList = async (id, data) => {
+  const response = await listaApi.put(`listas/${id}`, data);
+  return response.data;
+};

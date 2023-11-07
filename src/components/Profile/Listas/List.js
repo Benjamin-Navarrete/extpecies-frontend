@@ -37,7 +37,6 @@ const List = ({ nombre, especies, descripcion, id: listaId }) => {
     // Dentro del objeto de opciones, defino las funciones onSuccess, onError y onSettled
     // Dentro de la función onSuccess, muestro un mensaje de éxito, cierro el modal e invalido las queries que dependen de la lista eliminada
     onSuccess: response => {
-      console.log(response);
       toast.success(response.message);
       queryClient.invalidateQueries('listas');
     },
@@ -172,6 +171,7 @@ const List = ({ nombre, especies, descripcion, id: listaId }) => {
         especies={especies}
         isOpen={isModalOpen}
         setIsOpen={setIsModalOpen}
+        id={listaId}
       />
     </div>
   );
