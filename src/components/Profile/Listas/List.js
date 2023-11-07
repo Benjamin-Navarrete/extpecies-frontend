@@ -6,9 +6,13 @@ import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
 import { Tooltip } from 'react-tooltip';
 import { EllipsisVerticalIcon } from '@heroicons/react/24/solid';
 import EditListModal from './EditListModal';
+import { toast } from 'react-toastify';
+import { useMutation, useQueryClient } from 'react-query';
+import { deleteList } from '@/api/listaApi';
 
 // Componente para mostrar cada lista
-const List = ({ nombre, especies, descripcion }) => {
+const List = ({ nombre, especies, descripcion, id: listaId }) => {
+  const queryClient = useQueryClient();
   // Creo una variable de estado para controlar si el modal está abierto o cerrado
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -28,10 +32,44 @@ const List = ({ nombre, especies, descripcion }) => {
     setIsModalOpen(true);
   };
 
-  // // Creo una función para cerrar el modal
-  // const closeModal = () => {
-  //   setIsModalOpen(false);
-  // };
+  // Creo la variable deleteListMutation que es el resultado de invocar el método useMutation con el método deleteList y un objeto de opciones
+  const deleteListMutation = useMutation(deleteList, {
+    // Dentro del objeto de opciones, defino las funciones onSuccess, onError y onSettled
+    // Dentro de la función onSuccess, muestro un mensaje de éxito, cierro el modal e invalido las queries que dependen de la lista eliminada
+    onSuccess: response => {
+      console.log(response);
+      toast.success(response.message);
+      queryClient.invalidateQueries('listas');
+    },
+    // Dentro de la función onError, muestro un mensaje de error y manejo el error de alguna forma
+    onError: error => {
+      toast.error('Ha ocurrido un error al eliminar la lista');
+
+      switch (error.response.status) {
+        case 404:
+          toast.error(
+            'No se encontró la lista con el id ' + error.response.data.id
+          );
+          break;
+        case 500:
+          toast.error('Error interno del servidor');
+          break;
+        default:
+          toast.error('Error desconocido');
+      }
+    },
+
+    onSettled: () => {
+      // toast.info('La mutación se ha completado');
+    }
+  });
+
+  // Función para manejar el click en el botón de eliminar
+  const handleDeleteClick = () => {
+    if (window.confirm('¿Estás seguro de que quieres eliminar esta lista?"')) {
+      deleteListMutation.mutate({ id: listaId });
+    }
+  };
 
   return (
     <div className="w-full max-w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 md:flex-grow md:flex-shrink">
@@ -51,14 +89,14 @@ const List = ({ nombre, especies, descripcion }) => {
             {/* Creo los elementos Menu.Item con el texto de cada opción */}
             <Menu.Item>
               {({ active }) => (
-                <a
-                  href="#"
+                <button
                   className={`${
                     active ? 'bg-emerald-600 text-white' : 'text-gray-900'
-                  } group flex items-center px-4 py-2 text-sm`}
+                  } group flex items-center px-4 py-2 text-sm w-full text-left`}
+                  onClick={handleDeleteClick}
                 >
                   Eliminar lista
-                </a>
+                </button>
               )}
             </Menu.Item>
             <Menu.Item>

@@ -19,11 +19,6 @@ const EditListModal = ({
   isOpen,
   setIsOpen
 }) => {
-  // Creo una función para abrir el modal
-  const openModal = () => {
-    setIsOpen(true);
-  };
-
   // Creo una función para cerrar el modal
   const closeModal = () => {
     setIsOpen(false);
@@ -52,14 +47,6 @@ const EditListModal = ({
 
   return (
     <>
-      {/* Creo un botón para abrir el modal */}
-      <button
-        className="text-sm font-medium text-emerald-600 hover:underline flex items-center"
-        onClick={openModal}
-      >
-        Editar o ver
-      </button>
-
       {/* Creo el componente Transition para animar el modal */}
       <Transition appear show={isOpen} as={Fragment}>
         {/* Creo el componente Dialog para crear el modal */}
