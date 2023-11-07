@@ -15,7 +15,7 @@ const Grid = () => {
     isLoading,
     error,
     data: listas
-  } = useQuery('listas', () => getAllLists(usuario.id), {
+  } = useQuery('listas', () => getAllLists(usuario?.id), {
     // Solo ejecuto la consulta si el usuario existe
     enabled: !!usuario
   });
@@ -35,7 +35,7 @@ const Grid = () => {
   // Renderizo los componentes List usando las listas obtenidas del api
   return (
     <div className="grid gap-3 mt-4 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-      {listas.map(lista => (
+      {listas?.map(lista => (
         <List key={lista.id} {...lista} />
       ))}
       <AddListButton />

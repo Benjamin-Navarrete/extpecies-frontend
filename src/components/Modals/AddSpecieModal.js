@@ -18,7 +18,7 @@ const AddSpecieModal = ({ isOpen, onClose, usuario, especie }) => {
       // Manejo el éxito de la mutación
       onSuccess: data => {
         // Cierro el modal
-        queryClient.invalidateQueries(['listas', usuario?.id]);
+        queryClient.invalidateQueries('listas');
         onClose();
         toast.success(data.message);
       },

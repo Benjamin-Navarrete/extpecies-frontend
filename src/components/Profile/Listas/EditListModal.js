@@ -181,7 +181,11 @@ const EditListModal = ({
                   {especies.length > 0 ? (
                     // Mapeo el array de especies para mostrar cada una con el componente EspecieRow
                     especies.map(especie => (
-                      <EspecieRow key={especie.nombreComun} {...especie} />
+                      <EspecieRow
+                        key={especie.nombreComun}
+                        listaId={id}
+                        {...especie}
+                      />
                     ))
                   ) : (
                     // Si no hay especies en la lista, muestro un mensaje

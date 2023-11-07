@@ -25,12 +25,10 @@ const AddListModal = ({ showModal, closeModal }) => {
     {
       // Manejo el éxito de la mutación
       onSuccess: data => {
-        // Cierro el modal
-        closeModal();
         // Muestro un mensaje de éxito
         toast.success('Se ha creado la lista ' + data.nombre);
-        console.log(data);
-        queryClient.invalidateQueries(['listas', data.usuario_id]);
+        queryClient.invalidateQueries('listas');
+        closeModal();
       },
       // Manejo el error de la mutación
       onError: error => {

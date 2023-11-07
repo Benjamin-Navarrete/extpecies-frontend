@@ -17,10 +17,7 @@ const List = ({ nombre, especies, descripcion, id: listaId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Estado local para almacenar el número de especies que se muestran
-  const [numEspecies, setNumEspecies] = useState(
-    // Inicializo el estado con el valor 4 o el número de especies que tenga la lista, el menor de los dos
-    Math.min(4, especies.length)
-  );
+  const [numEspecies, setNumEspecies] = useState(4);
 
   // Función que incremente el estado en 4 cada vez que se pulse el botón de cargar más
   const handleLoadMore = () => {
@@ -34,8 +31,6 @@ const List = ({ nombre, especies, descripcion, id: listaId }) => {
 
   // Creo la variable deleteListMutation que es el resultado de invocar el método useMutation con el método deleteList y un objeto de opciones
   const deleteListMutation = useMutation(deleteList, {
-    // Dentro del objeto de opciones, defino las funciones onSuccess, onError y onSettled
-    // Dentro de la función onSuccess, muestro un mensaje de éxito, cierro el modal e invalido las queries que dependen de la lista eliminada
     onSuccess: response => {
       toast.success(response.message);
       queryClient.invalidateQueries('listas');
@@ -66,7 +61,8 @@ const List = ({ nombre, especies, descripcion, id: listaId }) => {
   // Función para manejar el click en el botón de eliminar
   const handleDeleteClick = () => {
     if (window.confirm('¿Estás seguro de que quieres eliminar esta lista?"')) {
-      deleteListMutation.mutate({ id: listaId });
+      console.log('aceptado');
+      deleteListMutation.mutate(listaId);
     }
   };
 
@@ -134,7 +130,11 @@ const List = ({ nombre, especies, descripcion, id: listaId }) => {
             especies
               .slice(0, numEspecies)
               .map(especie => (
-                <Especie key={especie.nombreComun} {...especie} />
+                <Especie
+                  key={especie.nombreComun}
+                  listaId={listaId}
+                  {...especie}
+                />
               ))
           ) : (
             // Si no hay especies en la lista, muestro un mensaje
