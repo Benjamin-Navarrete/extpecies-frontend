@@ -2,7 +2,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 
 // Importo el componente SearchBox que me permite buscar especies
 // import SearchBox from './SearchBox';
@@ -13,6 +13,7 @@ import { XMarkIcon } from '@heroicons/react/24/solid';
 import { useMutation, useQueryClient } from 'react-query';
 import { updateList } from '@/api/listaApi';
 import { toast } from 'react-toastify';
+import SpeciesModal from '@/components/Modals/SpeciesModal';
 
 // Creo el componente EditListModal
 const EditListModal = ({
@@ -34,7 +35,25 @@ const EditListModal = ({
       .max(200, 'La descripción no puede tener más de 200 caracteres')
   });
 
+  // Creo una variable de estado para controlar si el modal de ver especie está abierto o cerrado
+  const [isSeeSpeciesModalOpen, setIsSeeSpeciesModalOpen] = useState(false);
+
+  // Creo una variable de estado para almacenar la especie que se va a mostrar en el modal
+  const [especie, setEspecie] = useState(null);
+
   const queryClient = useQueryClient();
+
+  // Creo una función para abrir el modal de ver especie
+  const openSeeSpeciesModal = especie => {
+    setIsSeeSpeciesModalOpen(true);
+    setEspecie(especie);
+  };
+
+  // Creo una función para cerrar el modal de ver especie
+  const closeSeeSpeciesModal = () => {
+    setIsSeeSpeciesModalOpen(false);
+    setEspecie(null);
+  };
 
   // Creo una función para cerrar el modal
   const closeModal = () => {
@@ -184,7 +203,8 @@ const EditListModal = ({
                       <EspecieRow
                         key={especie.nombreComun}
                         listaId={id}
-                        {...especie}
+                        especie={especie}
+                        openModal={openSeeSpeciesModal}
                       />
                     ))
                   ) : (
@@ -196,6 +216,13 @@ const EditListModal = ({
                 </ul>
               </div>
             </div>
+            {especie && (
+              <SpeciesModal
+                isOpen={isSeeSpeciesModalOpen}
+                closeModal={closeSeeSpeciesModal}
+                especie={especie}
+              />
+            )}
           </div>
         </Dialog>
       </Transition>

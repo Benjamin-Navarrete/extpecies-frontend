@@ -7,12 +7,13 @@ import { deleteSpecieFromList } from '@/api/listaApi';
 import { toast } from 'react-toastify';
 
 // Creo un componente para mostrar cada especie
-const Especie = props => {
+// Agrego una nueva prop llamada openModal
+const Especie = ({ especie, openModal, listaId }) => {
   const queryClient = useQueryClient();
 
   // Creo una mutación con react query para eliminar la especie de la lista
   const { mutate, isLoading, isError, isSuccess, error } = useMutation(
-    () => deleteSpecieFromList(props.listaId, props.id), // Paso el id de la lista y de la especie al método deleteSpecieFromList
+    () => deleteSpecieFromList(listaId, especie.id), // Paso el id de la lista y de la especie al método deleteSpecieFromList
     {
       onSuccess: data => {
         queryClient.invalidateQueries('listas');
@@ -35,26 +36,27 @@ const Especie = props => {
       <div className="flex items-center space-x-4">
         <div className="flex-shrink-0">
           <img
-            className="w-8 h-8 rounded-full"
-            src={props.imagen}
-            alt={props.nombreComun + ' image'}
+            className="h-16 w-16 rounded-full"
+            src={especie.imagen}
+            alt={especie.nombreComun}
           />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-gray-900 truncate ">
-            {props.nombreComun}
+          <p className="text-sm font-medium text-gray-900 truncate">
+            {especie.nombreComun}
           </p>
-          <p className="text-sm text-gray-500 truncate ">
-            {props.estadoConservacion}
+          <p className="text-sm text-gray-500 truncate">
+            {especie.nombreCientifico}
           </p>
         </div>
-
         <div className="inline-flex items-center text-base font-semibold text-gray-600">
+          {/* Le paso la prop openModal al icono de ojo y le agrego un evento onClick */}
           <EyeIcon
-            className="h-5 w-5"
+            className="h-5 w-5 cursor-pointer"
             data-tooltip-id="tooltip-ver"
             data-tooltip-content="Ver especie"
             data-tooltip-place="top"
+            onClick={() => openModal(especie)}
           />
           <Tooltip id="tooltip-ver" />
           <TrashIcon

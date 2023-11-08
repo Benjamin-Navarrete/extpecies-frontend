@@ -9,12 +9,19 @@ import EditListModal from './EditListModal';
 import { toast } from 'react-toastify';
 import { useMutation, useQueryClient } from 'react-query';
 import { deleteList } from '@/api/listaApi';
+import SpeciesModal from '@/components/Modals/SpeciesModal';
 
 // Componente para mostrar cada lista
 const List = ({ nombre, especies, descripcion, id: listaId }) => {
   const queryClient = useQueryClient();
   // Creo una variable de estado para controlar si el modal está abierto o cerrado
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditListModalOpen, setIsEditListModalOpen] = useState(false);
+
+  // Creo una variable de estado para controlar si el modal de ver especie está abierto o cerrado
+  const [isSeeSpeciesModalOpen, setIsSeeSpeciesModalOpen] = useState(false);
+
+  // Creo una variable de estado para almacenar la especie que se va a mostrar en el modal
+  const [especie, setEspecie] = useState(null);
 
   // Estado local para almacenar el número de especies que se muestran
   const [numEspecies, setNumEspecies] = useState(4);
@@ -24,9 +31,21 @@ const List = ({ nombre, especies, descripcion, id: listaId }) => {
     setNumEspecies(numEspecies + 4);
   };
 
-  // Creo una función para abrir el modal
-  const openModal = () => {
-    setIsModalOpen(true);
+  // Creo una función para abrir el modal de editar lista
+  const openEditModal = () => {
+    setIsEditListModalOpen(true);
+  };
+
+  // Creo una función para abrir el modal de ver especie
+  const openSeeSpeciesModal = especie => {
+    setIsSeeSpeciesModalOpen(true);
+    setEspecie(especie);
+  };
+
+  // Creo una función para cerrar el modal de ver especie
+  const closeSeeSpeciesModal = () => {
+    setIsSeeSpeciesModalOpen(false);
+    setEspecie(null);
   };
 
   // Creo la variable deleteListMutation que es el resultado de invocar el método useMutation con el método deleteList y un objeto de opciones
@@ -113,7 +132,7 @@ const List = ({ nombre, especies, descripcion, id: listaId }) => {
                   className={`${
                     active ? 'bg-emerald-600 text-white' : 'text-gray-900'
                   } group flex items-center px-4 py-2 text-sm w-full text-left`}
-                  onClick={openModal}
+                  onClick={openEditModal}
                 >
                   Editar o ver
                 </button>
@@ -133,7 +152,8 @@ const List = ({ nombre, especies, descripcion, id: listaId }) => {
                 <Especie
                   key={especie.nombreComun}
                   listaId={listaId}
-                  {...especie}
+                  especie={especie}
+                  openModal={openSeeSpeciesModal}
                 />
               ))
           ) : (
@@ -169,10 +189,18 @@ const List = ({ nombre, especies, descripcion, id: listaId }) => {
         nombre={nombre}
         descripcion={descripcion}
         especies={especies}
-        isOpen={isModalOpen}
-        setIsOpen={setIsModalOpen}
+        isOpen={isEditListModalOpen}
+        setIsOpen={setIsEditListModalOpen}
         id={listaId}
       />
+
+      {especie && (
+        <SpeciesModal
+          isOpen={isSeeSpeciesModalOpen}
+          closeModal={closeSeeSpeciesModal}
+          especie={especie}
+        />
+      )}
     </div>
   );
 };
