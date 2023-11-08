@@ -1,5 +1,5 @@
 // Archivo src\components\Profile\Likes.js
-import { HeartIcon, EyeIcon } from '@heroicons/react/20/solid';
+import { EyeIcon } from '@heroicons/react/20/solid';
 import { useQuery } from 'react-query';
 import { getLikesByUser } from '@/api/likeApi';
 import { useState } from 'react';
@@ -18,7 +18,7 @@ export default function Likes() {
     ['likes', usuario?.id],
     () => getLikesByUser(usuario?.id),
     {
-      enabled: !!usuario.id
+      enabled: !!usuario?.id
     }
   );
 
@@ -82,20 +82,8 @@ export default function Likes() {
             <div>
               <div className="-mt-px flex divide-x divide-gray-200">
                 <div className="flex w-0 flex-1">
-                  <a
-                    href={'#'}
-                    className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-bl-lg border border-transparent py-4 px-2 text-sm font-medium text-gray-700 hover:text-gray-500"
-                  >
-                    <HeartIcon
-                      className="h-5 w-5 text-gray-400"
-                      aria-hidden="true"
-                    />
-                    <span className="ml-3">Me gusta</span>
-                  </a>
-                </div>
-                <div className="-ml-px flex w-0 flex-1">
                   <button
-                    className="relative inline-flex w-0 flex-1 items-center justify-center rounded-br-lg border border-transparent py-4 px-2 text-sm font-medium text-gray-700 hover:text-gray-500"
+                    className="relative inline-flex w-0 flex-1 items-center justify-center rounded-bl-lg rounded-br-lg border border-transparent py-4 px-2 text-sm font-medium text-gray-700 hover:text-gray-500"
                     onClick={() => openModal(especie.especy)}
                   >
                     {/* Le paso la función openModal al icono de ojo y le agrego un evento onClick */}
