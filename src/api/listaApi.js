@@ -32,7 +32,6 @@ export const addSpecieToList = async (listaId, especie_id) => {
 
 // Método para eliminar una lista con axios
 export const deleteList = async listaId => {
-  console.log('listaId' + listaId);
   // Hago una petición delete a la ruta listas/${listaId} con el id de la lista
   const response = await listaApi.delete(`listas/${listaId}`);
   // Devuelvo la respuesta del servidor

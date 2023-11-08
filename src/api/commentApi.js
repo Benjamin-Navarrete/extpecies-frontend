@@ -6,7 +6,6 @@ export const commentApi = axios.create({
 });
 
 export const createComment = async data => {
-  console.log('data createComment', data);
   const response = await commentApi.post('', {
     usuario_id: data.id_usuario,
     especie_id: data.id_especie,
@@ -23,8 +22,6 @@ export const deleteComment = async data => {
 };
 
 export const getCommentsByEspecie = async (id_especie, page, limit) => {
-  console.log('id_especie', id_especie);
-
   const response = await commentApi.get('', {
     params: { especie_id: id_especie, page, limit }
   });

@@ -67,6 +67,7 @@ const SpeciesActions = ({ especie, usuario }) => {
         : quitarLike(usuario.id, especie.id),
     {
       onSuccess: data => {
+        queryClient.invalidateQueries('likes');
         toast.success(
           `Se ${liked ? 'eliminó' : 'agregó'} el me gusta correctamente`
         );
