@@ -34,6 +34,7 @@ const routes = [
 export default function MainNavbar() {
   // Obtener la instancia del enrutador de next.js
   const router = useRouter();
+  const baseURL = process.env.NEXT_PUBLIC_API_URL;
 
   // Usar el hook useAuth para acceder a los valores y funciones relacionados con la autenticación
   const { usuario, permisos, isAuthenticated, isLoading, handleLogout } =
@@ -157,7 +158,7 @@ export default function MainNavbar() {
                           <Menu.Item>
                             {({ active }) => (
                               <Link
-                                href="/profile"
+                                href={baseURL + '/profile/logros'}
                                 className={classnames(
                                   active ? 'bg-gray-100' : '',
                                   'block px-4 py-2 text-sm text-gray-700'
@@ -170,7 +171,7 @@ export default function MainNavbar() {
                           <Menu.Item>
                             {({ active }) => (
                               <Link
-                                href="/likes"
+                                href={baseURL + '/profile/me-gusta'}
                                 className={classnames(
                                   active ? 'bg-gray-100' : '',
                                   'block px-4 py-2 text-sm text-gray-700'

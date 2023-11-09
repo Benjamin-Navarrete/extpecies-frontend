@@ -5,8 +5,8 @@ import { useQuery } from 'react-query';
 import { getAllLists } from '@/api/listaApi';
 import List from './List';
 
-// Defino el componente Grid
-const Grid = () => {
+// Defino el componente Lists
+const Lists = () => {
   // Obtengo el id del usuario con el hook useQuery
   const { data: usuario } = useQuery('usuario');
 
@@ -43,5 +43,5 @@ const Grid = () => {
   );
 };
 
-// Exporto el componente Grid como el principal
-export default Grid;
+// Exporto el componente Lists como el principal
+export default Lists;
