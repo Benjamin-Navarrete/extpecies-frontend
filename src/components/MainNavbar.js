@@ -184,7 +184,7 @@ export default function MainNavbar() {
                           <Menu.Item>
                             {({ active }) => (
                               <Link
-                                href="/lists"
+                                href={baseURL + '/profile/listas'}
                                 className={classnames(
                                   active ? 'bg-gray-100' : '',
                                   'block px-4 py-2 text-sm text-gray-700'
@@ -194,10 +194,10 @@ export default function MainNavbar() {
                               </Link>
                             )}
                           </Menu.Item>
-                          <Menu.Item>
+                          {/* <Menu.Item>
                             {({ active }) => (
                               <Link
-                                href="/statistics"
+                                href={baseURL + '/profile/estadisticas'}
                                 className={classnames(
                                   active ? 'bg-gray-100' : '',
                                   'block px-4 py-2 text-sm text-gray-700'
@@ -206,11 +206,11 @@ export default function MainNavbar() {
                                 Estadísticas
                               </Link>
                             )}
-                          </Menu.Item>
+                          </Menu.Item> */}
                           <Menu.Item>
                             {({ active }) => (
                               <Link
-                                href="/configuration"
+                                href={baseURL + '/profile/configuracion'}
                                 className={classnames(
                                   active ? 'bg-gray-100' : '',
                                   'block px-4 py-2 text-sm text-gray-700'
@@ -220,10 +220,10 @@ export default function MainNavbar() {
                               </Link>
                             )}
                           </Menu.Item>
-                          <Menu.Item>
+                          {/* <Menu.Item>
                             {({ active }) => (
                               <Link
-                                href="/security"
+                                href={baseURL + '/profile/logros'}
                                 className={classnames(
                                   active ? 'bg-gray-100' : '',
                                   'block px-4 py-2 text-sm text-gray-700'
@@ -232,7 +232,7 @@ export default function MainNavbar() {
                                 Privacidad
                               </Link>
                             )}
-                          </Menu.Item>
+                          </Menu.Item> */}
                           <Menu.Item>
                             {({ active }) => (
                               <a

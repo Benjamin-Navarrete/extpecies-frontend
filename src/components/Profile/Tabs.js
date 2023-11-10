@@ -4,18 +4,21 @@ import {
   TrophyIcon,
   HeartIcon,
   ListBulletIcon,
-  ChartBarSquareIcon
+  ChartBarSquareIcon,
+  CogIcon
 } from '@heroicons/react/20/solid';
 import Achievements from './Achievements';
 import Likes from './Likes';
 import Lists from './Listas/Lists';
 import Link from 'next/link';
+import Configuracion from './Configuracion';
 
 const tabs = [
   { name: 'Logros', icon: TrophyIcon, value: 'logros' },
   { name: 'Me gusta', icon: HeartIcon, value: 'me-gusta' },
   { name: 'Listas', icon: ListBulletIcon, value: 'listas' },
-  { name: 'Estadísticas', icon: ChartBarSquareIcon, value: 'estadisticas' }
+  { name: 'Configuración', icon: CogIcon, value: 'configuracion' }
+  // { name: 'Estadísticas', icon: ChartBarSquareIcon, value: 'estadisticas' }
 ];
 
 function classNames(...classes) {
@@ -37,6 +40,9 @@ export default function Tabs(props) {
         break;
       case 'listas':
         setContent(<Lists />);
+        break;
+      case 'configuracion':
+        setContent(<Configuracion />);
         break;
       default:
         setContent(null);
