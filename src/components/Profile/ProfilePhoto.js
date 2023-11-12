@@ -17,7 +17,7 @@ const ProfilePhoto = ({ formik }) => {
           >
             <img
               className="h-full w-full rounded-full"
-              src={formik.values.imageUrl}
+              src={`${process.env.NEXT_PUBLIC_EXPRESS_API_URL}/${formik.values.fotoPerfil}`}
               alt=""
             />
           </div>
@@ -32,7 +32,7 @@ const ProfilePhoto = ({ formik }) => {
               </label>
               <Field
                 id="mobile-user-photo"
-                name="imageUrl"
+                name="fotoPerfil"
                 type="text"
                 className="absolute h-full w-full cursor-pointer rounded-md border-gray-300 opacity-0"
               />
@@ -45,19 +45,19 @@ const ProfilePhoto = ({ formik }) => {
         <div className="relative h-40 w-40 rounded-full">
           <img
             className="relative h-40 w-40 rounded-full"
-            src={formik.values.imageUrl}
+            src={`${process.env.NEXT_PUBLIC_EXPRESS_API_URL}/${formik.values.fotoPerfil}`}
             alt=""
           />
           <label
             htmlFor="desktop-user-photo"
             className="absolute inset-0 flex h-full w-full rounded-full items-center justify-center bg-black bg-opacity-75 text-sm font-medium text-white opacity-0 focus-within:opacity-100 hover:opacity-100"
           >
-            <span>Change</span>
+            <span>Cambiar</span>
             <span className="sr-only"> user photo</span>
             <Field
               type="text"
               id="desktop-user-photo"
-              name="imageUrl"
+              name="fotoPerfil"
               className="absolute inset-0 h-full w-full cursor-pointer rounded-md border-gray-300 opacity-0"
             />
           </label>

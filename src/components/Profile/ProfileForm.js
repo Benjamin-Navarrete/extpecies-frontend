@@ -51,16 +51,16 @@ const ProfileForm = ({ formik }) => {
       <div className="grid grid-cols-12 gap-6">
         <div className="col-span-12 sm:col-span-6">
           <label
-            htmlFor="first-name"
+            htmlFor="nombres"
             className="block text-sm font-medium text-gray-700"
           >
             Nombres:
           </label>
           <Field
             type="text"
-            name="firstName"
-            id="first-name"
-            autoComplete="given-name"
+            name="nombres"
+            id="nombres"
+            autoComplete="nombres"
             className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-emerald-500 sm:text-sm"
           />
         </div>
@@ -74,41 +74,41 @@ const ProfileForm = ({ formik }) => {
           </label>
           <Field
             type="text"
-            name="email"
+            name="correo"
             id="correo"
-            autoComplete="email"
+            autoComplete="correo"
             className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-emerald-500 sm:text-sm"
           />
         </div>
 
         <div className="col-span-12 sm:col-span-6">
           <label
-            htmlFor="last-name"
+            htmlFor="apellidos"
             className="block text-sm font-medium text-gray-700"
           >
             Apellidos
           </label>
           <Field
             type="text"
-            name="lastName"
-            id="last-name"
-            autoComplete="family-name"
+            name="apellidos"
+            id="apellidos"
+            autoComplete="apellidos"
             className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-emerald-500 sm:text-sm"
           />
         </div>
 
         <div className="col-span-6 sm:col-span-6">
           <label
-            htmlFor="country"
+            htmlFor="pais"
             className="block text-sm font-medium text-gray-700"
           >
             País
           </label>
           <Field
             as="select"
-            name="country"
-            id="country"
-            autoComplete="country"
+            name="pais"
+            id="pais"
+            autoComplete="pais"
             className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-emerald-500 sm:text-sm"
           >
             {countries.map(country => (

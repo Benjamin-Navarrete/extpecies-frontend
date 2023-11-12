@@ -30,13 +30,13 @@ const CoverPhoto = ({ formik }) => {
           </svg>
           <div className="flex text-sm text-gray-600">
             <label
-              htmlFor="file-upload"
+              htmlFor="fotoPortada"
               className="relative cursor-pointer rounded-md bg-white font-medium text-emerald-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-emerald-500 focus-within:ring-offset-2 hover:text-emerald-500"
             >
               <span>Sube una imagen</span>
               <Field
-                id="file-upload"
-                name="coverPhoto"
+                id="fotoPortada"
+                name="fotoPortada"
                 type="text"
                 className="sr-only"
               />
