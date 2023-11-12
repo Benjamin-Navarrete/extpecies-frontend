@@ -1,51 +1,65 @@
 // Archivo src\components\Profile\CoverPhoto.js
-import React from 'react';
-import { Field } from 'formik';
+import React, { useRef, useState } from 'react';
 
 const CoverPhoto = ({ formik }) => {
-  // Este componente recibe el objeto formik como prop y muestra y cambia la foto de portada del usuario
+  // Crear una referencia al input de tipo file
+  const fileInputRef = useRef();
+
+  // Crear un estado para guardar la foto seleccionada
+  const [coverPhoto, setCoverPhoto] = useState(null);
+
+  // Crear una función para manejar el cambio de foto
+  const handleChangePhoto = e => {
+    // Obtener el archivo seleccionado
+    const file = e.target.files[0];
+
+    // Validar que el archivo sea de un formato válido
+    // Puedes usar otro criterio si quieres
+    const formatosValidos = ['image/jpeg', 'image/png'];
+    if (!file || !formatosValidos.includes(file.type)) {
+      alert('La foto de portada no es válida');
+      return;
+    }
+
+    // Asignar el archivo al campo del formulario
+    formik.setFieldValue('fotoPortada', file);
+
+    // Mostrar la foto seleccionada en el componente
+    const reader = new FileReader();
+    reader.onload = () => {
+      setCoverPhoto(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  // Crear una función para activar el input de tipo file
+  const handleClickPhoto = () => {
+    fileInputRef.current.click();
+  };
+
   return (
-    <div className="sm:col-span-6 mb-4">
-      <label
-        htmlFor="cover-photo"
-        className="block text-sm font-medium text-gray-700"
+    <div className="flex flex-col items-center justify-center flex-1 px-6 py-8 bg-gray-100 rounded-lg">
+      <img
+        // Usar el estado de la foto seleccionada si existe, de lo contrario, usar el valor inicial del formulario
+        src={coverPhoto ? coverPhoto : formik.values.fotoPortada}
+        alt="Foto de portada"
+        className="object-cover w-full h-48 rounded-md"
+      />
+      <button
+        type="button"
+        onClick={handleClickPhoto}
+        className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
       >
-        Foto de portada
-      </label>
-      <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
-        <div className="space-y-1 text-center">
-          <svg
-            className="mx-auto h-12 w-12 text-gray-400"
-            stroke="currentColor"
-            fill="none"
-            viewBox="0 0 48 48"
-            aria-hidden="true"
-          >
-            <path
-              d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          <div className="flex text-sm text-gray-600">
-            <label
-              htmlFor="fotoPortada"
-              className="relative cursor-pointer rounded-md bg-white font-medium text-emerald-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-emerald-500 focus-within:ring-offset-2 hover:text-emerald-500"
-            >
-              <span>Sube una imagen</span>
-              <Field
-                id="fotoPortada"
-                name="fotoPortada"
-                type="text"
-                className="sr-only"
-              />
-            </label>
-            <p className="pl-1">o arrastra y suelta</p>
-          </div>
-          <p className="text-xs text-gray-500">PNG, JPG hasta 3MB</p>
-        </div>
-      </div>
+        Cambiar foto de portada
+      </button>
+      <input
+        type="file"
+        name="fotoPortada"
+        id="fotoPortada"
+        ref={fileInputRef}
+        onChange={handleChangePhoto}
+        className="hidden"
+      />
     </div>
   );
 };
