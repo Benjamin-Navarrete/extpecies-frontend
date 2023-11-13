@@ -40,7 +40,7 @@ const ProfilePhoto = ({ formik }) => {
   return (
     <div className="flex flex-col items-center justify-center flex-1 px-6 py-8 bg-gray-100 rounded-lg">
       <img
-        src={profilePhoto}
+        src={profilePhoto ? profilePhoto : formik.values.fotoPerfil}
         alt="Foto de perfil"
         className="object-cover w-32 h-32 rounded-full"
       />

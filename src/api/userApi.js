@@ -19,3 +19,20 @@ export const obtenerUsuarioPorId = async id => {
   const response = await userApi.get(`usuarios/${id}`);
   return response.data;
 };
+
+export const actualizarUsuarioPorId = async ({ values }) => {
+  // Crear un objeto FormData para enviar los datos del formulario
+  const formData = new FormData();
+  for (const key in values) {
+    formData.append(key, values[key]);
+  }
+
+  // Enviar el FormData con axios usando el método put y el id del usuario
+  const response = await userApi.put(`usuarios/${values.id}`, formData, {
+    // Especificar el Content-Type como multipart/form-data
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+  return response.data;
+};

@@ -1,15 +1,17 @@
 // Archivo src\components\Profile\ProfileSettings.js
 import React, { useEffect, useState } from 'react';
 import { Formik } from 'formik';
-import { useQuery } from 'react-query';
-import { obtenerUsuarioPorId } from '@/api/userApi';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { actualizarUsuarioPorId, obtenerUsuarioPorId } from '@/api/userApi';
 import ProfilePhoto from './ProfilePhoto.js';
 import CoverPhoto from './CoverPhoto';
 import ProfileForm from './ProfileForm';
+import { toast } from 'react-toastify';
 
 const ProfileSettings = () => {
   const [profilePhotoUrl, setProfilePhotoUrl] = useState(null);
   const [coverPhotoUrl, setCoverPhotoUrl] = useState(null);
+  const queryClient = useQueryClient();
 
   // Obtener el id del usuario logeado
   const { data: usuario } = useQuery('usuario');
@@ -33,10 +35,30 @@ const ProfileSettings = () => {
     }
   }, [usuarioPorId]);
 
+  // Crear la mutación con react query para actualizar el usuario
+  const {
+    mutate: actualizarUsuario,
+    isLoading: actualizandoUsuario,
+    error: errorActualizandoUsuario,
+    isSuccess: exitoActualizandoUsuario
+  } = useMutation(actualizarUsuarioPorId, {
+    // Actualizar el estado del usuario en el caché de react query
+    onSuccess: data => {
+      toast.success('Usuario actualizado');
+      queryClient.invalidateQueries('usuarioPorId');
+      queryClient.setQueryData('usuarioPorId', data);
+      setProfilePhotoUrl(data.fotoPerfil);
+      setCoverPhotoUrl(data.fotoPortada);
+    },
+    onError: () => {
+      toast.error('Ha ocurrido un error');
+    }
+  });
+
   // Pasar las variables anteriores como el valor inicial del formulario
   const onSubmit = values => {
-    // Aquí puedes manejar la lógica para enviar los datos del formulario.
-    console.log('Valores del formulario:', values);
+    // Pasar el id del usuario a la función actualizarUsuario
+    actualizarUsuario({ id, values });
   };
 
   return isLoading ? (
