@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import { useMutation, useQueryClient } from 'react-query';
 import { deleteList } from '@/api/listaApi';
 import SpeciesModal from '@/components/Modals/SpeciesModal';
+import copy from 'copy-to-clipboard';
 
 // Componente para mostrar cada lista
 const List = ({ nombre, especies, descripcion, id: listaId }) => {
@@ -85,6 +86,21 @@ const List = ({ nombre, especies, descripcion, id: listaId }) => {
     }
   };
 
+  // Función que genera y copia el enlace de la lista
+  const handleShareClick = () => {
+    // Obtengo el dominio del frontend desde el objeto window
+    const domain = window.location.origin;
+
+    // Creo el enlace con el formato http://(direccion en la que esta el frontend)/listas/[id]
+    const link = `${domain}/listas/${listaId}`;
+
+    // Copio el enlace al portapapeles del usuario
+    copy(link);
+
+    // Muestro un mensaje de éxito al usuario
+    toast.success('Enlace copiado al portapapeles');
+  };
+
   return (
     <div className="w-full max-w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 md:flex-grow md:flex-shrink">
       <div className="flex items-center justify-between mb-4">
@@ -116,15 +132,17 @@ const List = ({ nombre, especies, descripcion, id: listaId }) => {
             <Menu.Item>
               {({ active }) => (
                 <a
-                  href="#"
                   className={`${
                     active ? 'bg-emerald-600 text-white' : 'text-gray-900'
                   } group flex items-center px-4 py-2 text-sm`}
+                  // Añado el evento onClick y llamo a la función handleShareClick
+                  onClick={handleShareClick}
                 >
                   Compartir
                 </a>
               )}
             </Menu.Item>
+
             {/* Creo el elemento Menu.Item con el componente EditListModal como hijo */}
             <Menu.Item>
               {({ active }) => (

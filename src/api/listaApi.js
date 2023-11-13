@@ -21,6 +21,13 @@ export const getAllLists = async userId => {
   return response.data;
 };
 
+// Función para hacer el get de una lista con axios
+export const getList = async id => {
+  const lista_id = id;
+  const response = await listaApi.get(`listas/${lista_id}`);
+  return response.data;
+};
+
 // Función para hacer el put de una especie a una lista con axios
 export const addSpecieToList = async (listaId, especie_id) => {
   // Paso los ids de la lista y de la especie como parámetros de la ruta
