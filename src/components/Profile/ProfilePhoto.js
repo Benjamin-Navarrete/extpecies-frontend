@@ -38,7 +38,7 @@ const ProfilePhoto = ({ formik }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center flex-1 px-6 py-8 bg-gray-100 rounded-lg">
+    <div className="flex flex-col items-start justify-center flex-1 py-2 mb-4">
       <img
         src={profilePhoto ? profilePhoto : formik.values.fotoPerfil}
         alt="Foto de perfil"
@@ -47,7 +47,7 @@ const ProfilePhoto = ({ formik }) => {
       <button
         type="button"
         onClick={handleClickPhoto}
-        className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
+        className="mt-4 inline-flex px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
       >
         Cambiar foto de perfil
       </button>

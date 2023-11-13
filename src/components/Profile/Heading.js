@@ -1,6 +1,8 @@
 // Archivo src\components\Profile\Heading.js
 import useAuth from '@/hooks/useAuth';
 
+const serverUrl = process.env.NEXT_PUBLIC_EXPRESS_API_URL;
+
 const profile = {
   name: 'Ricardo Cooper',
   email: 'ricardo.cooper@example.com',
@@ -31,7 +33,9 @@ export default function ProfileHeading() {
       <div>
         <img
           className="h-32 w-full object-cover lg:h-48"
-          src={profile.backgroundImage}
+          src={
+            serverUrl + '/' + usuario?.fotoPortada || profile.backgroundImage
+          }
           alt=""
         />
       </div>
@@ -40,7 +44,7 @@ export default function ProfileHeading() {
           <div className="flex">
             <img
               className="h-24 w-24 rounded-full ring-4 ring-white sm:h-32 sm:w-32"
-              src={profile.avatar}
+              src={serverUrl + '/' + usuario.fotoPerfil || profile.avatar}
               alt=""
             />
           </div>

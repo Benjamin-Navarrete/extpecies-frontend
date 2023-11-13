@@ -4,7 +4,6 @@ import {
   TrophyIcon,
   HeartIcon,
   ListBulletIcon,
-  ChartBarSquareIcon,
   CogIcon
 } from '@heroicons/react/20/solid';
 import Achievements from './Achievements';
@@ -12,6 +11,7 @@ import Likes from './Likes';
 import Lists from './Listas/Lists';
 import Link from 'next/link';
 import Configuracion from './Configuracion';
+import { useRouter } from 'next/router';
 
 const tabs = [
   { name: 'Logros', icon: TrophyIcon, value: 'logros' },
@@ -28,6 +28,8 @@ function classNames(...classes) {
 // Recibir el prop tab desde el archivo [tab].js los valores son
 export default function Tabs(props) {
   const [content, setContent] = useState(null);
+  // Crear una instancia del componente Router
+  const router = useRouter();
 
   useEffect(() => {
     // Usar el prop tab en lugar del estado currentTab
@@ -65,11 +67,7 @@ export default function Tabs(props) {
           defaultValue={props.tab}
           onChange={e => {
             const href = `/profile/${e.target.value}`;
-            return (
-              <Link href={href}>
-                <a></a>
-              </Link>
-            );
+            router.push(href);
           }}
         >
           {tabs.map(tab => (

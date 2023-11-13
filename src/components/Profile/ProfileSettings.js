@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Formik } from 'formik';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { actualizarUsuarioPorId, obtenerUsuarioPorId } from '@/api/userApi';
+import { actualizarUsuarioPorId } from '@/api/userApi';
 import ProfilePhoto from './ProfilePhoto.js';
 import CoverPhoto from './CoverPhoto';
 import ProfileForm from './ProfileForm';
@@ -17,38 +17,33 @@ const ProfileSettings = () => {
   const { data: usuario } = useQuery('usuario');
   const id = usuario?.id;
 
-  // Crear el useQuery para consultar los datos del usuario por id
-  const {
-    data: usuarioPorId,
-    isLoading,
-    error
-  } = useQuery('usuarioPorId', () => obtenerUsuarioPorId(id), {
-    enabled: !!id
-  });
-
   // Crear una constante para la url del servidor
   const serverUrl = 'http://localhost:3500';
 
   // Usar un efecto para actualizar las urls de las fotos cuando cambie el usuarioPorId
   useEffect(() => {
-    if (usuarioPorId) {
-      setProfilePhotoUrl(`${serverUrl}/${usuarioPorId.fotoPerfil}`);
-      setCoverPhotoUrl(`${serverUrl}/${usuarioPorId.fotoPortada}`);
+    if (usuario) {
+      setProfilePhotoUrl(`${serverUrl}/${usuario.fotoPerfil}`);
+      setCoverPhotoUrl(`${serverUrl}/${usuario.fotoPortada}`);
     }
-  }, [usuarioPorId]);
+  }, [usuario]);
 
   // Crear la mutación con react query para actualizar el usuario
-  const { mutate: actualizarUsuario } = useMutation(actualizarUsuarioPorId, {
-    // Actualizar el estado del usuario en el caché de react query
-    onSuccess: data => {
-      toast.success('Usuario actualizado');
-      queryClient.invalidateQueries('usuarioPorId');
-      queryClient.setQueryData('usuarioPorId', data);
-    },
-    onError: () => {
-      toast.error('Ha ocurrido un error');
+  const { mutate: actualizarUsuario, error } = useMutation(
+    actualizarUsuarioPorId,
+    {
+      // Actualizar el estado del usuario en el caché de react query
+      onSuccess: data => {
+        toast.success('Usuario actualizado');
+        queryClient.invalidateQueries('usuarioPorId');
+        queryClient.invalidateQueries('usuario');
+        queryClient.setQueryData('usuarioPorId', data);
+      },
+      onError: () => {
+        toast.error('Ha ocurrido un error');
+      }
     }
-  });
+  );
 
   // Pasar las variables anteriores como el valor inicial del formulario
   const onSubmit = values => {
@@ -58,16 +53,14 @@ const ProfileSettings = () => {
 
   // Crear una función para renderizar el contenido según el estado del useQuery
   const renderContent = () => {
-    if (isLoading) {
-      return <div className="text-center">Cargando...</div>;
-    } else if (error) {
+    if (error) {
       return <div className="text-center">Ha ocurrido un error</div>;
     } else {
       return (
         <Formik
           // Pasar las rutas completas de las fotos como el valor inicial del formulario
           initialValues={{
-            ...usuarioPorId,
+            ...usuario,
             fotoPerfil: profilePhotoUrl,
             fotoPortada: coverPhotoUrl
           }}

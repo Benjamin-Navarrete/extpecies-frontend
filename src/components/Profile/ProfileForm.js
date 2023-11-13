@@ -65,22 +65,6 @@ const ProfileForm = ({ formik }) => {
           />
         </div>
 
-        <div className="col-span-6">
-          <label
-            htmlFor="correo"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Correo electrónico
-          </label>
-          <Field
-            type="text"
-            name="correo"
-            id="correo"
-            autoComplete="correo"
-            className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-emerald-500 sm:text-sm"
-          />
-        </div>
-
         <div className="col-span-12 sm:col-span-6">
           <label
             htmlFor="apellidos"

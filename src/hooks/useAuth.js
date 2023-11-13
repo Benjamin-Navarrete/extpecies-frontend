@@ -3,9 +3,9 @@ import { useEffect, useState, useCallback } from 'react';
 import Cookies from 'js-cookie';
 import jwtDecode from 'jwt-decode';
 import { toast } from 'react-toastify';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
-import { login } from '@/api/userApi';
+import { login, obtenerUsuarioPorId } from '@/api/userApi';
 
 // Hook useAuth que devuelve los valores y funciones relacionados con la autenticación
 export default function useAuth() {
@@ -20,6 +20,15 @@ export default function useAuth() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   // Guardar el estado de carga de la sesión
   const [isLoading, setIsLoading] = useState(true);
+  // Obtener datos de usuario por id con obtenerUsuarioPorId
+
+  const { data: usuarioPorId } = useQuery('usuario', () => {
+    const token = Cookies.get('token');
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      return obtenerUsuarioPorId(decodedToken.usuario.id);
+    }
+  });
 
   // Cargar los datos del usuario con useCallback
   const loadUserData = useCallback(() => {
@@ -29,7 +38,7 @@ export default function useAuth() {
       // Decodificar el token y obtener los permisos y los datos del usuario
       const decodedToken = jwtDecode(token);
       setPermisos(decodedToken.permisos || []);
-      queryClient.setQueryData('usuario', decodedToken.usuario);
+      queryClient.setQueryData(usuarioPorId);
 
       // Actualizar el estado de autenticación a verdadero
       setIsAuthenticated(true);
