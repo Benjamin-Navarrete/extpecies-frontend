@@ -21,7 +21,6 @@ export default function useAuth() {
   // Guardar el estado de carga de la sesión
   const [isLoading, setIsLoading] = useState(true);
   // Obtener datos de usuario por id con obtenerUsuarioPorId
-
   const { data: usuarioPorId } = useQuery('usuario', () => {
     const token = Cookies.get('token');
     if (token) {
@@ -76,6 +75,7 @@ export default function useAuth() {
         // Guardar el token en las cookies
         const token = data.token;
         Cookies.set('token', token);
+
         toast.success('Usuario autenticado exitosamente');
 
         // Guardar los datos del usuario en "usuario"
