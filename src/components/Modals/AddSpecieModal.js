@@ -5,6 +5,7 @@ import AddListModal from '../Profile/Listas/AddListModal';
 import { addSpecieToList, getAllLists } from '@/api/listaApi';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { toast } from 'react-toastify';
+import Logro from '../Logro';
 
 const AddSpecieModal = ({ isOpen, onClose, usuario, especie }) => {
   // Creo un estado local para el modal de crear lista
@@ -12,7 +13,7 @@ const AddSpecieModal = ({ isOpen, onClose, usuario, especie }) => {
   const queryClient = useQueryClient();
 
   // Creo una mutación con el hook useMutation y le paso la función addSpecieToList y las opciones de la mutación
-  const mutation = useMutation(
+  const { mutate: mutation, newListSpecies } = useMutation(
     listaId => addSpecieToList(listaId, especie.id), // Le paso el id de la lista y el id de la especie a la función
     {
       // Manejo el éxito de la mutación
@@ -128,7 +129,7 @@ const AddSpecieModal = ({ isOpen, onClose, usuario, especie }) => {
                                 type="button"
                                 className="inline-flex items-center px-2 py-1 text-xs font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-500"
                                 onClick={() => {
-                                  mutation.mutate(lista.id);
+                                  mutation(lista.id);
                                 }}
                               >
                                 Añadir
@@ -172,6 +173,9 @@ const AddSpecieModal = ({ isOpen, onClose, usuario, especie }) => {
         closeModal={closeCreateListModal}
         usuario={usuario}
       />
+      {newListSpecies && newListSpecies.logros && (
+        <Logro logro={newListSpecies.logros} />
+      )}
     </>
   );
 };
