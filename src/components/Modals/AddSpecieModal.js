@@ -59,7 +59,7 @@ const AddSpecieModal = ({ isOpen, onClose, usuario, especie }) => {
       <Transition appear show={isOpen} as={React.Fragment}>
         <Dialog
           as="div"
-          className="fixed inset-0 z-[9998] overflow-y-auto"
+          className="fixed inset-0 z-[9991] overflow-y-auto"
           onClose={onClose}
         >
           <div className="min-h-screen px-4 text-center">

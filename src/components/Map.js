@@ -12,6 +12,7 @@ import { getEspecieById } from '@/api/specieApi';
 // Importar useRouter desde next/router
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
+import Logro from './Logro';
 
 const Map = ({ especies, isLoading, isError }) => {
   // Usar useRouter para obtener el objeto router
@@ -40,18 +41,7 @@ const Map = ({ especies, isLoading, isError }) => {
     () => getEspecieById(initialSpecieId),
     {
       // Deshabilitar la consulta si el id es nulo
-      enabled: !!initialSpecieId,
-      onSuccess: data => {
-        // Handle success here
-        console.log('Data fetched successfully', data);
-        if (data.logro) {
-          toast.success(data.logro.nombre);
-        }
-      },
-      onError: error => {
-        // Handle error here
-        console.error('Error fetching data', error);
-      }
+      enabled: !!initialSpecieId
     }
   );
 
@@ -158,6 +148,8 @@ const Map = ({ especies, isLoading, isError }) => {
           isError={isErrorSpecie}
         />
       )}
+      {/* Agregar el componente Logro y pasarle el prop logro que obtienes de la consulta */}
+      <Logro logro={selectedSpecie?.logro} />
     </>
   );
 };

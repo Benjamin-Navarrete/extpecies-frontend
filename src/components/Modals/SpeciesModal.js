@@ -54,7 +54,7 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
     <Transition show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="fixed inset-0 z-[9998] overflow-y-auto"
+        className="fixed inset-0 z-[9991] overflow-y-auto"
         onClose={() => {
           closeModal();
           setLiked(false);
