@@ -1,16 +1,26 @@
 // Archivo src\api\commentApi.js
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export const commentApi = axios.create({
   baseURL: 'http://localhost:3500/api/comentarios'
 });
 
 export const createComment = async data => {
-  const response = await commentApi.post('', {
-    usuario_id: data.id_usuario,
-    especie_id: data.id_especie,
-    contenido: data.content
-  });
+  const token = Cookies.get('token');
+  const response = await commentApi.post(
+    '',
+    {
+      usuario_id: data.id_usuario,
+      especie_id: data.id_especie,
+      contenido: data.content
+    },
+    {
+      headers: {
+        Authorization: `${token}`
+      }
+    }
+  );
   return response.data;
 };
 

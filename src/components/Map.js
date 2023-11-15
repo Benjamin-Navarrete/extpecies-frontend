@@ -148,8 +148,9 @@ const Map = ({ especies, isLoading, isError }) => {
           isError={isErrorSpecie}
         />
       )}
-      {/* Agregar el componente Logro y pasarle el prop logro que obtienes de la consulta */}
-      <Logro logro={selectedSpecie?.logro} />
+      {selectedSpecie && selectedSpecie.logro && (
+        <Logro logro={selectedSpecie.logro} />
+      )}
     </>
   );
 };

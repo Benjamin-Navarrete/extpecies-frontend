@@ -179,8 +179,7 @@ const SpeciesActions = ({ especie, usuario }) => {
 
       <Tooltip id="tooltip-id" />
 
-      {/* Agregar el componente Logro y pasarle el prop logro que obtienes de la consulta */}
-      <Logro logro={likeData?.logro} />
+      {likeData && likeData.logro && <Logro logro={likeData?.logro} />}
     </div>
   );
 };
