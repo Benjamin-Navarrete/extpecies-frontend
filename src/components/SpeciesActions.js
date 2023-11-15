@@ -22,6 +22,7 @@ import {
   HeartIcon as HeartIconSolid,
   XMarkIcon
 } from '@heroicons/react/24/solid';
+import Logro from './Logro';
 
 const SpeciesActions = ({ especie, usuario }) => {
   const queryClient = useQueryClient();
@@ -60,7 +61,7 @@ const SpeciesActions = ({ especie, usuario }) => {
     setLiked(hasLiked);
   }, [userLikes]);
 
-  const { mutate: toggleLike } = useMutation(
+  const { mutate: toggleLike, data: likeData } = useMutation(
     liked =>
       liked
         ? darLike(usuario.id, especie.id)
@@ -177,6 +178,9 @@ const SpeciesActions = ({ especie, usuario }) => {
       />
 
       <Tooltip id="tooltip-id" />
+
+      {/* Agregar el componente Logro y pasarle el prop logro que obtienes de la consulta */}
+      <Logro logro={likeData?.logro} />
     </div>
   );
 };
