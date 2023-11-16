@@ -40,13 +40,13 @@ export const addSpecieToList = async (listaId, especie_id) => {
   // Paso los ids de la lista y de la especie como parámetros de la ruta
   const response = await listaApi.put(
     `listas/${listaId}/especies/${especie_id}`,
+    {},
     {
       headers: {
         Authorization: `${token}`
       }
     }
   );
-  console.log(response.data);
   return response.data;
 };
 

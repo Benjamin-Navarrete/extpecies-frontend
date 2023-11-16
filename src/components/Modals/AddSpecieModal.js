@@ -13,11 +13,12 @@ const AddSpecieModal = ({ isOpen, onClose, usuario, especie }) => {
   const queryClient = useQueryClient();
 
   // Creo una mutación con el hook useMutation y le paso la función addSpecieToList y las opciones de la mutación
-  const { mutate: mutation, newListSpecies } = useMutation(
+  const { mutate: mutation, data: newListSpecies } = useMutation(
     listaId => addSpecieToList(listaId, especie.id), // Le paso el id de la lista y el id de la especie a la función
     {
       // Manejo el éxito de la mutación
       onSuccess: data => {
+        console.log(data);
         // Cierro el modal
         queryClient.invalidateQueries('listas');
         onClose();
@@ -173,8 +174,8 @@ const AddSpecieModal = ({ isOpen, onClose, usuario, especie }) => {
         closeModal={closeCreateListModal}
         usuario={usuario}
       />
-      {newListSpecies && newListSpecies.logros && (
-        <Logro logro={newListSpecies.logros} />
+      {newListSpecies && newListSpecies.lista.logro && (
+        <Logro logro={newListSpecies.lista.logro} />
       )}
     </>
   );
