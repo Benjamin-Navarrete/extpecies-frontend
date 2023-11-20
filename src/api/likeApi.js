@@ -1,15 +1,26 @@
 // Archivo src\api\likeApi.js
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export const likeApi = axios.create({
   baseURL: 'http://localhost:3500/api/'
 });
 
 export const darLike = async (id_usuario, id_especie) => {
-  const response = await likeApi.post('likes', {
-    id_usuario,
-    id_especie
-  });
+  const token = Cookies.get('token');
+  const response = await likeApi.post(
+    'likes',
+    {
+      id_usuario,
+      id_especie
+    },
+    {
+      headers: {
+        Authorization: `${token}`
+      }
+    }
+  );
+  console.log('darLike', response.data);
   return response.data;
 };
 

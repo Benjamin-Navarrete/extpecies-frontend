@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import Comment from './Comentario';
 import { createComment, getCommentsByEspecie } from '@/api/commentApi';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
+import Logro from './Logro';
 // import Spinner from './Spinner';
 
 const CommentSection = ({ especie, usuario, isOpen }) => {
@@ -43,20 +44,23 @@ const CommentSection = ({ especie, usuario, isOpen }) => {
   );
 
   // Mutación para crear un nuevo comentario
-  const createCommentMutation = useMutation(createComment, {
-    onSuccess: data => {
-      // Invalido la cache de los comentarios en vez de usar setQueryData
-      queryClient.invalidateQueries(['comments', especie.id]);
-      // Limpio el contenido del comentario
-      setContent('');
-      // Muestro un mensaje de éxito
-      toast.success('Comentario agregado');
-    },
-    onError: error => {
-      // Muestro un mensaje de error
-      toast.error(error.response.data.message);
+  const { mutate: createCommentMutation, data: comentario } = useMutation(
+    createComment,
+    {
+      onSuccess: data => {
+        // Invalido la cache de los comentarios en vez de usar setQueryData
+        queryClient.invalidateQueries(['comments', especie.id]);
+        // Limpio el contenido del comentario
+        setContent('');
+        // Muestro un mensaje de éxito
+        toast.success('Comentario agregado');
+      },
+      onError: error => {
+        // Muestro un mensaje de error
+        toast.error(error.response.data.message);
+      }
     }
-  });
+  );
 
   return (
     <>
@@ -68,7 +72,7 @@ const CommentSection = ({ especie, usuario, isOpen }) => {
               e.preventDefault();
               if (usuario) {
                 if (content) {
-                  createCommentMutation.mutate({
+                  createCommentMutation({
                     content,
                     id_usuario: usuario.id,
                     id_especie: especie.id
@@ -151,6 +155,7 @@ const CommentSection = ({ especie, usuario, isOpen }) => {
           <Spinner />
         </div>
       )} */}
+        {comentario && comentario.logro && <Logro logro={comentario.logro} />}
       </div>
     </>
   );

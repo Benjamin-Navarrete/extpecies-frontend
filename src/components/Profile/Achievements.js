@@ -8,50 +8,8 @@ const people = [
     imageUrl: 'https://placehold.co/50x50',
     lastSeen: '3h ago',
     lastSeenDateTime: '2023-01-23T13:23Z'
-  },
-  {
-    name: 'Logro 2',
-    email:
-      'Amet veniam eu commodo ut ut reprehenderit. Pariatur cillum nisi sint elit non voluptate proident eu magna proident ad id. Exercitation qui non amet proident laborum. Cillum deserunt enim ut reprehenderit ipsum dolore tempor laboris excepteur ea tempor laborum nulla. Eiusmod in tempor ad eu ut nisi excepteur duis. Ex quis anim nulla culpa sint incididunt voluptate anim pariatur et eiusmod.',
-    role: 'Co-Founder / CTO',
-    imageUrl: 'https://placehold.co/50x50',
-    lastSeen: '3h ago',
-    lastSeenDateTime: '2023-01-23T13:23Z'
-  },
-  {
-    name: 'Logro 3',
-    email:
-      'Esse ea ut incididunt ut quis minim. Mollit ea labore commodo nulla quis laboris deserunt in est ea occaecat anim velit sit. Ullamco minim exercitation officia mollit elit dolore pariatur ex ad sit fugiat. Pariatur veniam do officia esse occaecat.',
-    role: 'Business Relations',
-    imageUrl: 'https://placehold.co/50x50',
-    lastSeen: null
-  },
-  {
-    name: 'Logro 4',
-    email:
-      'Consequat officia minim irure ut non nisi labore in tempor aliqua enim do veniam ea. Duis dolore cupidatat aliqua duis et velit ullamco laboris aliquip nulla laborum laboris id. Incididunt cillum amet anim id veniam eiusmod laborum deserunt aute consequat id consequat anim adipisicing.',
-    role: 'Front-end Developer',
-    imageUrl: 'https://placehold.co/50x50',
-    lastSeen: '3h ago',
-    lastSeenDateTime: '2023-01-23T13:23Z'
-  },
-  {
-    name: 'Logro 5',
-    email:
-      'Lorem non duis commodo mollit mollit magna reprehenderit pariatur nisi id voluptate irure ex. Adipisicing laborum minim labore adipisicing mollit ipsum culpa occaecat ullamco in nisi cupidatat voluptate. Ex anim aliqua excepteur duis velit dolor aute tempor aute dolor deserunt occaecat. Ex cillum sit cupidatat incididunt dolor eiusmod commodo. Tempor consequat veniam enim aliqua nostrud quis minim enim consectetur voluptate occaecat dolor. Dolor sit minim aute aliquip eu veniam labore Lorem.',
-    role: 'Designer',
-    imageUrl: 'https://placehold.co/50x50',
-    lastSeen: '3h ago',
-    lastSeenDateTime: '2023-01-23T13:23Z'
-  },
-  {
-    name: 'Tom Cook',
-    email:
-      'Laborum commodo in incididunt cillum irure. Nostrud commodo id elit et in et sint dolore voluptate aliqua duis officia non. Adipisicing et amet est consectetur est cillum culpa in tempor. Tempor aliqua ullamco eu deserunt deserunt.',
-    role: 'Director of Product',
-    imageUrl: 'https://placehold.co/50x50',
-    lastSeen: null
   }
+  // . . . resto de logros
 ];
 
 export default function Achievements() {

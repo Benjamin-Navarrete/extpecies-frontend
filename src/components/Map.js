@@ -11,58 +11,58 @@ import { getEspecieById } from '@/api/specieApi';
 
 // Importar useRouter desde next/router
 import { useRouter } from 'next/router';
-
 import { toast } from 'react-toastify';
+import Logro from './Logro';
 
-const Map = ({ especies, isLoading, isError, initialSpecie }) => {
+const Map = ({ especies, isLoading, isError }) => {
   // Usar useRouter para obtener el objeto router
   const router = useRouter();
-  // Agregar estado para el id de la especie seleccionada
+  // Crear una variable de estado para el id de la especie inicial
+  const [initialSpecieId, setInitialSpecieId] = useState(null);
+  // Crear una variable de estado para el id de la especie seleccionada
   const [selectedSpecieId, setSelectedSpecieId] = useState(null);
 
   useEffect(() => {
-    // Verificar si el parámetro de consulta initialSpecie está definido
-    if (initialSpecie) {
-      // Actualizar el estado con el id de la especie seleccionada
-      setSelectedSpecieId(initialSpecie);
-    }
-  }, [initialSpecie]);
+    // Obtener el id de la especie inicial del parámetro de consulta de la URL
+    const initialSpecie = router.query.especie_id;
+    // Actualizar el estado con el id de la especie inicial
+    setInitialSpecieId(initialSpecie);
+    setSelectedSpecieId(initialSpecie);
+  }, [router.query]);
 
   // Crear una consulta para obtener los detalles de la especie seleccionada por id
+  // Usar el estado del id de la especie inicial en lugar del id de la especie seleccionada
   const {
     data: selectedSpecie,
     isLoading: isLoadingSpecie,
     isError: isErrorSpecie
   } = useQuery(
-    ['especie', selectedSpecieId],
-    () => getEspecieById(selectedSpecieId),
+    ['especie', initialSpecieId],
+    () => getEspecieById(initialSpecieId),
     {
       // Deshabilitar la consulta si el id es nulo
-      enabled: selectedSpecieId !== null
+      enabled: !!initialSpecieId
     }
   );
 
   // Función para manejar el clic en un marcador
-  const handleMarkerClick = async especie => {
-    try {
-      setSelectedSpecieId(especie.id);
-      // Usar el método push del router para actualizar la URL con el id de la especie seleccionada
-      router.push(`/map?especie_id=${especie.id}`, undefined, {
-        shallow: true
-      });
-    } catch (error) {
-      // Mostrar un toast de error si algo falla
-      toast.error('Ha ocurrido un error al obtener el historial: ', error);
-    }
+  const handleMarkerClick = especie => {
+    // Actualizar el estado con el id de la especie seleccionada
+    setSelectedSpecieId(especie.id);
+    // Usar el método push del router para actualizar la URL con el id de la especie seleccionada
+    router.push(`/map?especie_id=${especie.id}`, undefined, {
+      shallow: true
+    });
   };
 
   // Función para cerrar el modal
   const closeModal = () => {
-    setSelectedSpecieId(null);
     // Usar el método replace del router para eliminar el parámetro de consulta de la URL
     router.replace('/map', undefined, {
       shallow: true
     });
+    // Actualizar el estado con el id de la especie seleccionada a null
+    setSelectedSpecieId(null);
   };
 
   // Función para crear un icono personalizado con la imagen de la especie
@@ -137,16 +137,20 @@ const Map = ({ especies, isLoading, isError, initialSpecie }) => {
         {createMarkers()}
       </MapContainer>
 
-      {/* Pasar el prop selectedSpecie al componente SpeciesModal */}
-      {/* Usar el prop selectedSpecieId para determinar si el modal está abierto o no */}
-
-      <SpeciesModal
-        isOpen={selectedSpecieId !== null}
-        closeModal={closeModal}
-        especie={selectedSpecie}
-        isLoading={isLoadingSpecie}
-        isError={isErrorSpecie}
-      />
+      {/* Pasar el estado del id de la especie seleccionada al componente SpeciesModal */}
+      {/* Usar el resultado de la consulta para mostrar los datos de la especie en el modal */}
+      {selectedSpecie && !isLoadingSpecie && (
+        <SpeciesModal
+          isOpen={selectedSpecieId !== null}
+          closeModal={closeModal}
+          especie={selectedSpecie}
+          isLoading={isLoadingSpecie}
+          isError={isErrorSpecie}
+        />
+      )}
+      {selectedSpecie && selectedSpecie.logro && (
+        <Logro logro={selectedSpecie.logro} />
+      )}
     </>
   );
 };

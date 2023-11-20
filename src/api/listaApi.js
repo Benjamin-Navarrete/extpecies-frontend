@@ -1,5 +1,6 @@
 // Archivo src\api\listaApi.js
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 // Instancia de axios con la base URL
 export const listaApi = axios.create({
@@ -8,7 +9,12 @@ export const listaApi = axios.create({
 
 // Función para hacer el post de una nueva lista con axios
 export const createList = async data => {
-  const response = await listaApi.post('listas', data);
+  const token = Cookies.get('token');
+  const response = await listaApi.post('listas', data, {
+    headers: {
+      Authorization: `${token}`
+    }
+  });
   return response.data;
 };
 
@@ -30,9 +36,16 @@ export const getList = async id => {
 
 // Función para hacer el put de una especie a una lista con axios
 export const addSpecieToList = async (listaId, especie_id) => {
+  const token = Cookies.get('token');
   // Paso los ids de la lista y de la especie como parámetros de la ruta
   const response = await listaApi.put(
-    `listas/${listaId}/especies/${especie_id}`
+    `listas/${listaId}/especies/${especie_id}`,
+    {},
+    {
+      headers: {
+        Authorization: `${token}`
+      }
+    }
   );
   return response.data;
 };
