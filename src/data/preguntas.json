@@ -1,99 +1,227 @@
 [
   {
-    "pregunta": "1) Primera pregunta",
+    "enunciado": "¿Qué significa la sigla EX en la clasificación de especies?",
+    "a": "a) Extinto",
+    "b": "b) Extinto en la Naturaleza",
+    "c": "c) En Peligro",
+    "d": "d) En Extinción",
+    "correcta": "a",
+    "descripcion": "La sigla EX viene del inglés \"Extinct\" que significa Extinto. Cuando una especie está catalogada como extinta, no hay dudas de que el último individuo existente ha muerto."
+  },    
+  {
+    "enunciado": "¿Qué significa la sigla EW en la clasificación de especies?",
+    "a": "a) En Peligro Crítico",
+    "b": "b) En Peligro de Extinción en el Mundo",
+    "c": "c) Extinto en la Naturaleza",
+    "d": "d) Extinto en el Mundo",
+    "correcta": "c",
+    "descripcion": "La sigla EW viene del inglés \"Extinct in the Wild\" que significa Extinto en la Naturaleza. Cuando una especie está catalogada como Extinta en la Naturaleza, solo sobrevive en cultivo, cautiverio o como población fuera de su distribución original."
+  },
+  {
+    "enunciado": "¿Qué significa la sigla CR en la clasificación de especies?",
+    "a": "a) Casi en Riesgo",
+    "b": "b) Conservación Requerida",
+    "c": "c) En Peligro Crítico",
+    "d": "d) Cambio Radical",
+    "correcta": "c",
+    "descripcion": "La sigla CR viene del inglés \"Critically Endangered\" que significa En Peligro Crítico. Cuando una especie está catalogada como En Peligro Crítico, se considera que está enfrentando un peligro de extinción extremadamente alto en estado de vida silvestre."
+  },
+  {
+  "enunciado": "¿Qué significa la sigla EN en la clasificación de especies?",
+    "a": "a) En Peligro",
+    "b": "b) Enormemente Numeroso",
+    "c": "c) Esencialmente Nocivo",
+    "d": "d) Enorme Nivel",
+    "correcta": "a",
+    "descripcion": "La sigla EN viene del inglés \"Endangered\" que significa En Peligro. Cuando una especie está catalogada como En Peligro, se considera que está enfrentando un peligro de extinción muy alto en estado de vida silvestre."
+  },  
+  {
+    "enunciado": "¿Qué significa la sigla VU en la clasificación de especies?",
+    "a": "a) Vulnerable",
+    "b": "b) Vida Única",
+    "c": "c) Varias Unidades",
+    "d": "d) Valor Único",
+    "correcta": "a",
+    "descripcion": "La sigla VU viene del inglés \"Vulnerable\" que significa Vulnerable. Cuando una especie está catalogada como Vulnerable, se considera que se está enfrentando a un riesgo de extinción alto en estado de vida silvestre."
+  },  
+  {
     "enunciado": "¿Qué es una especie endémica?",
     "a": "a) Una especie que solo se distribuye de forma natural en un área",
     "b": "b) Una especie que puede encontrarse en diversos países de forma natural",
     "c": "c) Una especie que se establece en un territorio diferente a su ecosistema original",
     "d": "d) Una especie que se establece e invade el ecosistema de otras especies",
-    "correcta": "a"
-  },
-
+    "correcta": "a",
+    "descripcion": "Las especies endémicas habitan de forma natural en un solo espacio determinado. Su hábitat es limitado y restringido, y no existen poblaciones de la misma especie en ninguna otra parte del mundo."
+  },  
   {
-    "pregunta": "2) Segunda pregunta",
-    "enunciado": "¿El pudú (pudu puda) es una especie endémica?",
-    "a": "a) Sí, es endémico de Chile",
-    "b": "b) Sí, es endémico de Chile y Argentina",
-    "c": "c) No, es nativo de Chile y Argentina",
-    "d": "d) No, es endémico solo de Argentina",
-    "correcta": "b"
-  },
-
-  {
-    "pregunta": "3) Tercera pregunta",
-    "enunciado": "¿El pino (pinus radiata) es nativo de Chile?",
-    "a": "a) Sí, es endémico de la zona central de Chile",
-    "b": "b) Sí, es nativo de Chile",
-    "c": "c) No, es endémico de Estados Unidos",
-    "d": "d) No, es nativo de Brasil",
-    "correcta": "c"
-  },
-
-  {
-    "pregunta": "4) Cuarta pregunta",
     "enunciado": "¿Qué afirmación respecto a una especie exótica es falsa?",
     "a": "a) No se distribuye de forma natural en el lugar en el que se encuentra",
-    "b": "b) Se encuentra en los alrededores de su distribución natural",
+    "b": "b) Se encuentra en los límites de su distribución natural",
     "c": "c) Puede de forma natural llegar a un lugar diferente al de su distribución natural",
-    "d": "d) Su dispersión es producto de la movilización humana sin cuidado",
-    "correcta": "b"
-  },
-
+    "d": "d) Su dispersión muchas veces es producto de la movilización humana sin cuidado",
+    "correcta": "b",
+    "descripcion": "Se describe a una especie como exótica cuando esta se encuentra fuera de su zona natural de distribución. Siempre que se encuentre a una especie dentro de su área de distribución natural, se le llamará \"nativa\" de esa zona. "
+  },  
   {
-    "pregunta": "5) Quinta pregunta",
-    "enunciado": "En los bosques de Araucaria (araucaria araucana), ¿Cuál es el signo más claro de degradación?",
-    "a": "a) Los incendios",
-    "b": "b) La actividad silvícola",
-    "c": "c) La presencia de urbanización cercana",
-    "d": "d) La falta de regeneración",
-    "correcta": "d"
-  },
-
+    "enunciado": "¿Qué es una especie exótica?",
+    "a": "a) Una especie rara y poco común",
+    "b": "b) Una especie que se encuentra solo en un lugar específico",
+    "c": "c) Una especie originaria de la región",
+    "d": "d) Una especie que no es nativa y ha sido introducida en un nuevo lugar",
+    "correcta": "d",
+    "descripcion": "Se define como especie exótica a una especie que se encuentre fuera de su área de distribución natural, principalmente por causa de actividades humanas, ya sea de forma intencionada o accidental."
+  },  
   {
-    "pregunta": "6) Sexta pregunta",
-    "enunciado": "¿Qué tipo de pesca afecta al tiburon toro (carcharhinus leucas)?",
-    "a": "a) La pesca industrial",
-    "b": "b) Solo a y d",
-    "c": "c) La pesca recreacional",
-    "d": "d) La pesca artesanal y recreacional",
-    "correcta": "b"
-  },
-{
-    "pregunta": "7) Séptima pregunta",
-    "enunciado": "¿Qué especies son parte de la familia Cactaceae?",
-    "a": "a) Parodia tenuicylindrica y Parodia arnostiana",
-    "b": "b) Discocactus ferricola y Discocactus diersianus",
-    "c": "c) Uebelmannia pectinifera y Discocactus pseudoinsignis",
-    "d": "d) Todas las anteriores",
-    "correcta": "d"
-
-  },
-{
-    "pregunta": "8) Octava pregunta",
-    "enunciado": "¿Qué alternativa señala en orden ascendente las amenazas que afectan al gato andino (leopardus jacobita) en la actualidad?",
-    "a": "a) Reducción de la población de sus presas; caza por parte de personas; degradación del hábitat y pérdida de hábitat",
-    "b": "b) Reducción de la población de sus presas; caza por parte de personas; pérdida del hábitat y degradación de hábitat",
-    "c": "c) Caza por parte de personas; reducción de la población de sus presas; pérdida del hábitat y degradación de hábitat",
-    "d": "d) Pérdida de hábitat; reducción de la población de sus presas; degradación del hábitat y caza por parte de personas",
-    "correcta": "a"
-  },
-{
-    "pregunta": "9) Novena pregunta",
-    "enunciado": "¿A qué se debe la degradación de hábitat de la ranita del Itatiaia (holoaden bradei)?",
-    "a": "a) La agricultura y ganadería",
-    "b": "b) El turismo, incendios y heladas",
-    "c": "c) Incendios y heladas",
-    "d": "d) Solo al turismo",
-    "correcta": "b"
-  },
-{
-    "pregunta": "10) Décima pregunta",
-    "enunciado": "¿Cuál es la distribución del oso de los Andes (Tremarctos ornatus)?",
-    "a": "a) Es endémico de la cordillera de los Andes Tropicales",
-    "b": "b) Se encuentra en Bolivia, Colombia, Ecuador, Perú y Venezuela.",
-    "c": "c) Letras a y b",
-    "d": "d) Venezuela, Perú y Argentina",
-    "correcta": "c"
+    "enunciado": "¿Qué es una especie nativa?",
+    "a": "a) Una especie en peligro de extinción",
+    "b": "b) Una especie que ha desaparecido completamente",
+    "c": "c) Una especie que pertenece y se ha desarrollado naturalmente en una región específica",
+    "d": "d) Una especie que está bajo protección gubernamental",
+    "correcta": "c",
+    "descripcion": "Las especies nativas son aquellas que viven de forma natural en un territorio determinado, se encuentran adaptadas al clima y al relieve de la zona, y poseen relaciones estrechas con otras especies que habitan el mismo lugar."
+  },  
+  {
+    "enunciado": "¿Cuál es el proceso por el cual las plantas fabrican su propio alimento?",
+    "a": "a) Respiración",
+    "b": "b) Digestión",
+    "c": "c) Fotosíntesis",
+    "d": "d) Transpiración",
+    "correcta": "c",
+    "descripcion": "La fotosíntesis es un proceso bioquímico en el que las plantas utilizan la luz solar para convertir el dióxido de carbono y el agua en alimento, liberando oxígeno como subproducto. "
+  },  
+  {
+    "enunciado": "¿Qué es un hábitat?",
+    "a": "a) Un territorio",
+    "b": "b) Un lugar que tiene agua y comida",
+    "c": "c) Ambiente que permite el desarrollo de ciertas poblaciones de seres vivos",
+    "d": "d) Ambiente que permite únicamente el desarrollo de mamíferos",
+    "correcta": "c",
+    "descripcion": "Un hábitat es un entorno natural que presenta condiciones y componentes ambientales adecuados (humedad, salinidad, sustrato, tipo de suelo, entre otros) para que una especie pueda sobrevivir y reproducirse. A pesar de que muchas veces se hace referencia a la vegetación para caracterizar un hábitat, un hábitat no es un tipo de vegetación sino que es el conjunto de los elementos físicos y biológicos."
+  },  
+  {
+    "enunciado": "¿Qué es flora?",
+    "a": "a) El conjunto de animales en una región",
+    "b": "b) El proceso de fotosíntesis en las plantas",
+    "c": "c) La diversidad de plantas en una región",
+    "d": "d) El ciclo del agua en un ecosistema",
+    "correcta": "c",
+    "descripcion": "La flora es el conjunto de especies vegetales (arboles, arbustos, entre otros) presentes en un lugar específico, adaptadas a las condiciones climáticas y geográficas del lugar. "
+  },  
+  {
+    "enunciado": "¿Qué es fauna?",
+    "a": "a) El conjunto de plantas en una región",
+    "b": "b) El comportamiento de los animales",
+    "c": "c) La diversidad de animales en una región",
+    "d": "d) La formación de nubes en el cielo",
+    "correcta": "c",
+    "descripcion": "La fauna es el conjunto de especies animales (mamíferos, reptiles, entre otros) presentes en un lugar específico, adaptados a las condiciones climáticas, geográficas y a la flora del lugar."
+  },  
+  {
+    "enunciado": "¿Por qué es importante conservar y proteger la biodiversidad?",
+    "a": "a) Solo es importante para científicos y biólogos",
+    "b": "b) Porque contribuye al equilibrio de los ecosistemas y al bienestar humano",
+    "c": "c) Para tener más animales lindos en los zoológicos",
+    "d": "d) Porque no hay suficientes animales y plantas en el mundo",
+    "correcta": "b",
+    "descripcion": "El concepto de biodiversidad es muy amplio, y se refiere al conjunto de seres vivos que habitan cada lugar de la tierra. Sus interacciones y cómo se relacionan con el medio permiten su mantención a lo largo del tiempo, por lo que afectar tanto a las especies que viven en un lugar como modificar el lugar, tiene consecuencias muchas veces negativas tanto para los ecosistemas como para los humanos, que dependen de estas relaciones para acceder a alimento, agua potable y aire limpio. "
+  },  
+  {
+    "enunciado": "¿Cuál de estas actividades perjudica a la flora y fauna?",
+    "a": "a) Plantar árboles en áreas deforestadas",
+    "b": "b) Recoger la basura en una playa",
+    "c": "c) Uso excesivo de pesticidas en cultivos",
+    "d": "d) Construir refugios para animales en peligro de extinción",
+    "correcta": "c",
+    "descripcion": "El uso excesivo de pesticidas en cultivos puede traer consecuencias negativas debido a su composición química y efectos tanto en insectos como en el suelo. Por ejemplo, alterar las poblaciones de insectos puede generar desbalances en los ecosistemas, ya que son los principales polinizadores, y a la vez, el alimento de otras especies, por lo que su disminución puede generar un efecto en cadena. "
+  },  
+  {
+    "enunciado": "¿Qué significa que una especie esté extinta?",
+    "a": "a) Está en riesgo de desaparecer",
+    "b": "b) Ya no existe en la naturaleza",
+    "c": "c) Tiene una población muy pequeña",
+    "d": "d) Es una especie recién descubierta",
+    "correcta": "b",
+    "descripcion": "Una especie se describe como extinta cuando ya no es posible encontrarla habitando algún lugar en la tierra, y solo se conoce su existencia por medio de fósiles, descripciones del pasado, o avistamientos de antaño. "
+  },  
+  {
+    "enunciado": "¿Qué es la deforestación? ",
+    "a": "a) Plantar árboles en un área ",
+    "b": "b) La eliminación de un bosque o de árboles ",
+    "c": "c) La creación de un nuevo bosque ",
+    "d": "d) El estudio de los árboles ",
+    "correcta": "b",
+    "descripcion": "Se le llama deforestación a la tala de un bosque o un conjunto de arboles. "
+  },  
+  {
+    "enunciado": "¿Qué es un ecosistema? ",
+    "a": "a) El conjunto geológico e hidrológico de un lugar",
+    "b": "b) Poblaciones animales y vegetales",
+    "c": "c) Un lugar donde viven los humanos ",
+    "d": "d) Una comunidad de organismos vivos y su ambiente físico ",
+    "correcta": "d",
+    "descripcion": "Se denomina ecosistema al conjunto de componentes físicos (clima, suelo, geografía) y bióticos (especies vegetales, animales, fungi) que habitan este lugar. Los ecosistemas poseen complejos sistemas de relaciones e interacciones, siendo cada uno único. "
+  },  
+  {
+    "enunciado": "¿Qué es la cadena alimenticia? ",
+    "a": "a) Describe a quién se comen los mamíferos en un ecosistema",
+    "b": "b) El proceso por el cual los nutrientes son reciclados en un ecosistema ",
+    "c": "c) La transferencia de energía de un organismo a otro en un ecosistema ",
+    "d": "d) La interacción entre los productores, los consumidores y los descomponedores en un ecosistema ",
+    "correcta": "d",
+    "descripcion": "La cadena alimenticia es un esquema que permite representar de forma didáctica las relaciones en un ecosistema entre seres vivos, comenzando con los productores (las plantas, que producen su propio alimento), continuando con los consumidores primarios (herbívoros), consumidores secundarios y terciarios (omnívoros y carnívoros), y finalizando con los descomponedores (hongos)."
+  },  
+  {
+    "enunciado": "¿Qué es la desertificación? ",
+    "a": "a) El proceso por el cual un área se convierte en desierto ",
+    "b": "b) La pérdida de productividad de un suelo debido a la erosión o el uso excesivo ",
+    "c": "c) La transformación de un ecosistema forestal en un ecosistema de sabana ",
+    "d": "d) La disminución de la biodiversidad en un ecosistema debido a cambios en el clima ",
+    "correcta": "a",
+    "descripcion": "La desertificación es un proceso complejo de degradación ecológica donde con el tiempo se pierde la vegetación de una zona árida o semiárida, cambiando la composición del suelo y con esto las especies que habitan la zona. "
+  },  
+  {
+    "enunciado": "¿Qué es la conservación de la biodiversidad? ",
+    "a": "a) El proceso de proteger y preservar la diversidad de vida en la Tierra ",
+    "b": "b) La creación de áreas protegidas para preservar especies en peligro de extinción ",
+    "c": "c) El estudio de la diversidad de especies en un ecosistema ",
+    "d": "d) La gestión sostenible de los recursos naturales para preservar la diversidad de especies ",
+    "correcta": "a",
+    "descripcion": "La conservación consiste en proteger y preservar los ecosistemas presentes en la Tierra, ya sea mediante políticas públicas, acciones directas en lugares amenazados o evitando la realización de actividades humanas en lugares vulnerables, evitando así la pérdida de especies nativas y endémicas de cada lugar. La conservación juega un rol fundamental en el presente y futuro de la humanidad, ya que la destrucción de hábitats, extinción de especies y degradación de los ecosistemas tienen consecuencias catastróficas para las personas."
+  },  
+  {
+    "enunciado": "¿Qué es la evolución? ",
+    "a": "a) El proceso de cambio en todas las formas de vida a lo largo de generaciones ",
+    "b": "b) La adaptación de los organismos a su entorno a través de la selección natural ",
+    "c": "c) El desarrollo de nuevas especies a partir de especies ancestrales ",
+    "d": "d) La acumulación de cambios genéticos en una población a lo largo del tiempo ",
+    "correcta": "a",
+    "descripcion": "La evolución es un proceso complejo y constante que experimentan todas las especies a medida que se reproducen a lo largo del tiempo, y que brinda opciones de adaptabilidad y sobrevivencia a las especies a medida que el planeta cambia."
+  },  
+  {
+    "enunciado": "¿Qué es la polinización? ",
+    "a": "a) El proceso de transferencia de polen de una flor a otra ",
+    "b": "b) La reproducción sexual en las plantas ",
+    "c": "c) La dispersión de las semillas por el viento o los animales ",
+    "d": "d) El proceso por el cual las plantas producen frutos ",
+    "correcta": "a",
+    "descripcion": "La polinización es parte del ciclo reproductivo de las plantas con flores. Existen dos estructuras reproductivas, una que recibe el polen y otra que posee el polen, pueden encontrarse en la misma flor o en flores diferentes, y gracias a las interacciones con insectos (abejas) u otros animales, el viento o el agua, el polen se transporta hasta otra flor de otra planta, fecundándola y permitiendo el desarrollo de una nueva vida."
+  },  
+  {
+    "enunciado": "¿Qué es la sobreexplotación de recursos?",
+    "a": "a) Utilizar recursos de manera sostenible",
+    "b": "b) Consumir recursos a una tasa que excede su capacidad de regeneración",
+    "c": "c) Dejar los recursos naturales sin utilizar",
+    "d": "d) Proteger los recursos naturales sin intervenir",
+    "correcta": "b",
+    "descripcion": "Las poblaciones humanas dependen de los variados recursos que ofrecen los diversos ecosistemas para sobrevivir, sin embargo, a medida que aumentan las poblaciones ha aumentado la demanda de estos, y lamentablemente, muchos de estos recursos son extraídos de forma tan agresiva que no logran reponerse o regenerarse, llegando incluso a agotarse en algunas zonas. Además, los recursos se dividen en renovables y no renovables, por lo que hay recursos que simplemente no se regeneran, y es necesario cuidar aún más."
+  },  
+  {
+    "enunciado": "¿Cuál es el propósito principal de los corredores ecológicos?",
+    "a": "a) Facilitar la caza de animales",
+    "b": "b) Conectar hábitats fragmentados para permitir el movimiento de especies",
+    "c": "c) Destruir hábitats naturales",
+    "d": "d) Promover la urbanización en áreas verdes",
+    "correcta": "b",
+    "descripcion": "Los corredores ecológicos nacen a partir de la necesidad de conectar ecosistemas que han sido degradados y fragmentados por las comunidades humanas, y permiten mantener poblaciones animales y vegetales conectadas a pesar de los cambios en el territorio, aumentando las posibilidades de mantener la variabilidad genética de las poblaciones y asegurar su sobrevivencia. "
   }
 ]
-
