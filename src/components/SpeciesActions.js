@@ -155,7 +155,7 @@ const SpeciesActions = ({ especie, usuario }) => {
       <div className="px-6 py-5 text-center text-sm font-medium">
         <LinkIcon
           className={`h-7 w-7 mx-auto text-center text-sm font-medium ${
-            !copied ? 'text-gray-900' : 'text-green-500'
+            !copied ? 'text-gray-900' : 'text-emerald-500'
           }`}
           data-tooltip-id="tooltip-id"
           data-tooltip-content={tooltipContent3}

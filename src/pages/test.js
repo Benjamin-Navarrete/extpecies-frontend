@@ -1,84 +1,59 @@
-// Archivo src/pages/test.js
-import { useState } from 'react';
-import QuestionCard from '@/components/QuestionCard';
+// Archivo src\pages\test.js
+import React, { useState } from 'react';
 import DefaultLayout from '@/layouts/DefaultLayout';
-import preguntas from '@/data/preguntas.json';
+import Slider from '@/components/Slider';
 import Swal from 'sweetalert2';
+import { useRouter } from 'next/router';
 
 const Test = () => {
-  // Creamos un estado para guardar las respuestas del usuario
-  const [respuestas, setRespuestas] = useState({});
+  const [numQuestions, setNumQuestions] = useState(10);
+  const router = useRouter();
 
-  // Creamos una función para actualizar el estado cuando el usuario selecciona una alternativa
-  const handleSelect = (index, value) => {
-    setRespuestas({
-      ...respuestas,
-      [index]: value
+  const handleStart = () => {
+    Swal.fire({
+      title:
+        '¿Estás seguro de que quieres comenzar el cuestionario con ' +
+        numQuestions +
+        ' preguntas?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No'
+    }).then(result => {
+      if (result.isConfirmed) {
+        router.push({
+          pathname: '/quiz',
+          query: { numQuestions }
+        });
+      }
     });
   };
 
-  // Creamos una función para enviar el test y calcular el puntaje
-  const handleSubmit = () => {
-    // Inicializamos una variable para guardar el puntaje
-    let puntaje = 0;
-
-    // Recorremos las respuestas del usuario y las comparamos con las correctas
-    for (let index in respuestas) {
-      if (respuestas[index] === preguntas[index - 1].correcta) {
-        // Si la respuesta es correcta, sumamos un punto al puntaje
-        puntaje++;
-      }
-    }
-
-    // Mostramos un modal según el puntaje obtenido usando sweet alerts
-    // Todas las respuestas son correctas
-    if (puntaje == preguntas.length) {
-      Swal.fire({
-        title: 'Tu puntaje',
-        html: `${puntaje} de ${preguntas.length}.<br> <br> ¡Sabes mucho de biodiversidad y el cuidado de las especies!`,
-        icon: 'success',
-        confirmButtonText: 'Ok'
-      });
-      // Ninguna respuesta es correcta
-    } else if (puntaje == 0) {
-      Swal.fire({
-        title: 'Tu puntaje',
-        html: `${puntaje} de ${preguntas.length}.<br> <br> ¡Oh no!, Intentalo nuevamente. `,
-        icon: 'error',
-        confirmButtonText: 'Ok'
-      });
-      // Al menos una respuesta es correcta
-    } else {
-      Swal.fire({
-        title: 'Tu puntaje',
-        html: `${puntaje} de ${preguntas.length}.<br> <br> ¡Puedes hacerlo mejor!`,
-        icon: 'warning',
-        confirmButtonText: 'Ok'
-      });
-    }
-  };
-
   return (
-    <DefaultLayout>
-      <div className="container mx-auto px-4 max-w-5xl">
-        {preguntas.map((pregunta, index) => (
-          // Usamos el componente QuestionCard para mostrar cada pregunta con sus alternativas
-          <QuestionCard
-            key={index}
-            index={index + 1}
-            question={pregunta.enunciado}
-            alternatives={[pregunta.a, pregunta.b, pregunta.c, pregunta.d]}
-            // Pasamos la función handleSelect como prop para que se ejecute cuando el usuario seleccione una alternativa
-            onSelect={value => handleSelect(index + 1, value)}
+    <DefaultLayout title="¿Listo para desafiar tus conocimientos de biodiversidad?¡Ponte a prueba!">
+      <div className="container mx-auto px-4 py-8 p-2 rounded-lg bg-white shadow">
+        <h1 className="text-4xl font-bold text-center mb-4">
+          ¿Listo para desafiar tus conocimientos de biodiversidad?¡Ponte a
+          prueba!
+        </h1>
+        <p className="text-xl text-center mb-8 px-3">
+          ¿Crees que sabes suficiente acerca de las especies en peligro de
+          extinción? Pon a prueba tus conocimientos en nuestro cuestionario y
+          guarda tu puntaje en tu cuenta para seguir tus avances y estadísticas.
+        </p>
+        <div className="flex flex-col items-center">
+          <p className="text-2xl mb-4">
+            Elige la cantidad de preguntas que quieres responder:
+          </p>
+          <Slider
+            value={numQuestions}
+            onChange={e => setNumQuestions(e.target.value)}
           />
-        ))}
-
-        <div className="flex justify-end px-5">
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={handleSubmit}
+            className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded mt-8"
+            onClick={handleStart}
           >
-            Enviar test
+            Comenzar
           </button>
         </div>
       </div>

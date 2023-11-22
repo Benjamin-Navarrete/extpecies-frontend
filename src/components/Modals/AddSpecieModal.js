@@ -128,7 +128,7 @@ const AddSpecieModal = ({ isOpen, onClose, usuario, especie }) => {
                               </span>{' '}
                               <button // Creo un botón para añadir la especie a la lista
                                 type="button"
-                                className="inline-flex items-center px-2 py-1 text-xs font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-500"
+                                className="inline-flex items-center px-2 py-1 text-xs font-medium text-white bg-emerald-600 border border-transparent rounded-md hover:bg-emerald-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-emerald-500"
                                 onClick={() => {
                                   mutation(lista.id);
                                 }}

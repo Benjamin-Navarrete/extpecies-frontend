@@ -26,7 +26,7 @@ export default function Achievements() {
   //       <Spinner
   //         animation="border"
   //         variant="success"
-  //         className="text-green-500"
+  //         className="text-emerald-500"
   //       />
   //     </div>
   //   );
@@ -63,7 +63,7 @@ export default function Achievements() {
             );
 
             // Aplicar un estilo diferente dependiendo del estado del logro
-            const textColor = isUnlocked ? 'text-green-500' : 'text-gray-400';
+            const textColor = isUnlocked ? 'text-emerald-500' : 'text-gray-400';
 
             // Usar un icono de un candado abierto o cerrado para indicar el estado del logro
             const lockIcon = isUnlocked ? 'unlock' : 'lock';

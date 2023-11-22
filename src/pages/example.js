@@ -47,7 +47,7 @@ const moods = [
     value: 'happy',
     icon: FaceSmileIconMini,
     iconColor: 'text-white',
-    bgColor: 'bg-green-400'
+    bgColor: 'bg-emerald-400'
   },
   {
     name: 'Sad',

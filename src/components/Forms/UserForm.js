@@ -87,7 +87,7 @@ const UserForm = ({
             <div className="flex justify-end">
               <button
                 type="submit"
-                className="ml-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                className="ml-2 bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded"
               >
                 Guardar
               </button>
