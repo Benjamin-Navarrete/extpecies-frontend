@@ -1,108 +1,105 @@
 // Archivo src\components\Profile\Achievements.js
 import React from 'react';
 import { useQuery, QueryClient } from 'react-query';
-// import { Spinner } from 'react-bootstrap';
 import { getAchievementsByUserId } from '@/api/achievementsApi';
+import Image from 'next/image'; // Importar el componente Image de Next.js
+import { LockClosedIcon, LockOpenIcon } from '@heroicons/react/24/solid';
 
-// Crear un cliente de react-query
-const queryClient = new QueryClient();
+// Componente para mostrar un logro con su imagen, nombre, descripción y estado
+function AchievementCard({ nombre, nombreImagen, descripcion, desbloqueado }) {
+  return (
+    <div
+      className={`flex flex-col items-center border-2 rounded-lg shadow-lg p-4 gap-2 ${
+        desbloqueado ? 'bg-white' : 'bg-gray-200'
+      }`}
+    >
+      <Image
+        src={`/img/logros/${nombreImagen}`} // Usar el nombre del logro para obtener la imagen correspondiente
+        alt={nombreImagen}
+        width={100}
+        height={100}
+      />
+      <h3 className="text-lg font-bold">{nombre}</h3>
+      <p className="text-sm text-gray-600">{descripcion}</p>
+      {/* ubicar icono al final inferior (centrado al medio): */}
+      <div className="flex flex-grow items-end justify-center w-full">
+        {desbloqueado ? ( // Mostrar un ícono de check o de lock según el estado del logro
+          <LockOpenIcon className="h-6 w-6 text-green-500" />
+        ) : (
+          <LockClosedIcon className="h-6 w-6 text-red-500" />
+        )}
+      </div>
+    </div>
+  );
+}
 
 // Componente para mostrar los logros obtenidos por el usuario
 export default function Achievements() {
-  // Obtener el id del usuario desde el contexto o las props
-  const userId = 1; // Esto es solo un ejemplo, puedes cambiarlo según tu lógica
+  const { data: usuario } = useQuery('usuario');
 
   // Hacer una petición GET a la API usando el hook useQuery
-  const { data, status, error } = useQuery(
-    ['achievements', userId], // Clave única para identificar la petición
-    () => getAchievementsByUserId(userId), // Función que devuelve una promesa con los datos de la respuesta
-    { staleTime: 60000 } // Opciones para configurar la petición, por ejemplo, el tiempo de refresco
+  const {
+    data: rawData,
+    status,
+    error
+  } = useQuery(
+    ['achievements', usuario?.id], // Clave única para identificar la petición
+    () => getAchievementsByUserId(usuario?.id), // Función que devuelve una promesa con los datos de la respuesta
+    { staleTime: 60000, enabled: !!usuario?.id } // Opciones para configurar la petición, por ejemplo, el tiempo de refresco
   );
 
-  // // Si la petición está en curso, mostrar un indicador de carga
-  // if (status === 'loading') {
-  //   return (
-  //     <div className="flex justify-center items-center">
-  //       <Spinner
-  //         animation="border"
-  //         variant="success"
-  //         className="text-emerald-500"
-  //       />
-  //     </div>
-  //   );
-  // }
+  // Ordenar los datos por nombre y por el atributo "desbloqueado"
+  const data = rawData?.sort((a, b) => {
+    // Primero ordenar por el atributo "desbloqueado"
+    if (a.desbloqueado && !b.desbloqueado) return -1;
+    if (!a.desbloqueado && b.desbloqueado) return 1;
 
-  // Si la petición falla, mostrar un mensaje de error
-  if (status === 'error') {
-    return (
-      <div className="flex justify-center items-center">
-        <div className="text-red-500">{error.message}</div>
+    // Si ambos tienen el mismo estado de "desbloqueado", ordenar por nombre
+    return a.nombre.localeCompare(b.nombre);
+  });
+
+  // Calcular el porcentaje de logros desbloqueados usando la función reduce sobre el arreglo data
+  const porcentaje = data
+    ? Math.round(
+        (data.reduce(
+          (acum, logro) => (logro.desbloqueado ? acum + 1 : acum),
+          0
+        ) /
+          data.length) *
+          100
+      )
+    : 0;
+
+  // Mostrar el porcentaje de logros desbloqueados en un elemento h2 con clases de Tailwind
+  return (
+    <div className="p-4">
+      <h2 className="text-lg bg-white font-bold text-center border rounded-lg shadow p-4">
+        Has desbloqueado el {porcentaje}% de los logros
+      </h2>
+      <div className="w-full bg-gray-200 rounded-lg h-1">
+        <div
+          className={`bg-blue-500 h-1 rounded-lg transition-all duration-500 ease-in-out`}
+          style={{ width: `${porcentaje}%` }}
+        ></div>
       </div>
-    );
-  }
-
-  // Si la petición tiene éxito, mostrar los datos de la respuesta
-  if (status === 'success') {
-    // Extraer los logros y los logrosUsuario de la respuesta
-    const { logros, logrosUsuario } = data;
-
-    // Calcular el porcentaje de logros desbloqueados por el usuario
-    const percentage = Math.round((logrosUsuario.length / logros.length) * 100);
-
-    // Mostrar el porcentaje de logros desbloqueados
-    return (
-      <>
-        <div className="text-2xl text-center">
-          Has desbloqueado el {percentage}% de los logros
-        </div>
-        <ul className="divide-y divide-gray-100 mt-4">
-          {logros.map(logro => {
-            // Verificar si el usuario ha obtenido el logro o no
-            const isUnlocked = logrosUsuario.some(
-              logroUsuario => logroUsuario.id_logro === logro.id
-            );
-
-            // Aplicar un estilo diferente dependiendo del estado del logro
-            const textColor = isUnlocked ? 'text-emerald-500' : 'text-gray-400';
-
-            // Usar un icono de un candado abierto o cerrado para indicar el estado del logro
-            const lockIcon = isUnlocked ? 'unlock' : 'lock';
-
-            // Usar una imagen diferente dependiendo del nombre del logro
-            const imageSrc =
-              logro.nombre === 'Explorador Novato' ? 'A explorer' : 'An eye';
-
-            // Mostrar cada elemento de la lista
-            return (
-              <li
-                key={logro.id}
-                className="flex justify-between gap-x-6 py-5 my-2 bg-white rounded-lg shadow"
-              >
-                <div className="flex min-w-0 gap-x-4 pl-6">
-                  <img
-                    className="h-12 w-12 flex-none rounded-full bg-gray-50"
-                    src={imageSrc}
-                    alt={logro.nombre}
-                  />
-                  <div className="min-w-0 flex-auto">
-                    <p
-                      className={`text-sm font-semibold leading-6 ${textColor}`}
-                    >
-                      {logro.nombre}
-                    </p>
-                    <p className={`mt-1 pr-10 text-xs leading-5 ${textColor}`}>
-                      {logro.descripcion}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center pr-6">
-                  <i className={`fas fa-${lockIcon} ${textColor}`} />
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      </>
-    );
-  }
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+        {status === 'loading' && <p>Cargando...</p>}
+        {status === 'error' && (
+          // Mostrar un mensaje de error si la petición falla
+          <p className="text-red-500 text-center">{error.message}</p>
+        )}
+        {status === 'success' &&
+          // Usar la función map sobre el arreglo data para renderizar un componente AchievementCard por cada logro
+          data.map(logro => (
+            <AchievementCard
+              key={logro.nombre}
+              nombre={logro.nombre}
+              nombreImagen={logro.nombre_imagen}
+              descripcion={logro.descripcion}
+              desbloqueado={logro.desbloqueado}
+            />
+          ))}
+      </div>
+    </div>
+  );
 }

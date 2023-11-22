@@ -66,7 +66,10 @@ const QuizQuestion = ({ question, userAnswer, onChangeAnswer, submitted }) => {
       </div>
       {submitted &&
         userAnswer !== correcta && ( // Mostrar la descripción de la respuesta correcta en verde solo si el usuario ha enviado el cuestionario y se ha equivocado
-          <p className="text-xl text-green-500 mt-4">{descripcion}</p>
+          <p className="text-base p-2 bg-green-300 text-green-900 mt-4 border border-green-300 rounded-md shadow-sm">
+            <span className="text-lg">Respuesta correcta: </span>
+            <br /> {descripcion}
+          </p>
         )}
     </div>
   );
