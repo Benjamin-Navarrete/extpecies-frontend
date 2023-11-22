@@ -7,14 +7,15 @@ import CommentSection from '../CommentSection';
 import { useQuery } from 'react-query';
 
 const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
+  console.log('especie1', especie);
   const {
     // nombreComun = '',
     // nombreCientifico = '',
     reino = '',
     familia = '',
     estadoConservacion = '',
-    descripcionGeografica = '',
-    detallesAmenazas = ''
+    rangoGeografico = '',
+    amenazas = ''
   } = especie;
   const [liked, setLiked] = useState(false);
   const [added, setAdded] = useState(false);
@@ -149,10 +150,10 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
                                 </li>
                                 <li>
                                   <h2 className="text-lg font-semibold text-gray-800">
-                                    Descripción geográfica
+                                    Rango geográfico
                                   </h2>
                                   <p className="text-gray-600">
-                                    {descripcionGeografica}
+                                    {rangoGeografico}
                                   </p>
                                   <hr className="my-2 border-gray-300" />
                                 </li>
@@ -160,9 +161,7 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
                                   <h2 className="text-lg font-semibold text-gray-800">
                                     Amenazas
                                   </h2>
-                                  <p className="text-gray-600">
-                                    {detallesAmenazas}
-                                  </p>
+                                  <p className="text-gray-600">{amenazas}</p>
                                 </li>
                               </ul>
                             </div>
