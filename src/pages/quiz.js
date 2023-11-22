@@ -5,14 +5,54 @@ import QuizQuestion from '@/components/QuizQuestion';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/router';
 import questions from '@/data/preguntas.json';
+import Link from 'next/link';
+import { useQuery, useMutation } from 'react-query';
+import { crearCuestionario } from '@/api/cuestionarioApi';
+import { toast } from 'react-toastify';
 
 const Quiz = () => {
   const router = useRouter();
-  const numQuestions = router.query.numQuestions; // Obtener la cantidad de preguntas de la url
-  const [selectedQuestions, setSelectedQuestions] = useState([]); // Estado para guardar las preguntas seleccionadas
-  const [userAnswers, setUserAnswers] = useState({}); // Estado para guardar las respuestas del usuario
-  const [score, setScore] = useState(0); // Estado para guardar el puntaje
-  const [submitted, setSubmitted] = useState(false); // Estado para indicar si el usuario ha enviado el cuestionario
+  const numQuestions = router.query.numQuestions;
+  const [selectedQuestions, setSelectedQuestions] = useState([]);
+  const [userAnswers, setUserAnswers] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+  const [score, setScore] = useState(0);
+  const [percentage, setPercentage] = useState(0);
+
+  // Obtener el id del usuario logeado
+  const { data: usuario } = useQuery('usuario');
+
+  // Crear una mutación para crear un nuevo registro de cuestionario que ha respondido el usuario
+  const { mutate, isLoading, isError, isSuccess, error } = useMutation(
+    crearCuestionario,
+    {
+      onSuccess: () => {
+        // Mostrar un toast que diga que se han almacenado los resultados
+        toast.success('Se han almacenado los resultados');
+      },
+      onError: () => {
+        // Mostrar un toast que diga que ocurrió un error al crear el cuestionario
+        toast.error('Ocurrió un error al crear el cuestionario');
+      }
+    }
+  );
+
+  // Crear una función para enviar los datos del cuestionario al backend
+  const enviarCuestionario = () => {
+    // Verificar si el usuario está logeado
+    if (usuario) {
+      // Llamar a la mutación con los datos del cuestionario
+      mutate({
+        score,
+        percentage,
+        numQuestions,
+        usuario_id: usuario.id
+      });
+    } else {
+      // Mostrar un toast que diga que debe estar logeado para almacenar los resultados
+      toast.info('Debes estar logeado para almacenar los resultados');
+    }
+  };
 
   useEffect(() => {
     // Función para mezclar el array de preguntas
@@ -76,13 +116,23 @@ const Quiz = () => {
             correctAnswers++;
           }
         }
+
+        // Cambiar el estado de score y percentage
         setScore(correctAnswers);
+        setPercentage(Math.round((correctAnswers / numQuestions) * 100));
 
         // Cambiar el estado de submitted a true
         setSubmitted(true);
       }
     });
   };
+
+  // Usar el Hook useEffect para llamar a la función enviarCuestionario cuando el estado de submitted sea true
+  useEffect(() => {
+    if (submitted) {
+      enviarCuestionario();
+    }
+  }, [submitted]);
 
   return (
     <DefaultLayout title="Cuestionario de biodiversidad">
@@ -105,13 +155,44 @@ const Quiz = () => {
               submitted={submitted} // Pasar el estado de submitted como prop
             />
           ))}
-          <button
-            className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded mt-8"
-            onClick={handleSubmit}
-          >
-            Enviar
-          </button>
+          {!submitted && (
+            <button
+              className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded mt-8"
+              onClick={handleSubmit}
+            >
+              Enviar
+            </button>
+          )}
         </div>
+        {submitted && (
+          <div className="container mx-auto px-4 py-8 p-2 ">
+            <h1 className="text-4xl font-bold text-center mb-4">
+              Resultados del cuestionario
+            </h1>
+            <p className="text-xl text-center mb-8">
+              Has completado el cuestionario de biodiversidad con {numQuestions}{' '}
+              preguntas. Aquí puedes ver tu puntaje y tu porcentaje de aciertos.
+              Y puedes ver las respuestas correctas{' '}
+              <span className="text-green-500">mas arriba</span>.
+            </p>
+            <div className="flex flex-col items-center">
+              <p className="text-3xl mb-4">
+                Tu puntaje es: {score} de {numQuestions}
+              </p>
+              <p className="text-3xl mb-4">
+                Tu porcentaje de aciertos es: {percentage}%
+              </p>
+            </div>
+            {/* preguntar si desea realizar otro y redirijir a test.js */}
+            <div className="flex flex-col items-center">
+              <Link href="/test">
+                <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-8">
+                  Realizar otro cuestionario
+                </button>
+              </Link>
+            </div>
+          </div>
+        )}
       </div>
     </DefaultLayout>
   );

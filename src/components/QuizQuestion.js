@@ -32,7 +32,7 @@ const QuizQuestion = ({ question, userAnswer, onChangeAnswer, submitted }) => {
   };
 
   return (
-    <div className="w-full max-w-full p-4 m-4 border rounded-lg">
+    <div className="w-full max-w-full p-4 m-2 border border-gray-100 rounded-lg">
       <p className="text-2xl mb-4">{enunciado}</p>
       <div className="grid grid-cols-2 gap-4">
         <button
