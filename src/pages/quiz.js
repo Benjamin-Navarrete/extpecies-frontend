@@ -55,7 +55,8 @@ const Quiz = () => {
   // Función para manejar el envío de las respuestas
   const handleSubmit = () => {
     // Verificar si el usuario ha respondido todas las preguntas
-    const answeredAll = Object.keys(userAnswers).length === numQuestions;
+    const answeredAll =
+      Object.keys(userAnswers).length === Number(numQuestions);
 
     // Mostrar un swal de confirmación
     Swal.fire({
