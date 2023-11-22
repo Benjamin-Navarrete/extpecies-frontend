@@ -34,7 +34,7 @@ function MapPage() {
         data.forEach(especie => {
           transformedData[especie.id] = especie;
         });
-        // Devolver el objeto transformado
+
         return transformedData;
       }
     }
