@@ -50,6 +50,10 @@ const CommentSection = ({ especie, usuario, isOpen }) => {
       onSuccess: data => {
         // Invalido la cache de los comentarios en vez de usar setQueryData
         queryClient.invalidateQueries(['comments', especie.id]);
+        // Invalido cache achievements si se obtiene logro:
+        if (data.logro) {
+          queryClient.invalidateQueries(['achievements', usuario?.id]);
+        }
         // Limpio el contenido del comentario
         setContent('');
         // Muestro un mensaje de éxito

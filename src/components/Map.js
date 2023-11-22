@@ -6,7 +6,7 @@ import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import 'leaflet-defaulticon-compatibility';
 import { useEffect, useState } from 'react';
 import SpeciesModal from './Modals/SpeciesModal';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import { getEspecieById } from '@/api/specieApi';
 
 // Importar useRouter desde next/router
@@ -21,6 +21,7 @@ const Map = ({ especies, isLoading, isError }) => {
   const [initialSpecieId, setInitialSpecieId] = useState(null);
   // Crear una variable de estado para el id de la especie seleccionada
   const [selectedSpecieId, setSelectedSpecieId] = useState(null);
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     // Obtener el id de la especie inicial del parámetro de consulta de la URL
@@ -41,7 +42,13 @@ const Map = ({ especies, isLoading, isError }) => {
     () => getEspecieById(initialSpecieId),
     {
       // Deshabilitar la consulta si el id es nulo
-      enabled: !!initialSpecieId
+      enabled: !!initialSpecieId,
+      // On success, invalidate cache if logro is true
+      onSuccess: data => {
+        if (data.logro) {
+          queryClient.invalidateQueries(['achievements']);
+        }
+      }
     }
   );
 

@@ -30,6 +30,9 @@ const AddListModal = ({ showModal, closeModal }) => {
         console.log(data);
         toast.success('Se ha creado la lista ' + data.nombre);
         queryClient.invalidateQueries('listas');
+        if (data.logro) {
+          queryClient.invalidateQueries(['achievements', usuario?.id]);
+        }
         closeModal();
       },
       // Manejo el error de la mutación

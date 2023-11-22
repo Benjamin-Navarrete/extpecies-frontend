@@ -72,6 +72,9 @@ const SpeciesActions = ({ especie, usuario }) => {
         toast.success(
           `Se ${liked ? 'eliminó' : 'agregó'} el me gusta correctamente`
         );
+        if (data.logro) {
+          queryClient.invalidateQueries(['achievements', usuario?.id]);
+        }
       },
       onError: error => {
         toast.error('Ocurrió un error al dar me gusta');

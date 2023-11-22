@@ -21,6 +21,9 @@ const AddSpecieModal = ({ isOpen, onClose, usuario, especie }) => {
         console.log(data);
         // Cierro el modal
         queryClient.invalidateQueries('listas');
+        if (data.logro) {
+          queryClient.invalidateQueries(['achievements']);
+        }
         onClose();
         toast.success(data.message);
       },
