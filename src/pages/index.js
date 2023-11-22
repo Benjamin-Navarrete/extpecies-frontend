@@ -12,7 +12,7 @@ export default function Inicio() {
                 Explora, Aprende y Protege
               </h1>
               <p className="mt-6 text-lg leading-8 text-justify text-gray-600">
-                Descubre especies en peligro de extinción de América Latina con
+                Descubre especies en peligro de extinción en el mundo con
                 nuestro mapa interactivo, aumenta tus conocimientos y contribuye
                 a la conservación de nuestra biodiversidad. ¡Anímate a explorar!
               </p>
@@ -35,7 +35,7 @@ export default function Inicio() {
           <div className="relative lg:col-span-5 lg:-mr-8 xl:absolute xl:inset-0 xl:left-1/2 xl:mr-0">
             <img
               className="aspect-[3/2] w-full bg-gray-50 object-cover lg:absolute lg:inset-0 lg:aspect-auto lg:h-full"
-              src="/img/americalatina.jpg"
+              src="/img/mapaEspeciesInicio.jpg"
               alt=""
             />
           </div>
