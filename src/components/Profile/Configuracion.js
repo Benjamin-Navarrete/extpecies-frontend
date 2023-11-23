@@ -1,17 +1,11 @@
 // Archivo src\pages\settings.js
 import React, { useState } from 'react';
-import {
-  LockClosedIcon,
-  KeyIcon,
-  UserCircleIcon
-} from '@heroicons/react/24/outline';
+import { KeyIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 import ProfileSettings from '@/components/Profile/ProfileSettings';
-import Security from '@/components/Profile/Security';
 import ChangePassword from '@/components/Profile/ChangePassword';
 
 const subNavigation = [
   { name: 'Perfil', icon: UserCircleIcon, component: <ProfileSettings /> },
-  { name: 'Privacidad', icon: LockClosedIcon, component: <Security /> },
   { name: 'Contraseña', icon: KeyIcon, component: <ChangePassword /> }
 ];
 
