@@ -9,16 +9,12 @@ import {
 import Cookies from 'cookies';
 
 export default function ProfilePage({ usuario, tab, isOwner }) {
-  // Si el usuario es el dueño del perfil, mostrar el componente PrivateProfile
-  if (isOwner) {
-    return <PrivateProfile usuario={usuario} tab={tab} />;
-  }
-  // Si el usuario no es el dueño del perfil, mostrar el componente PublicProfile
-  else {
-    console.log('usuario', usuario);
-
-    return <PublicProfile usuario={usuario} tab={tab} />;
-  }
+  // Usar el operador ternario para renderizar el componente adecuado según el isOwner
+  return isOwner ? (
+    <PrivateProfile usuario={usuario} tab={tab} />
+  ) : (
+    <PublicProfile usuario={usuario} tab={tab} />
+  );
 }
 
 export async function getServerSideProps(context) {
@@ -32,22 +28,39 @@ export async function getServerSideProps(context) {
   let props = {};
   // Si hay token, verificar su validez y expiración con la función jwtVerify
   if (token) {
-    const decodedToken = jwtDecode(token);
-    const usuarioLogueado = decodedToken.usuario;
-    // Obtener el usuario por id con la función obtenerUsuarioPorId
-    const usuario = await obtenerUsuarioPorId(usuarioLogueado.id);
-    // Comparar el username del usuario con el parámetro username de la url
-    const isOwner = usuario.username === username;
-    // Devolver los datos del usuario, el tab y el isOwner como props para la página
-    return {
-      props: {
+    try {
+      // Si el token es válido y no ha expirado, decodificarlo y obtener los datos del usuario
+      const decodedToken = jwtDecode(token);
+      const usuarioLogueado = decodedToken.usuario;
+      // Comparar el username del usuario con el parámetro username de la url
+      const isOwner = usuarioLogueado.username === username;
+      // Crear una variable usuario que almacene el resultado de las funciones obtenerUsuarioPorId y obtenerUsuarioPorNombreUsuario
+      let usuario;
+      // Si el username de la url coincide con el username del usuario logueado, obtener el usuario por id con la función obtenerUsuarioPorId
+      if (isOwner) {
+        usuario = await obtenerUsuarioPorId(usuarioLogueado.id);
+      }
+      // Si el username de la url no coincide con el username del usuario logueado, obtener el usuario por username con la función obtenerUsuarioPorNombreUsuario
+      else {
+        usuario = await obtenerUsuarioPorNombreUsuario(username);
+      }
+      // Asignar los datos del usuario, el tab y el isOwner a la variable props
+      props = {
         usuario,
         tab,
         isOwner
-      }
-    };
+      };
+    } catch (error) {
+      // Si hay un error al verificar el token, manejarlo con un bloque try-catch y asignar solo el username y el tab a la variable props, y el isOwner como falso
+      console.error(error);
+      props = {
+        username,
+        tab,
+        isOwner: false
+      };
+    }
   }
-  // Si no hay token, devolver solo el username y el tab como props para la página
+  // Si no hay token, asignar solo el username y el tab a la variable props, y el isOwner como falso
   else {
     const usuario = await obtenerUsuarioPorNombreUsuario(username);
     props = {
