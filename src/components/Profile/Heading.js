@@ -20,14 +20,7 @@ const profile = {
   ]
 };
 
-export default function ProfileHeading() {
-  // Usar el hook useAuth para acceder al usuario autenticado
-  const { usuario } = useAuth();
-
-  if (!usuario) {
-    return null;
-  }
-
+export default function ProfileHeading({ usuario }) {
   return (
     <div>
       <div>

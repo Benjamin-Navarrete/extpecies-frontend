@@ -6,7 +6,7 @@ import { getAllLists } from '@/api/listaApi';
 import List from './List';
 
 // Defino el componente Lists
-const Lists = ({ usuario }) => {
+const Lists = ({ usuario, isOwner }) => {
   // Uso el hook useQuery para obtener las listas del usuario
   const {
     isLoading,
@@ -33,9 +33,9 @@ const Lists = ({ usuario }) => {
   return (
     <div className="grid gap-3 mt-4 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
       {listas?.map(lista => (
-        <List key={lista.id} {...lista} />
+        <List key={lista.id} isOwner={isOwner} {...lista} />
       ))}
-      <AddListButton />
+      {isOwner && <AddListButton />}
     </div>
   );
 };

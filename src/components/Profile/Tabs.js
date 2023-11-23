@@ -1,4 +1,4 @@
-// Archivo src\components\Profile\Tabs.js
+// Archivo src/components/Profile/Tabs.js
 import React, { useState, useEffect } from 'react';
 import {
   TrophyIcon,
@@ -13,6 +13,7 @@ import Link from 'next/link';
 import Configuracion from './Configuracion';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
+import classNames from 'classnames';
 
 const tabs = [
   { name: 'Logros', icon: TrophyIcon, value: 'logros' },
@@ -22,22 +23,15 @@ const tabs = [
   // { name: 'Estadísticas', icon: ChartBarSquareIcon, value: 'estadisticas' }
 ];
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
-}
-
-// Recibir el prop tab desde el archivo [tab].js los valores son
-export default function Tabs(props) {
+// Recibir el prop tab y el prop isOwner desde el archivo [tab].js
+export default function Tabs({ tab, isOwner, usuario }) {
   const [content, setContent] = useState(null);
   // Crear una instancia del componente Router
   const router = useRouter();
 
-  // Se extraen los datos del usuario con useQuery para utilizar en el menú
-  const { data: usuario } = useQuery('usuario');
-
   useEffect(() => {
     // Usar el prop tab en lugar del estado currentTab
-    switch (props.tab) {
+    switch (tab) {
       case 'logros':
         setContent(<Achievements usuario={usuario} />);
         break;
@@ -45,7 +39,8 @@ export default function Tabs(props) {
         setContent(<Likes usuario={usuario} />);
         break;
       case 'listas':
-        setContent(<Lists usuario={usuario} />);
+        // Pasar el prop isOwner al componente Lists
+        setContent(<Lists usuario={usuario} isOwner={isOwner} />);
         break;
       case 'configuracion':
         setContent(<Configuracion usuario={usuario} />);
@@ -53,7 +48,7 @@ export default function Tabs(props) {
       default:
         setContent(null);
     }
-  }, [props.tab]);
+  }, [tab]);
 
   return (
     <div className="mt-5">
@@ -68,46 +63,55 @@ export default function Tabs(props) {
           id="tabs"
           name="tabs"
           className="block w-full rounded-md border-gray-300 focus:border-emerald-500 focus:ring-emerald-500"
-          defaultValue={props.tab}
+          defaultValue={tab}
           onChange={e => {
-            const href = `/profile/${e.target.value}`;
+            const href = `/profile/${usuario.username}/${e.target.value}`;
             router.push(href);
           }}
         >
-          {tabs.map(tab => (
-            <option key={tab.name} value={tab.value}>
-              {tab.name}
-            </option>
-          ))}
+          {tabs.map(tab =>
+            // Si el prop isOwner es falso, no mostrar la opción de configuración
+            isOwner || tab.value !== 'configuracion' ? (
+              <option key={tab.name} value={tab.value}>
+                {tab.name}
+              </option>
+            ) : null
+          )}
         </select>
       </div>
       <div className="hidden sm:block">
         <div className="border-b border-gray-200">
           <nav className="-mb-px flex space-x-8" aria-label="Tabs">
-            {tabs.map(tab => (
-              <Link key={tab.name} href={`/profile/${tab.value}`}>
-                <div
-                  className={classNames(
-                    tab.value === props.tab
-                      ? 'border-emerald-500 text-emerald-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
-                    'group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm'
-                  )}
-                  aria-current={tab.value === props.tab ? 'page' : undefined}
+            {tabs.map(tab =>
+              // Si el prop isOwner es falso, no mostrar el link de configuración
+              isOwner || tab.value !== 'configuracion' ? (
+                <Link
+                  key={tab.name}
+                  href={`/profile/${usuario?.username}/${tab.value}`}
                 >
-                  <tab.icon
+                  <div
                     className={classNames(
-                      tab.value === props.tab
-                        ? 'text-emerald-500'
-                        : 'text-gray-400 group-hover:text-gray-500',
-                      '-ml-0.5 mr-2 h-5 w-5'
+                      tab.value === tab
+                        ? 'border-emerald-500 text-emerald-600'
+                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+                      'group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm'
                     )}
-                    aria-hidden="true"
-                  />
-                  <span>{tab.name}</span>
-                </div>
-              </Link>
-            ))}
+                    aria-current={tab.value === tab ? 'page' : undefined}
+                  >
+                    <tab.icon
+                      className={classNames(
+                        tab.value === tab
+                          ? 'text-emerald-500'
+                          : 'text-gray-400 group-hover:text-gray-500',
+                        '-ml-0.5 mr-2 h-5 w-5'
+                      )}
+                      aria-hidden="true"
+                    />
+                    <span>{tab.name}</span>
+                  </div>
+                </Link>
+              ) : null
+            )}
           </nav>
         </div>
       </div>

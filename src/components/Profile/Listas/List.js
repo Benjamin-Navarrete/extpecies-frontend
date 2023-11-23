@@ -13,7 +13,7 @@ import SpeciesModal from '@/components/Modals/SpeciesModal';
 import copy from 'copy-to-clipboard';
 
 // Componente para mostrar cada lista
-const List = ({ nombre, especies, descripcion, id: listaId }) => {
+const List = ({ nombre, especies, descripcion, id: listaId, isOwner }) => {
   const queryClient = useQueryClient();
   // Creo una variable de estado para controlar si el modal está abierto o cerrado
   const [isEditListModalOpen, setIsEditListModalOpen] = useState(false);
@@ -108,56 +108,58 @@ const List = ({ nombre, especies, descripcion, id: listaId }) => {
           {nombre}
         </h5>
         {/* Reemplazo el elemento a por el componente Menu */}
-        <Menu as="div" className="relative inline-block text-left">
-          <Menu.Button className="text-sm font-medium text-emerald-600 hover:underline flex items-center">
-            {/* Añado el icono de tres puntos verticales al lado del texto */}
-            Opciones
-            <EllipsisVerticalIcon className="h-5 w-5 ml-1" />
-          </Menu.Button>
-          {/* Creo el elemento Menu.Items con el estilo de un menú desplegable */}
-          <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-            {/* Creo los elementos Menu.Item con el texto de cada opción */}
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  className={`${
-                    active ? 'bg-emerald-600 text-white' : 'text-gray-900'
-                  } group flex items-center px-4 py-2 text-sm w-full text-left`}
-                  onClick={handleDeleteClick}
-                >
-                  Eliminar lista
-                </button>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  className={`${
-                    active ? 'bg-emerald-600 text-white' : 'text-gray-900'
-                  } group flex items-center px-4 py-2 text-sm`}
-                  // Añado el evento onClick y llamo a la función handleShareClick
-                  onClick={handleShareClick}
-                >
-                  Compartir
-                </a>
-              )}
-            </Menu.Item>
+        {isOwner && (
+          <Menu as="div" className="relative inline-block text-left">
+            <Menu.Button className="text-sm font-medium text-emerald-600 hover:underline flex items-center">
+              {/* Añado el icono de tres puntos verticales al lado del texto */}
+              Opciones
+              <EllipsisVerticalIcon className="h-5 w-5 ml-1" />
+            </Menu.Button>
+            {/* Creo el elemento Menu.Items con el estilo de un menú desplegable */}
+            <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              {/* Creo los elementos Menu.Item con el texto de cada opción */}
+              <Menu.Item>
+                {({ active }) => (
+                  <button
+                    className={`${
+                      active ? 'bg-emerald-600 text-white' : 'text-gray-900'
+                    } group flex items-center px-4 py-2 text-sm w-full text-left`}
+                    onClick={handleDeleteClick}
+                  >
+                    Eliminar lista
+                  </button>
+                )}
+              </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
+                  <a
+                    className={`${
+                      active ? 'bg-emerald-600 text-white' : 'text-gray-900'
+                    } group flex items-center px-4 py-2 text-sm`}
+                    // Añado el evento onClick y llamo a la función handleShareClick
+                    onClick={handleShareClick}
+                  >
+                    Compartir
+                  </a>
+                )}
+              </Menu.Item>
 
-            {/* Creo el elemento Menu.Item con el componente EditListModal como hijo */}
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  className={`${
-                    active ? 'bg-emerald-600 text-white' : 'text-gray-900'
-                  } group flex items-center px-4 py-2 text-sm w-full text-left`}
-                  onClick={openEditModal}
-                >
-                  Editar o ver
-                </button>
-              )}
-            </Menu.Item>
-          </Menu.Items>
-        </Menu>
+              {/* Creo el elemento Menu.Item con el componente EditListModal como hijo */}
+              <Menu.Item>
+                {({ active }) => (
+                  <button
+                    className={`${
+                      active ? 'bg-emerald-600 text-white' : 'text-gray-900'
+                    } group flex items-center px-4 py-2 text-sm w-full text-left`}
+                    onClick={openEditModal}
+                  >
+                    Editar o ver
+                  </button>
+                )}
+              </Menu.Item>
+            </Menu.Items>
+          </Menu>
+        )}
       </div>
       <div className="flow-root">
         <ul role="list" className="divide-y divide-gray-200 ">
