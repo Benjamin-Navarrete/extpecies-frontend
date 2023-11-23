@@ -22,11 +22,6 @@ const routes = [
     name: 'Gestionar especies',
     url: '/manage-species',
     permiso: 'MEN_02'
-  },
-  {
-    name: 'Historial',
-    url: '/history',
-    permiso: 'MEN_03'
   }
 ];
 
@@ -203,19 +198,6 @@ export default function MainNavbar() {
                               </Link>
                             )}
                           </Menu.Item>
-                          {/* <Menu.Item>
-                            {({ active }) => (
-                              <Link
-                                href={baseURL + '/profile/estadisticas'}
-                                className={classnames(
-                                  active ? 'bg-gray-100' : '',
-                                  'block px-4 py-2 text-sm text-gray-700'
-                                )}
-                              >
-                                Estadísticas
-                              </Link>
-                            )}
-                          </Menu.Item> */}
                           <Menu.Item>
                             {({ active }) => (
                               <Link
@@ -232,19 +214,22 @@ export default function MainNavbar() {
                               </Link>
                             )}
                           </Menu.Item>
-                          {/* <Menu.Item>
+                          <Menu.Item>
                             {({ active }) => (
                               <Link
-                                href={baseURL + '/profile/logros'}
+                                href={
+                                  baseURL +
+                                  `/profile/${usuario.username}/estadisticas`
+                                }
                                 className={classnames(
                                   active ? 'bg-gray-100' : '',
                                   'block px-4 py-2 text-sm text-gray-700'
                                 )}
                               >
-                                Privacidad
+                                Estadísticas
                               </Link>
                             )}
-                          </Menu.Item> */}
+                          </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
                               <a
