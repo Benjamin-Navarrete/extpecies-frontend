@@ -12,15 +12,16 @@ import Lists from './Listas/Lists';
 import Link from 'next/link';
 import Configuracion from './Configuracion';
 import { useRouter } from 'next/router';
-import { useQuery } from 'react-query';
 import classNames from 'classnames';
+import { ChartBarSquareIcon } from '@heroicons/react/24/solid';
+import EstadisticasUsuario from '../Estadisticas';
 
 const tabs = [
   { name: 'Logros', icon: TrophyIcon, value: 'logros' },
   { name: 'Me gusta', icon: HeartIcon, value: 'me-gusta' },
   { name: 'Listas', icon: ListBulletIcon, value: 'listas' },
-  { name: 'Configuración', icon: CogIcon, value: 'configuracion' }
-  // { name: 'Estadísticas', icon: ChartBarSquareIcon, value: 'estadisticas' }
+  { name: 'Configuración', icon: CogIcon, value: 'configuracion' },
+  { name: 'Estadísticas', icon: ChartBarSquareIcon, value: 'estadisticas' }
 ];
 
 // Recibir el prop tab y el prop isOwner desde el archivo [tab].js
@@ -45,6 +46,9 @@ export default function Tabs({ tab, isOwner, usuario }) {
         break;
       case 'configuracion':
         setContent(<Configuracion usuario={usuario} isOwner={isOwner} />);
+        break;
+      case 'estadisticas':
+        setContent(<EstadisticasUsuario usuario={usuario} isOwner={isOwner} />);
         break;
       default:
         setContent(null);
@@ -84,8 +88,10 @@ export default function Tabs({ tab, isOwner, usuario }) {
         <div className="border-b border-gray-200">
           <nav className="-mb-px flex space-x-8" aria-label="Tabs">
             {tabs.map(tab =>
-              // Si el prop isOwner es falso, no mostrar el link de configuración
-              isOwner || tab.value !== 'configuracion' ? (
+              // Si el prop isOwner es falso, no mostrar el link de configuración ni estadísticas
+              isOwner ||
+              (tab.value !== 'configuracion' &&
+                tab.value !== 'estadisticas') ? (
                 <Link
                   key={tab.name}
                   href={`/profile/${usuario?.username}/${tab.value}`}

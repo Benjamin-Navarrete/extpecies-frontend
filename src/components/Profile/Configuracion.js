@@ -5,7 +5,6 @@ import {
   KeyIcon,
   UserCircleIcon
 } from '@heroicons/react/24/outline';
-import DefaultLayout from '@/layouts/DefaultLayout';
 import ProfileSettings from '@/components/Profile/ProfileSettings';
 import Security from '@/components/Profile/Security';
 import ChangePassword from '@/components/Profile/ChangePassword';

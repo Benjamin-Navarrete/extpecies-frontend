@@ -32,7 +32,7 @@ const Lists = ({ usuario, isOwner }) => {
   // Renderizo los componentes List usando las listas obtenidas del api
   return (
     <>
-      <div className="grid gap-3 mt-4 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid gap-3 pt-4 mt-4 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         {listas?.map(lista => (
           <List key={lista.id} isOwner={isOwner} {...lista} />
         ))}
