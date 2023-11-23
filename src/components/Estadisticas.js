@@ -23,19 +23,9 @@ import {
 } from '@heroicons/react/24/solid';
 
 // Crear el componente que reciba el id del usuario como prop
-const EstadisticasUsuario = ({ usuario, isOwner }) => {
+const EstadisticasUsuario = ({ usuario }) => {
   // Usar el custom hook para obtener los datos de los cuestionarios
   const { data, isLoading, isError, error } = useCuestionarios(usuario.id);
-
-  if (!isOwner) {
-    return (
-      <div className="col-span-1 flex flex-col p-12 divide-y divide-gray-200 rounded-lg bg-white text-center shadow">
-        <p className="text-gray-500 text-2xl font-medium">
-          Esta página es privada.
-        </p>
-      </div>
-    );
-  }
 
   // Si está cargando, mostrar un mensaje
   if (isLoading) {
@@ -50,9 +40,11 @@ const EstadisticasUsuario = ({ usuario, isOwner }) => {
   // Si no hay datos, mostrar un mensaje
   if (!data || data.length === 0) {
     return (
-      <p className="text-center">
-        No hay cuestionarios respondidos por este usuario.
-      </p>
+      <div className="col-span-1 flex flex-col p-8 divide-y divide-gray-200 rounded-lg bg-white text-center shadow">
+        <p className="text-gray-500 text-2xl font-medium">
+          No hay cuestionarios respondidos por este usuario.
+        </p>
+      </div>
     );
   }
 

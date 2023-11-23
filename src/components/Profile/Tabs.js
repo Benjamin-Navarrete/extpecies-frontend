@@ -89,9 +89,7 @@ export default function Tabs({ tab, isOwner, usuario }) {
           <nav className="-mb-px flex space-x-8" aria-label="Tabs">
             {tabs.map(tab =>
               // Si el prop isOwner es falso, no mostrar el link de configuración ni estadísticas
-              isOwner ||
-              (tab.value !== 'configuracion' &&
-                tab.value !== 'estadisticas') ? (
+              isOwner || tab.value !== 'configuracion' ? (
                 <Link
                   key={tab.name}
                   href={`/profile/${usuario?.username}/${tab.value}`}

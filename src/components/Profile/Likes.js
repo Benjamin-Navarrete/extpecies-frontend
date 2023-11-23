@@ -24,7 +24,7 @@ export default function Likes({ usuario }) {
   if (!likes || likes.length === 0) {
     return (
       <>
-        <div className="col-span-1 flex flex-col p-4 divide-y divide-gray-200 rounded-lg bg-white text-center shadow">
+        <div className="col-span-1 flex flex-col p-8 divide-y divide-gray-200 rounded-lg bg-white text-center shadow">
           <p className="text-gray-500 text-2xl font-medium">
             No existen me gusta.
           </p>

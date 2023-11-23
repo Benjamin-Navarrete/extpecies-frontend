@@ -1,6 +1,6 @@
 // Archivo src\components\Profile\Achievements.js
 import React from 'react';
-import { useQuery, QueryClient } from 'react-query';
+import { useQuery } from 'react-query';
 import { getAchievementsByUserId } from '@/api/achievementsApi';
 import Image from 'next/image'; // Importar el componente Image de Next.js
 import { LockClosedIcon, LockOpenIcon } from '@heroicons/react/24/solid';
