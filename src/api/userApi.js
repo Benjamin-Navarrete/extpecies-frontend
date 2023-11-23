@@ -36,3 +36,9 @@ export const actualizarUsuarioPorId = async ({ id, values }) => {
   });
   return response.data;
 };
+
+// Crear una función para obtener usuario por nombre de usuario con axios
+export const obtenerUsuarioPorNombreUsuario = async username => {
+  const response = await userApi.get(`usuarios/username/${username}`);
+  return response.data;
+};

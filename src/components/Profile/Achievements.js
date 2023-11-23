@@ -20,7 +20,7 @@ function AchievementCard({ nombre, nombreImagen, descripcion, desbloqueado }) {
         height={100}
       />
       <h3 className="text-lg font-bold">{nombre}</h3>
-      <p className="text-sm text-gray-600">{descripcion}</p>
+      <p className="text-sm text-center text-gray-600">{descripcion}</p>
       {/* ubicar icono al final inferior (centrado al medio): */}
       <div className="flex flex-grow items-end justify-center w-full">
         {desbloqueado ? ( // Mostrar un ícono de check o de lock según el estado del logro
@@ -34,9 +34,7 @@ function AchievementCard({ nombre, nombreImagen, descripcion, desbloqueado }) {
 }
 
 // Componente para mostrar los logros obtenidos por el usuario
-export default function Achievements() {
-  const { data: usuario } = useQuery('usuario');
-
+export default function Achievements({ usuario }) {
   // Hacer una petición GET a la API usando el hook useQuery
   const {
     data: rawData,
