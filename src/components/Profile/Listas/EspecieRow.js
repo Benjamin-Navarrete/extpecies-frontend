@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 
 // Creo un componente para mostrar cada especie
 // Agrego una nueva prop llamada openModal
-const Especie = ({ especie, openModal, listaId }) => {
+const Especie = ({ especie, openModal, listaId, isOwner }) => {
   const queryClient = useQueryClient();
 
   // Creo una mutación con react query para eliminar la especie de la lista
@@ -59,13 +59,16 @@ const Especie = ({ especie, openModal, listaId }) => {
             onClick={() => openModal(especie)}
           />
           <Tooltip id="tooltip-ver" />
-          <TrashIcon
-            className="h-5 w-5 ml-2 cursor-pointer"
-            data-tooltip-id="tooltip-eliminar"
-            data-tooltip-content="Eliminar especie de la lista"
-            data-tooltip-place="top"
-            onClick={handleDelete}
-          />
+          {isOwner && (
+            <TrashIcon
+              className="h-5 w-5 ml-2 cursor-pointer"
+              data-tooltip-id="tooltip-eliminar"
+              data-tooltip-content="Eliminar"
+              data-tooltip-place="top"
+              onClick={handleDelete}
+            />
+          )}
+
           <Tooltip id="tooltip-eliminar" />
         </div>
       </div>

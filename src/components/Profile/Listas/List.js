@@ -174,6 +174,7 @@ const List = ({ nombre, especies, descripcion, id: listaId, isOwner }) => {
                   listaId={listaId}
                   especie={especie}
                   openModal={openSeeSpeciesModal}
+                  isOwner={isOwner}
                 />
               ))
           ) : (

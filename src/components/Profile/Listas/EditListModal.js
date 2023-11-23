@@ -89,7 +89,7 @@ const EditListModal = ({
         {/* Creo el componente Dialog para crear el modal */}
         <Dialog
           as="div"
-          className="fixed inset-0 z-10 overflow-y-auto"
+          className="fixed inset-0 z-[9999] overflow-y-auto"
           onClose={closeModal}
         >
           {/* Creo el componente Dialog.Overlay para crear el fondo oscuro */}
@@ -205,6 +205,7 @@ const EditListModal = ({
                         listaId={id}
                         especie={especie}
                         openModal={openSeeSpeciesModal}
+                        isOwner={true}
                       />
                     ))
                   ) : (
