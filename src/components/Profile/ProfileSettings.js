@@ -79,7 +79,7 @@ const ProfileSettings = () => {
                     Aquí puedes configurar tu perfil.
                   </p>
                 </div>
-                <div className="mt-6 flex flex-col 2xl:flex-row">
+                <div className="mt-6 flex flex-col">
                   <CoverPhoto formik={formik} />
                   <ProfilePhoto formik={formik} />
                   <ProfileForm formik={formik} />
