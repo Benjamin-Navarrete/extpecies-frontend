@@ -164,7 +164,7 @@ const SpeciesActions = ({ especie, usuario }) => {
           data-tooltip-content={tooltipContent3}
           data-tooltip-place="top"
           onClick={() => {
-            navigator.clipboard.writeText('https://www.example.com/post/123');
+            navigator.clipboard.writeText(window.location.href);
             setCopied(!copied);
             setTooltipContent3(copied ? 'Copiar enlace' : 'Copiado');
           }}
