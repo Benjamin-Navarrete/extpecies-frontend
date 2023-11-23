@@ -158,7 +158,10 @@ export default function MainNavbar() {
                           <Menu.Item>
                             {({ active }) => (
                               <Link
-                                href={baseURL + '/profile/logros'}
+                                href={
+                                  baseURL +
+                                  `/profile/${usuario.username}/logros`
+                                }
                                 className={classnames(
                                   active ? 'bg-gray-100' : '',
                                   'block px-4 py-2 text-sm text-gray-700'
@@ -171,7 +174,10 @@ export default function MainNavbar() {
                           <Menu.Item>
                             {({ active }) => (
                               <Link
-                                href={baseURL + '/profile/me-gusta'}
+                                href={
+                                  baseURL +
+                                  `/profile/${usuario.username}/me-gusta`
+                                }
                                 className={classnames(
                                   active ? 'bg-gray-100' : '',
                                   'block px-4 py-2 text-sm text-gray-700'
@@ -184,7 +190,10 @@ export default function MainNavbar() {
                           <Menu.Item>
                             {({ active }) => (
                               <Link
-                                href={baseURL + '/profile/listas'}
+                                href={
+                                  baseURL +
+                                  `/profile/${usuario.username}/listas`
+                                }
                                 className={classnames(
                                   active ? 'bg-gray-100' : '',
                                   'block px-4 py-2 text-sm text-gray-700'
@@ -210,7 +219,10 @@ export default function MainNavbar() {
                           <Menu.Item>
                             {({ active }) => (
                               <Link
-                                href={baseURL + '/profile/configuracion'}
+                                href={
+                                  baseURL +
+                                  `/profile/${usuario.username}/configuracion`
+                                }
                                 className={classnames(
                                   active ? 'bg-gray-100' : '',
                                   'block px-4 py-2 text-sm text-gray-700'
