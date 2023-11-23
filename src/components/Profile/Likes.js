@@ -5,9 +5,7 @@ import { getLikesByUser } from '@/api/likeApi';
 import { useState } from 'react';
 import SpeciesModal from '../Modals/SpeciesModal';
 
-export default function Likes() {
-  // Se extraen los datos del usuario con useQuery para utilizar en el menú
-  const { data: usuario } = useQuery('usuario');
+export default function Likes({ usuario }) {
   // Creo un estado para controlar si el modal está abierto o cerrado
   const [isOpen, setIsOpen] = useState(false);
   // Creo un estado para guardar la especie seleccionada

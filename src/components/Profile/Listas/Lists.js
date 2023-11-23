@@ -6,10 +6,7 @@ import { getAllLists } from '@/api/listaApi';
 import List from './List';
 
 // Defino el componente Lists
-const Lists = () => {
-  // Obtengo el id del usuario con el hook useQuery
-  const { data: usuario } = useQuery('usuario');
-
+const Lists = ({ usuario }) => {
   // Uso el hook useQuery para obtener las listas del usuario
   const {
     isLoading,

@@ -12,6 +12,7 @@ import Lists from './Listas/Lists';
 import Link from 'next/link';
 import Configuracion from './Configuracion';
 import { useRouter } from 'next/router';
+import { useQuery } from 'react-query';
 
 const tabs = [
   { name: 'Logros', icon: TrophyIcon, value: 'logros' },
@@ -31,20 +32,23 @@ export default function Tabs(props) {
   // Crear una instancia del componente Router
   const router = useRouter();
 
+  // Se extraen los datos del usuario con useQuery para utilizar en el menú
+  const { data: usuario } = useQuery('usuario');
+
   useEffect(() => {
     // Usar el prop tab en lugar del estado currentTab
     switch (props.tab) {
       case 'logros':
-        setContent(<Achievements />);
+        setContent(<Achievements usuario={usuario} />);
         break;
       case 'me-gusta':
-        setContent(<Likes />);
+        setContent(<Likes usuario={usuario} />);
         break;
       case 'listas':
-        setContent(<Lists />);
+        setContent(<Lists usuario={usuario} />);
         break;
       case 'configuracion':
-        setContent(<Configuracion />);
+        setContent(<Configuracion usuario={usuario} />);
         break;
       default:
         setContent(null);
