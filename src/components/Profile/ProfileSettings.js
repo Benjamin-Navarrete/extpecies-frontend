@@ -7,6 +7,7 @@ import ProfilePhoto from './ProfilePhoto.js';
 import CoverPhoto from './CoverPhoto';
 import ProfileForm from './ProfileForm';
 import { toast } from 'react-toastify';
+import * as yup from 'yup';
 
 const ProfileSettings = () => {
   const [profilePhotoUrl, setProfilePhotoUrl] = useState(null);
@@ -34,10 +35,14 @@ const ProfileSettings = () => {
     {
       // Actualizar el estado del usuario en el caché de react query
       onSuccess: data => {
-        toast.success('Usuario actualizado');
         queryClient.invalidateQueries('usuarioPorId');
         queryClient.invalidateQueries('usuario');
         queryClient.setQueryData('usuarioPorId', data);
+        toast.success('Usuario actualizado exitosamente');
+        // esperar 1 segundo y recargar la página
+        setTimeout(() => {
+          window.location.reload();
+        }, 600);
       },
       onError: () => {
         toast.error('Ha ocurrido un error');
@@ -50,6 +55,10 @@ const ProfileSettings = () => {
     // Pasar el id del usuario a la función actualizarUsuario
     actualizarUsuario({ id, values });
   };
+
+  const validationSchema = yup.object().shape({
+    nombres: yup.string().required('El nombre es obligatorio')
+  });
 
   // Crear una función para renderizar el contenido según el estado del useQuery
   const renderContent = () => {
@@ -66,6 +75,7 @@ const ProfileSettings = () => {
           }}
           onSubmit={onSubmit}
           enableReinitialize={true}
+          validationSchema={validationSchema}
         >
           {formik => (
             <div className="divide-y divide-gray-200">

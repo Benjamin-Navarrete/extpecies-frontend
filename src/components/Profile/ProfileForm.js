@@ -1,32 +1,12 @@
 // Archivo src\components\Profile\ProfileForm.js
 import React from 'react';
-import { Field, Form } from 'formik';
+import { Field, Form, ErrorMessage } from 'formik';
 import { countries } from '@/utils/countries';
 
 const ProfileForm = ({ formik }) => {
   // Este componente recibe el objeto formik como prop y muestra los campos del formulario y los botones de cancelar y guardar
   return (
     <Form className="flex-grow space-y-6">
-      <div>
-        <label
-          htmlFor="username"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Nombre de usuario
-        </label>
-        <div className="mt-1 flex rounded-md shadow-sm">
-          <span className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-gray-500 sm:text-sm">
-            extpecies.com/
-          </span>
-          <Field
-            type="text"
-            name="username"
-            id="username"
-            className="flex-1 focus:ring-emerald-500 focus:border-emerald-500 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
-          />
-        </div>
-      </div>
-
       <div>
         <label
           htmlFor="about"
@@ -62,6 +42,11 @@ const ProfileForm = ({ formik }) => {
             id="nombres"
             autoComplete="nombres"
             className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-emerald-500 sm:text-sm"
+          />
+          <ErrorMessage
+            name="nombres"
+            component="div"
+            className="text-red-500 text-sm mt-2"
           />
         </div>
 

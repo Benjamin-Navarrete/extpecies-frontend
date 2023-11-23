@@ -31,12 +31,21 @@ const Lists = ({ usuario, isOwner }) => {
 
   // Renderizo los componentes List usando las listas obtenidas del api
   return (
-    <div className="grid gap-3 mt-4 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-      {listas?.map(lista => (
-        <List key={lista.id} isOwner={isOwner} {...lista} />
-      ))}
-      {isOwner && <AddListButton />}
-    </div>
+    <>
+      <div className="grid gap-3 mt-4 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+        {listas?.map(lista => (
+          <List key={lista.id} isOwner={isOwner} {...lista} />
+        ))}
+        {isOwner && <AddListButton />}
+      </div>
+      {!isOwner && listas.length === 0 && (
+        <div className="col-span-1 flex flex-col p-12 divide-y divide-gray-200 rounded-lg bg-white text-center shadow">
+          <p className="text-gray-500 text-2xl font-medium">
+            No existen listas
+          </p>
+        </div>
+      )}
+    </>
   );
 };
 
