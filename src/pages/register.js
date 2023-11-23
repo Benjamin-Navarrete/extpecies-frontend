@@ -39,7 +39,8 @@ export default function Register() {
   const router = useRouter();
 
   const validationSchema = Yup.object({
-    nombreCompleto: Yup.string().required('El nombre completo es obligatorio'),
+    nombres: Yup.string().required('El nombre es obligatorio'),
+    apellidos: Yup.string(),
     correoElectronico: Yup.string()
       .email('El correo electrónico no es válido')
       .required('El correo electrónico es obligatorio'),
@@ -60,7 +61,8 @@ export default function Register() {
   const handleSubmit = async (values, actions) => {
     try {
       const {
-        nombreCompleto,
+        nombres,
+        apellidos,
         correoElectronico,
         password,
         pais,
@@ -70,7 +72,8 @@ export default function Register() {
       const response = await axios.post(
         'http://localhost:3500/api/auth/signup',
         {
-          nombreCompleto,
+          nombres,
+          apellidos,
           correoElectronico,
           password,
           pais,
@@ -96,13 +99,11 @@ export default function Register() {
       <DefaultLayout>
         <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-md">
-            {/* LOGO
             <img
               className="mx-auto h-12 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=emerald&shade=600"
+              src="/logo.png"
               alt="Your Company"
             />
-            */}
             <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
               Regístrate, cuidemos la biodiversidad juntos
             </h2>
@@ -111,7 +112,8 @@ export default function Register() {
             <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
               <Formik
                 initialValues={{
-                  nombreCompleto: '',
+                  nombres: '',
+                  apellidos: '',
                   correoElectronico: '',
                   password: '',
                   confirmarContrasena: '',
@@ -121,14 +123,23 @@ export default function Register() {
                 }}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
+                enableReinitialize={true}
               >
                 {({ isSubmitting }) => (
                   <Form>
                     <InputField
-                      label="Nombre completo"
+                      label="Nombres"
                       type="text"
-                      name="nombreCompleto"
-                      placeholder="Nombre y apellido"
+                      name="nombres"
+                      placeholder="Nombres"
+                      autoComplete="name"
+                    />
+
+                    <InputField
+                      label="Apellidos"
+                      type="text"
+                      name="apellidos"
+                      placeholder="Apellidos"
                       autoComplete="name"
                     />
 
@@ -173,11 +184,6 @@ export default function Register() {
                       name="terminosYCondiciones"
                     />
 
-                    <CheckboxField
-                      label="Deseo recibir el boletín informativo"
-                      name="boletinInformativo"
-                    />
-
                     <div>
                       <button
                         type="submit"
@@ -192,28 +198,6 @@ export default function Register() {
                   </Form>
                 )}
               </Formik>
-
-              <div className="mt-6">
-                <div className="relative">
-                  <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-gray-300" />
-                  </div>
-                  <div className="relative flex justify-center text-sm">
-                    <span className="bg-white px-2 text-gray-500">
-                      O registrate con
-                    </span>
-                  </div>
-                </div>
-
-                <div className="mt-6 grid grid-cols-3 gap-3">
-                  <SocialLoginButton
-                    platform="Facebook"
-                    icon={<FaFacebook />}
-                  />
-                  <SocialLoginButton platform="Twitter" icon={<FaTwitter />} />
-                  <SocialLoginButton platform="GitHub" icon={<FaGithub />} />
-                </div>
-              </div>
             </div>
           </div>
         </div>
