@@ -48,6 +48,7 @@ const CommentSection = ({ especie, usuario, isOpen }) => {
     createComment,
     {
       onSuccess: data => {
+        console.log(data);
         // Invalido la cache de los comentarios en vez de usar setQueryData
         queryClient.invalidateQueries(['comments', especie.id]);
         // Invalido cache achievements si se obtiene logro:
