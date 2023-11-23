@@ -44,7 +44,7 @@ export default function Tabs({ tab, isOwner, usuario }) {
         setContent(<Lists usuario={usuario} isOwner={isOwner} />);
         break;
       case 'configuracion':
-        setContent(<Configuracion usuario={usuario} />);
+        setContent(<Configuracion usuario={usuario} isOwner={isOwner} />);
         break;
       default:
         setContent(null);

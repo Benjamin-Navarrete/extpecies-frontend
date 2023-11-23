@@ -20,7 +20,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Configuracion() {
+export default function Configuracion({ isOwner }) {
   // Estado del tab actual
   const [currentTab, setCurrentTab] = useState(0);
 
@@ -31,6 +31,16 @@ export default function Configuracion() {
 
   // Componente que se va a renderizar
   const content = subNavigation[currentTab].component;
+
+  if (!isOwner) {
+    return (
+      <div className="col-span-1 flex flex-col p-12 divide-y divide-gray-200 rounded-lg bg-white text-center shadow">
+        <p className="text-gray-500 text-2xl font-medium">
+          Esta página es privada.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-screen-xl px-4 pb-6 sm:px-6 lg:px-8 lg:pb-16">
