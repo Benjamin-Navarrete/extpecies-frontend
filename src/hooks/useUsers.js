@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import Cookies from 'js-cookie';
 
 const useUsers = () => {
   const [data, setData] = useState([]);
@@ -62,6 +63,16 @@ const useUsers = () => {
   };
 
   const handleDelete = async id => {
+    const token = Cookies.get('token');
+    if (!token) {
+      return;
+    }
+    // decodificar token
+    const { id: id_usuario } = JSON.parse(atob(token.split('.')[1]));
+    if (id_usuario === id) {
+      toast.error('No puedes eliminar tu propio usuario');
+      return;
+    }
     if (window.confirm('¿Estás seguro de que quieres eliminar este usuario?')) {
       try {
         await axios.delete(`http://localhost:3500/api/usuarios/${id}`);
