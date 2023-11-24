@@ -28,8 +28,6 @@ const ChangePassword = ({ usuario }) => {
         values
       );
 
-      console.log(response);
-
       // Mostrar un mensaje de éxito
       toast.success(response.data.message);
 

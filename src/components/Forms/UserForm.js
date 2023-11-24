@@ -13,8 +13,6 @@ const UserForm = ({
   handleCloseModal,
   handleSubmit
 }) => {
-  console.log('userForm', userForm);
-  console.log('currentUser', currentUser);
   const validationSchema = Yup.object({
     nombres: Yup.string().required('El nombre es obligatorio'),
     apellidos: Yup.string().required('El apellido es obligatorio'),

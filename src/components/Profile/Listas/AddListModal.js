@@ -26,8 +26,6 @@ const AddListModal = ({ showModal, closeModal }) => {
     {
       // Manejo el éxito de la mutación
       onSuccess: data => {
-        // Muestro un mensaje de éxito
-        console.log(data);
         toast.success('Se ha creado la lista ' + data.nombre);
         queryClient.invalidateQueries('listas');
         if (data.logro) {
@@ -73,9 +71,7 @@ const AddListModal = ({ showModal, closeModal }) => {
             <span
               className="inline-block h-screen align-middle"
               aria-hidden="true"
-            >
-              ​
-            </span>
+            ></span>
             <Transition.Child
               as={React.Fragment}
               enter="ease-out duration-300"

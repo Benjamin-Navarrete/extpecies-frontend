@@ -61,7 +61,7 @@ const EditListModal = ({
   };
 
   // Creo una mutación con react query para actualizar la lista
-  const { mutate, isLoading, isError, isSuccess, error } = useMutation(
+  const { mutate } = useMutation(
     data => updateList(id, data), // Paso el id de la lista y los datos al método updateList
     {
       onSuccess: data => {
@@ -100,9 +100,7 @@ const EditListModal = ({
             <span
               className="inline-block h-screen align-middle"
               aria-hidden="true"
-            >
-              ​
-            </span>
+            ></span>
             {/* Creo un div para crear el modal con un estilo de tailwind */}
             <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
               {/* Creo un botón para cerrar el modal con un icono de X */}

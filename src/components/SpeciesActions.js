@@ -18,10 +18,7 @@ import {
   LinkIcon
 } from '@heroicons/react/24/outline';
 
-import {
-  HeartIcon as HeartIconSolid,
-  XMarkIcon
-} from '@heroicons/react/24/solid';
+import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid';
 import Logro from './Logro';
 
 const SpeciesActions = ({ especie, usuario }) => {
@@ -76,10 +73,10 @@ const SpeciesActions = ({ especie, usuario }) => {
           queryClient.invalidateQueries(['achievements', usuario?.id]);
         }
       },
-      onError: error => {
+      onError: () => {
         toast.error('Ocurrió un error al dar me gusta');
       },
-      onSettled: (data, error) => {
+      onSettled: () => {
         queryClient.invalidateQueries(['likesCount', especie.id]);
       }
     }

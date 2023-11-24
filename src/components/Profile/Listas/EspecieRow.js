@@ -12,10 +12,10 @@ const Especie = ({ especie, openModal, listaId, isOwner }) => {
   const queryClient = useQueryClient();
 
   // Creo una mutación con react query para eliminar la especie de la lista
-  const { mutate, isLoading, isError, isSuccess, error } = useMutation(
+  const { mutate } = useMutation(
     () => deleteSpecieFromList(listaId, especie.id), // Paso el id de la lista y de la especie al método deleteSpecieFromList
     {
-      onSuccess: data => {
+      onSuccess: () => {
         queryClient.invalidateQueries('listas');
         // Si la mutación tiene éxito, muestro un mensaje de éxito
         toast.success('La especie se ha eliminado de la lista');

@@ -43,7 +43,6 @@ const useSpecies = () => {
       const result = await axios.get(
         'http://localhost:3500/api/especies/all/allSpecies'
       );
-      console.log('result.data', result.data);
       setData(result.data);
       setLoading(false);
     };

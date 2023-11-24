@@ -7,7 +7,6 @@ import CommentSection from '../CommentSection';
 import { useQuery } from 'react-query';
 
 const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
-  console.log('especie1', especie);
   const {
     // nombreComun = '',
     // nombreCientifico = '',
@@ -17,6 +16,7 @@ const SpeciesModal = ({ isOpen, closeModal, especie = {} }) => {
     rangoGeografico = '',
     amenazas = ''
   } = especie;
+  // eslint-disable-next-line no-unused-vars
   const [liked, setLiked] = useState(false);
   const [added, setAdded] = useState(false);
   const { data: usuario } = useQuery('usuario');

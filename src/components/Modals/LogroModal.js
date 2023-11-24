@@ -6,7 +6,6 @@ import 'sweetalert2/src/sweetalert2.scss';
 
 // Crear el componente LogroModal
 const LogroModal = ({ nombre, icono }) => {
-  console.log('Logro renderizandoo');
   // Crear una función para mostrar el modal
   const mostrarModal = () => {
     // Usar Swal.fire para crear el modal

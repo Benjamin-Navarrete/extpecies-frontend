@@ -4,8 +4,6 @@ import { KeyIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 import ProfileSettings from '@/components/Profile/ProfileSettings';
 import ChangePassword from '@/components/Profile/ChangePassword';
 
-
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }

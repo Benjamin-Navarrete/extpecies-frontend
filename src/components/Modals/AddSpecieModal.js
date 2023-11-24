@@ -18,7 +18,6 @@ const AddSpecieModal = ({ isOpen, onClose, usuario, especie }) => {
     {
       // Manejo el éxito de la mutación
       onSuccess: data => {
-        console.log(data);
         // Cierro el modal
         queryClient.invalidateQueries('listas');
         if (data.logro) {
@@ -33,7 +32,7 @@ const AddSpecieModal = ({ isOpen, onClose, usuario, especie }) => {
         toast.error(error.response.data.message);
       },
       // Manejo el resultado de la mutación
-      onSettled: (data, error) => {
+      onSettled: () => {
         // Aquí podría hacer algo más con el resultado, como invalidar alguna consulta o actualizar algún estado
       }
     }

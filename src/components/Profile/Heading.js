@@ -1,5 +1,4 @@
 // Archivo src\components\Profile\Heading.js
-import useAuth from '@/hooks/useAuth';
 
 const serverUrl = process.env.NEXT_PUBLIC_EXPRESS_API_URL;
 

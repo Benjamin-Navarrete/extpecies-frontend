@@ -2,14 +2,11 @@
 import CheckboxField from '@/components/Inputs/CheckBoxField';
 import InputField from '@/components/Inputs/InputField';
 import SelectField from '@/components/Inputs/SelectField';
-import SocialLoginButton from '@/components/SocialLoginButton';
 import DefaultLayout from '@/layouts/DefaultLayout';
-import { FaFacebook, FaTwitter, FaGithub } from 'react-icons/fa';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 
 const countries = [

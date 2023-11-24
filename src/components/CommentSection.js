@@ -14,6 +14,7 @@ const CommentSection = ({ especie, usuario, isOpen }) => {
   // Estado para el contenido del nuevo comentario
   const [content, setContent] = useState('');
   // Estado para la paginación de los comentarios
+  // eslint-disable-next-line no-unused-vars
   const [page, setPage] = useState(1);
 
   // Estado para la paginación de los comentarios
@@ -35,7 +36,7 @@ const CommentSection = ({ especie, usuario, isOpen }) => {
 
   // Mutaciones de comentarios
   // Query para obtener los comentarios de la especie seleccionada
-  const { data: comments, isLoading: isLoadingComments } = useQuery(
+  const { data: comments } = useQuery(
     ['comments', especie.id, page, limit.value], // Uso limit.value como parámetro
     () => getCommentsByEspecie(especie.id, page, limit.value), // Uso limit.value como argumento
     {
@@ -48,7 +49,6 @@ const CommentSection = ({ especie, usuario, isOpen }) => {
     createComment,
     {
       onSuccess: data => {
-        console.log(data);
         // Invalido la cache de los comentarios en vez de usar setQueryData
         queryClient.invalidateQueries(['comments', especie.id]);
         // Invalido cache achievements si se obtiene logro:

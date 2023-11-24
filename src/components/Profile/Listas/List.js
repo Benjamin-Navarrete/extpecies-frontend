@@ -81,7 +81,6 @@ const List = ({ nombre, especies, descripcion, id: listaId, isOwner }) => {
   // Función para manejar el click en el botón de eliminar
   const handleDeleteClick = () => {
     if (window.confirm('¿Estás seguro de que quieres eliminar esta lista?"')) {
-      console.log('aceptado');
       deleteListMutation.mutate(listaId);
     }
   };

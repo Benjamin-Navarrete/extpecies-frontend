@@ -51,8 +51,6 @@ export async function getServerSideProps(context) {
         isOwner
       };
     } catch (error) {
-      // Si hay un error al verificar el token, manejarlo con un bloque try-catch y asignar solo el username y el tab a la variable props, y el isOwner como falso
-      console.error(error);
       props = {
         username,
         tab,

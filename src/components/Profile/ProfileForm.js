@@ -3,7 +3,7 @@ import React from 'react';
 import { Field, Form, ErrorMessage } from 'formik';
 import { countries } from '@/utils/countries';
 
-const ProfileForm = ({ formik }) => {
+const ProfileForm = () => {
   // Este componente recibe el objeto formik como prop y muestra los campos del formulario y los botones de cancelar y guardar
   return (
     <Form className="flex-grow space-y-6">

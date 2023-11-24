@@ -14,7 +14,7 @@ const About = () => {
               Extpecies es una organización independiente enfocada en el
               desarrollo de aplicaciones web para concientizar sobre la
               importancia de proteger y preservar las especies en peligro. Nos
-              centramos en la flora y fauna que se encuentran en categorías de 
+              centramos en la flora y fauna que se encuentran en categorías de
               Amenazada y Extinta en el mundo.
             </p>
             <p className="mt-6 text-lg leading-8 text-justify font-normal text-gray-600">
@@ -44,19 +44,19 @@ const About = () => {
             </h2>
             <p className="mt-6 mb-4 text-lg leading-8 text-justify font-normal text-gray-600">
               El Mapa de Extpecies ha sido creado con el objetivo de brindar una
-              visualización sencilla a las especies amenazadas del mundo.
-              A través de este mapa, puedes navegar de una manera
-              intuitiva y, al hacer clic en una especie, se abrirá una ventana
-              emergente que mostrará la información más relevante de la especie.
+              visualización sencilla a las especies amenazadas del mundo. A
+              través de este mapa, puedes navegar de una manera intuitiva y, al
+              hacer clic en una especie, se abrirá una ventana emergente que
+              mostrará la información más relevante de la especie.
             </p>
             <p className="mt-6 mb-4 text-lg leading-8 text-justify font-normal text-gray-600">
               Las especies son una recopilación simplificada de la Lista Roja de
               las especies amenazadas de la IUCN (Unión Internacional para la
               Conservación de la Naturaleza). Para cada especie podrás
               visualizar su nombre común, nombre científico, imagen, reino,
-              filo, clase, orden, familia, género, estado de conservación, 
-              descripción geográfica y las amenazas. Existen 3 grandes categorías 
-              de conservación, con varias subcategorías:
+              filo, clase, orden, familia, género, estado de conservación,
+              descripción geográfica y las amenazas. Existen 3 grandes
+              categorías de conservación, con varias subcategorías:
             </p>
             <ul className="space-y-4 text-gray-500 list-disc list-inside">
               <li>

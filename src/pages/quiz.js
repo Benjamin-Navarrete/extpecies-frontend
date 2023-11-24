@@ -23,19 +23,16 @@ const Quiz = () => {
   const { data: usuario } = useQuery('usuario');
 
   // Crear una mutación para crear un nuevo registro de cuestionario que ha respondido el usuario
-  const { mutate, isLoading, isError, isSuccess, error } = useMutation(
-    crearCuestionario,
-    {
-      onSuccess: () => {
-        // Mostrar un toast que diga que se han almacenado los resultados
-        toast.success('Se han almacenado los resultados');
-      },
-      onError: () => {
-        // Mostrar un toast que diga que ocurrió un error al crear el cuestionario
-        toast.error('Ocurrió un error al crear el cuestionario');
-      }
+  const { mutate } = useMutation(crearCuestionario, {
+    onSuccess: () => {
+      // Mostrar un toast que diga que se han almacenado los resultados
+      toast.success('Se han almacenado los resultados');
+    },
+    onError: () => {
+      // Mostrar un toast que diga que ocurrió un error al crear el cuestionario
+      toast.error('Ocurrió un error al crear el cuestionario');
     }
-  );
+  });
 
   // Crear una función para enviar los datos del cuestionario al backend
   const enviarCuestionario = () => {

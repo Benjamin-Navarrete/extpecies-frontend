@@ -1,8 +1,6 @@
 // Archivo src/pages/login.js
 import InputField from '@/components/Inputs/InputField';
-import SocialLoginButton from '@/components/SocialLoginButton';
 import DefaultLayout from '@/layouts/DefaultLayout';
-import { FaFacebook, FaTwitter, FaGithub } from 'react-icons/fa';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 

@@ -20,7 +20,6 @@ export const darLike = async (id_usuario, id_especie) => {
       }
     }
   );
-  console.log('darLike', response.data);
   return response.data;
 };
 

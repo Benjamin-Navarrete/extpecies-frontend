@@ -25,7 +25,7 @@ const Logro = ({ logro }) => {
         customClass: {
           container: 'z-[9998]'
         }
-      }).then(result => {
+      }).then(() => {
         // Desactivar el confeti cuando se cierra la alerta
         setConfettiActive(false);
       });

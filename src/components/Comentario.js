@@ -11,7 +11,7 @@ const Comentario = ({ comentario }) => {
   const [contenido, setContenido] = useState(comentario.contenido);
 
   const mutationActualizar = useMutation(updateComment, {
-    onSuccess: data => {
+    onSuccess: () => {
       toast.success('Comentario actualizado');
       // Invalido la cache de los comentarios en vez de usar setQueryData
       queryClient.invalidateQueries(['comments', comentario.especie_id]);
@@ -23,7 +23,7 @@ const Comentario = ({ comentario }) => {
   });
 
   const mutationEliminar = useMutation(deleteComment, {
-    onSuccess: data => {
+    onSuccess: () => {
       toast.success('Comentario eliminado');
       // Invalido la cache de los comentarios en vez de usar setQueryData
       queryClient.invalidateQueries(['comments', comentario.especie_id]);

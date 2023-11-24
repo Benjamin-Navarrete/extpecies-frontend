@@ -11,7 +11,6 @@ import { getEspecieById } from '@/api/specieApi';
 
 // Importar useRouter desde next/router
 import { useRouter } from 'next/router';
-import { toast } from 'react-toastify';
 import Logro from './Logro';
 
 const Map = ({ especies, isLoading, isError }) => {
