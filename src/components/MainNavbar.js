@@ -155,7 +155,7 @@ export default function MainNavbar() {
                               <Link
                                 href={
                                   baseURL +
-                                  `/profile/${usuario.username}/logros`
+                                  `/profile/${usuario?.username}/logros`
                                 }
                                 className={classnames(
                                   active ? 'bg-gray-100' : '',
@@ -171,7 +171,7 @@ export default function MainNavbar() {
                               <Link
                                 href={
                                   baseURL +
-                                  `/profile/${usuario.username}/me-gusta`
+                                  `/profile/${usuario?.username}/me-gusta`
                                 }
                                 className={classnames(
                                   active ? 'bg-gray-100' : '',
@@ -187,7 +187,7 @@ export default function MainNavbar() {
                               <Link
                                 href={
                                   baseURL +
-                                  `/profile/${usuario.username}/listas`
+                                  `/profile/${usuario?.username}/listas`
                                 }
                                 className={classnames(
                                   active ? 'bg-gray-100' : '',
@@ -203,7 +203,7 @@ export default function MainNavbar() {
                               <Link
                                 href={
                                   baseURL +
-                                  `/profile/${usuario.username}/configuracion`
+                                  `/profile/${usuario?.username}/configuracion`
                                 }
                                 className={classnames(
                                   active ? 'bg-gray-100' : '',
@@ -219,7 +219,7 @@ export default function MainNavbar() {
                               <Link
                                 href={
                                   baseURL +
-                                  `/profile/${usuario.username}/estadisticas`
+                                  `/profile/${usuario?.username}/estadisticas`
                                 }
                                 className={classnames(
                                   active ? 'bg-gray-100' : '',

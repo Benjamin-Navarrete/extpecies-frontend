@@ -37,14 +37,14 @@ export default function ProfileHeading({ usuario }) {
           <div className="flex">
             <img
               className="h-24 w-24 rounded-full ring-4 ring-white sm:h-32 sm:w-32"
-              src={serverUrl + '/' + usuario.fotoPerfil || profile.avatar}
+              src={serverUrl + '/' + usuario?.fotoPerfil || profile.avatar}
               alt=""
             />
           </div>
           <div className="mt-6 sm:flex sm:min-w-0 sm:flex-1 sm:items-center sm:justify-end sm:space-x-6 sm:pb-1">
             <div className="mt-6 min-w-0 flex-1 sm:hidden md:block">
               <h1 className="truncate text-2xl font-bold text-gray-900">
-                {usuario.nombres} {usuario.apellidos}
+                {usuario?.nombres} {usuario?.apellidos}
               </h1>
             </div>
             <div className="justify-stretch text-gray-600 mt-8 flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4">
@@ -56,7 +56,8 @@ export default function ProfileHeading({ usuario }) {
                 className="-ml-1 mr-2 h-5 w-5 text-gray-400"
                 aria-hidden="true"
               /> */}
-              <span>Seguidores 20</span>
+              {/* <span>Seguidores 20</span>
+              <span>Seguidos 14</span> */}
               {/* </button> */}
               {/* <button
                 type="button"
@@ -66,7 +67,6 @@ export default function ProfileHeading({ usuario }) {
                   className="-ml-1 mr-2 h-5 w-5 text-gray-400"
                   aria-hidden="true"
                 /> */}
-              <span>Seguidos 14</span>
               {/* </button> */}
             </div>
           </div>
