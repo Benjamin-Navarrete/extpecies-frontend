@@ -7,7 +7,7 @@ const ProfileForm = ({ formik }) => {
   // Este componente recibe el objeto formik como prop y muestra los campos del formulario y los botones de cancelar y guardar
   return (
     <Form className="flex-grow space-y-6">
-      <div>
+      {/* <div>
         <label
           htmlFor="about"
           className="block text-sm font-medium text-gray-700"
@@ -26,7 +26,7 @@ const ProfileForm = ({ formik }) => {
         <p className="mt-2 text-sm text-gray-500">
           Una breve descripción de ti.
         </p>
-      </div>
+      </div> */}
 
       <div className="grid grid-cols-12 gap-6">
         <div className="col-span-12 sm:col-span-6">

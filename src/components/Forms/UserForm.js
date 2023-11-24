@@ -77,7 +77,7 @@ const UserForm = ({
             </SelectField>
             <SelectField
               label="Rol"
-              name="nombre"
+              name="nombre_rol"
               placeholder="Selecciona tu rol"
             >
               <option value="">Seleccione un rol</option>
