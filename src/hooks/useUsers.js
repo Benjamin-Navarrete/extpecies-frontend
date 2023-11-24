@@ -81,7 +81,10 @@ const useUsers = () => {
       if (currentUser) {
         // Añadir un bloque then y catch para manejar la promesa devuelta por axios.put
         await axios
-          .put(`http://localhost:3500/api/usuarios/${currentUser.id}`, values)
+          .put(
+            `http://localhost:3500/api/usuarios/editUserByAdmin/${currentUser.id}`,
+            values
+          )
           .then(() => {
             // Si se resuelve correctamente, mostrar un mensaje de éxito y actualizar los datos
             toast.success('Usuario actualizado correctamente.');

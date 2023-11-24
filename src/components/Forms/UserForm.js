@@ -13,6 +13,8 @@ const UserForm = ({
   handleCloseModal,
   handleSubmit
 }) => {
+  console.log('userForm', userForm);
+  console.log('currentUser', currentUser);
   const validationSchema = Yup.object({
     nombres: Yup.string().required('El nombre es obligatorio'),
     apellidos: Yup.string().required('El apellido es obligatorio'),
@@ -22,8 +24,7 @@ const UserForm = ({
     password: Yup.string()
       .min(8, 'La contraseña debe tener al menos 8 caracteres')
       .required('La contraseña es obligatoria'),
-    pais: Yup.string().required('El país es obligatorio'),
-    boletinInformativo: Yup.boolean()
+    pais: Yup.string().required('El país es obligatorio')
   });
 
   return (
@@ -55,12 +56,14 @@ const UserForm = ({
               name="correo"
               autoComplete="email"
             />
-            <InputField
-              label="Contraseña"
-              type="password"
-              name="password"
-              autoComplete="current-password"
-            />
+            {currentUser ? null : (
+              <InputField
+                label="Contraseña"
+                type="password"
+                name="password"
+                autoComplete="current-password"
+              />
+            )}
             <SelectField
               label="País"
               name="pais"
@@ -72,7 +75,6 @@ const UserForm = ({
                 </option>
               ))}
             </SelectField>
-
             <SelectField
               label="Rol"
               name="nombre"
@@ -83,7 +85,6 @@ const UserForm = ({
               <option value="administrador">Administrador</option>
               <option value="editor">Editor</option>
             </SelectField>
-
             <div className="flex justify-end">
               <button
                 type="submit"
