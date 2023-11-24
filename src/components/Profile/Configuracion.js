@@ -4,18 +4,25 @@ import { KeyIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 import ProfileSettings from '@/components/Profile/ProfileSettings';
 import ChangePassword from '@/components/Profile/ChangePassword';
 
-const subNavigation = [
-  { name: 'Perfil', icon: UserCircleIcon, component: <ProfileSettings /> },
-  { name: 'Contraseña', icon: KeyIcon, component: <ChangePassword /> }
-];
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Configuracion({ isOwner }) {
+export default function Configuracion({ isOwner, usuario }) {
   // Estado del tab actual
   const [currentTab, setCurrentTab] = useState(0);
+
+  const subNavigation = [
+    { name: 'Perfil', icon: UserCircleIcon, component: <ProfileSettings /> },
+    {
+      name: 'Contraseña',
+      icon: KeyIcon,
+      // Aquí pasas la prop usuario al componente ChangePassword
+      component: <ChangePassword usuario={usuario} />
+    }
+  ];
 
   // Función para cambiar el tab actual
   const handleTabClick = index => {
