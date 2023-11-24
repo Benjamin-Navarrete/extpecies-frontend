@@ -7,7 +7,7 @@ const TextArea = ({ label, type, name, placeholder, autoComplete }) => {
 
   return (
     <>
-      <div className="mt-4">
+      <div className="mt-4 ">
         <label
           htmlFor={name}
           className="mb-2 block text-sm font-medium text-gray-700"
@@ -15,19 +15,19 @@ const TextArea = ({ label, type, name, placeholder, autoComplete }) => {
           {label}
         </label>
         {/* Usar el spread operator para pasar las propiedades del campo al input */}
-        <textarea 
+        <textarea
           {...field}
           id={name}
           name={name}
           type={type}
           autoComplete={autoComplete}
           required
-          rows="1" 
-          class={`block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-emerald-500 sm:text-sm ${
+          rows="1"
+          class={`block w-full h-24 appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-emerald-500 sm:text-sm ${
             meta.touched && meta.error && 'border-red-500'
           }`}
           placeholder={placeholder}
-          />
+        />
       </div>
 
       {/* Mostrar el mensaje de error si el campo está tocado y tiene error */}

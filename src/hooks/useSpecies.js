@@ -40,7 +40,10 @@ const useSpecies = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const result = await axios('http://localhost:3500/api/especies');
+      const result = await axios.get(
+        'http://localhost:3500/api/especies/all/allSpecies'
+      );
+      console.log('result.data', result.data);
       setData(result.data);
       setLoading(false);
     };

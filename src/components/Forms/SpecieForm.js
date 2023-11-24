@@ -51,9 +51,6 @@ const SpecieForm = ({
     nombreCientifico: Yup.string().required(
       'El nombre científico es obligatorio'
     ),
-    imagen: Yup.string()
-      .url('La imagen debe ser una URL válida')
-      .required('La imagen es obligatoria'),
     reino: Yup.string().required('El reino es obligatorio'),
     filo: Yup.string().required('El filo es obligatorio'),
     clase: Yup.string().required('La clase es obligatoria'),
@@ -63,37 +60,10 @@ const SpecieForm = ({
     estadoConservacion: Yup.string().required(
       'El estado de conservación es obligatorio'
     ),
-    sitio: Yup.string().required('El sitio es obligatorio'),
-    numeroLocaciones: Yup.number()
-      .min(0, 'El número de locaciones debe ser mayor o igual a cero')
-      .required('El número de locaciones es obligatorio'),
-    limiteElevacionSuperior: Yup.number()
-      .min(0, 'El límite de elevación superior debe ser mayor o igual a cero')
-      .nullable(),
-    limiteElevacionInferior: Yup.number()
-      .min(0, 'El límite de elevación inferior debe ser mayor o igual a cero')
-      .nullable(),
-    descripcionGeografica: Yup.string().required(
+    rangoGeografico: Yup.string().required(
       'La descripción geográfica es obligatoria'
     ),
-    tendenciaPoblacion: Yup.string().required(
-      'La tendencia poblacional es obligatoria'
-    ),
-    detallesPoblacion: Yup.string().required(
-      'Los detalles poblacionales son obligatorios'
-    ),
-    sistemaHabitat: Yup.string().required('El sistema hábitat es obligatorio'),
-    tiposHabitat: Yup.string().nullable(),
-    detallesHabitat: Yup.string().required(
-      'Los detalles hábitat son obligatorios'
-    ),
-    detallesAmenazas: Yup.string().required(
-      'Los detalles amenazas son obligatorios'
-    ),
-    accionesConservacion: Yup.string().required(
-      'Las acciones de conservación son obligatorias'
-    ),
-    bibliografia: Yup.string().required('La bibliografía es obligatoria'),
+    amenazas: Yup.string().required('Los detalles amenazas son obligatorios'),
     latitud: Yup.number()
       .min(-90, 'La latitud debe estar entre -90 y 90 grados')
       .max(90, 'La latitud debe estar entre -90 y 90 grados')
@@ -120,7 +90,7 @@ const SpecieForm = ({
         onSubmit={handleSubmit}
       >
         {() => (
-          <Form className="space-y-3">
+          <Form className="space-y-4">
             <InputField
               label="Nombre común"
               type="text"
@@ -131,12 +101,6 @@ const SpecieForm = ({
               label="Nombre científico"
               type="text"
               name="nombreCientifico"
-            />
-            <InputField
-              label="Imagen"
-              type="text"
-              name="imagen"
-              autoComplete="url"
             />
             <SelectField
               label="Reino"
@@ -175,59 +139,12 @@ const SpecieForm = ({
                 </option>
               ))}
             </SelectField>
-            <InputField label="Sitio" type="text" name="sitio" />
-            <InputField
-              label="Número de locaciones"
-              type="number"
-              name="numeroLocaciones"
-            />
-            <InputField
-              label="Límite de elevación superior (m)"
-              type="number"
-              name="limiteElevacionSuperior"
-            />
-            <InputField
-              label="Límite de elevación inferior (m)"
-              type="number"
-              name="limiteElevacionInferior"
-            />
             <TextArea
               label="Descripción geográfica"
               type="text"
-              name="descripcionGeografica"
+              name="rangoGeografico"
             />
-            <InputField
-              label="Tendencia poblacional"
-              type="text"
-              name="tendenciaPoblacion"
-            />
-            <TextArea
-              label="Detalles poblacionales"
-              type="text"
-              name="detallesPoblacion"
-            />
-            <InputField
-              label="Sistema hábitat"
-              type="text"
-              name="sistemaHabitat"
-            />
-            <InputField label="Tipos hábitat" type="text" name="tiposHabitat" />
-            <TextArea
-              label="Detalles hábitat"
-              type="text"
-              name="detallesHabitat"
-            />
-            <TextArea
-              label="Detalles amenazas"
-              type="text"
-              name="detallesAmenazas"
-            />
-            <TextArea
-              label="Acciones de conservación"
-              type="text"
-              name="accionesConservacion"
-            />
-            <TextArea label="Bibliografía" type="text" name="bibliografia" />
+            <TextArea label="Detalles amenazas" type="text" name="amenazas" />
             <InputField label="Latitud (grados)" type="number" name="latitud" />
             <InputField
               label="Longitud (grados)"

@@ -40,7 +40,7 @@ const SpeciesPage = () => {
 
       const { permisos } = JSON.parse(atob(token.split('.')[1]));
 
-      if (!permisos.includes('MEN_01')) {
+      if (!permisos.includes('MEN_02')) {
         toast.error('No tienes permisos para ver esta página');
         setTimeout(() => {
           router.push('/login');

@@ -10,31 +10,16 @@ const SpeciesTable = ({ data, loading, handleEdit, handleDelete }) => {
     {
       name: 'Nombre común',
       selector: 'nombreComun',
-      sortable: true,
-      center: true
-    },
-    {
-      name: 'Nombre científico',
-      selector: 'nombreCientifico',
-      sortable: true,
-      center: true
-    },
-    {
-      name: 'Reino',
-      selector: 'reino',
-      sortable: true,
-      center: true
+      sortable: true
     },
     {
       name: 'Estado de conservación',
       selector: 'estadoConservacion',
-      sortable: true,
-      center: true
+      sortable: true
     },
     {
       name: 'Acciones',
       button: true,
-      center: true,
       cell: row => (
         <div className="flex space-x-2">
           <Tippy content="Editar">
