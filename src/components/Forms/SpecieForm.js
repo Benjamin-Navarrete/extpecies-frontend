@@ -51,19 +51,15 @@ const SpecieForm = ({
     nombreCientifico: Yup.string().required(
       'El nombre científico es obligatorio'
     ),
-    reino: Yup.string().required('El reino es obligatorio'),
-    filo: Yup.string().required('El filo es obligatorio'),
-    clase: Yup.string().required('La clase es obligatoria'),
-    orden: Yup.string().required('El orden es obligatorio'),
-    familia: Yup.string().required('La familia es obligatoria'),
-    genero: Yup.string().required('El género es obligatorio'),
-    estadoConservacion: Yup.string().required(
-      'El estado de conservación es obligatorio'
-    ),
-    rangoGeografico: Yup.string().required(
-      'La descripción geográfica es obligatoria'
-    ),
-    amenazas: Yup.string().required('Los detalles amenazas son obligatorios'),
+    reino: Yup.string(),
+    filo: Yup.string(),
+    clase: Yup.string(),
+    orden: Yup.string(),
+    familia: Yup.string(),
+    genero: Yup.string(),
+    estadoConservacion: Yup.string(),
+    rangoGeografico: Yup.string().nullable(),
+    amenazas: Yup.string().nullable(),
     latitud: Yup.number()
       .min(-90, 'La latitud debe estar entre -90 y 90 grados')
       .max(90, 'La latitud debe estar entre -90 y 90 grados')
