@@ -3,6 +3,7 @@ import { Fragment, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { updateComment, deleteComment } from '@/api/commentApi';
 import { toast } from 'react-toastify';
+import Link from 'next/link';
 
 const Comentario = ({ comentario }) => {
   const queryClient = useQueryClient();
@@ -61,7 +62,12 @@ const Comentario = ({ comentario }) => {
     <li className="py-5">
       <div className="relative focus-within:ring-2 focus-within:ring-cyan-500">
         <h3 className="text-sm font-semibold text-gray-800">
-          {comentario.usuario?.nombres} {comentario.usuario?.apellidos}
+          <Link
+            href={`/profile/${comentario.usuario?.username}/logros`}
+            className="cursor-pointer text-emerald-600 hover:underline"
+          >
+            {comentario.usuario?.nombres} {comentario.usuario?.apellidos}
+          </Link>
         </h3>
         <p className="mt-1 text-sm text-gray-600">
           {new Date(comentario.fecha).toLocaleString()}
