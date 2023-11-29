@@ -2,22 +2,22 @@
 
 const serverUrl = process.env.NEXT_PUBLIC_EXPRESS_API_URL;
 
-const profile = {
-  name: 'Ricardo Cooper',
-  email: 'ricardo.cooper@example.com',
-  avatar: 'https://placehold.co/500x500',
-  backgroundImage: 'https://placehold.co/1980x1050',
-  fields: [
-    ['Phone', '(555) 123-4567'],
-    ['Email', 'ricardocooper@example.com'],
-    ['Title', 'Senior Front-End Developer'],
-    ['Team', 'Product Development'],
-    ['Location', 'San Francisco'],
-    ['Sits', 'Oasis, 4th floor'],
-    ['Salary', '$145,000'],
-    ['Birthday', 'June 8, 1990']
-  ]
-};
+// const profile = {
+//   name: 'Ricardo Cooper',
+//   email: 'ricardo.cooper@example.com',
+//   avatar: 'https://placehold.co/500x500',
+//   backgroundImage: 'https://placehold.co/1980x1050',
+//   fields: [
+//     ['Phone', '(555) 123-4567'],
+//     ['Email', 'ricardocooper@example.com'],
+//     ['Title', 'Senior Front-End Developer'],
+//     ['Team', 'Product Development'],
+//     ['Location', 'San Francisco'],
+//     ['Sits', 'Oasis, 4th floor'],
+//     ['Salary', '$145,000'],
+//     ['Birthday', 'June 8, 1990']
+//   ]
+// };
 
 export default function ProfileHeading({ usuario }) {
   return (
@@ -25,9 +25,7 @@ export default function ProfileHeading({ usuario }) {
       <div>
         <img
           className="h-32 w-full object-cover lg:h-48"
-          src={
-            serverUrl + '/' + usuario?.fotoPortada || profile.backgroundImage
-          }
+          src={serverUrl + '/' + usuario?.fotoPortada}
           alt=""
         />
       </div>
@@ -36,7 +34,7 @@ export default function ProfileHeading({ usuario }) {
           <div className="flex">
             <img
               className="h-24 w-24 rounded-full ring-4 ring-white sm:h-32 sm:w-32"
-              src={serverUrl + '/' + usuario?.fotoPerfil || profile.avatar}
+              src={serverUrl + '/' + usuario?.fotoPerfil}
               alt=""
             />
           </div>
@@ -72,7 +70,7 @@ export default function ProfileHeading({ usuario }) {
         </div>
         <div className="mt-6 hidden min-w-0 flex-1 sm:block md:hidden">
           <h1 className="truncate text-2xl font-bold text-gray-900">
-            {profile.name}
+            {usuario?.nombres}
           </h1>
         </div>
       </div>

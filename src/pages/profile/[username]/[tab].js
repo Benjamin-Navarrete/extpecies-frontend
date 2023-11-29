@@ -7,14 +7,34 @@ import {
   obtenerUsuarioPorNombreUsuario
 } from '@/api/userApi';
 import Cookies from 'cookies';
+import Link from 'next/link';
 
 export default function ProfilePage({ usuario, tab, isOwner }) {
-  // Usar el operador ternario para renderizar el componente adecuado según el isOwner
-  return isOwner ? (
-    <PrivateProfile usuario={usuario} tab={tab} />
-  ) : (
-    <PublicProfile usuario={usuario} tab={tab} />
-  );
+  // Agregar una condición para verificar si el usuario existe y está activado
+  if (usuario && usuario.estado) {
+    // Usar el operador ternario para renderizar el componente adecuado según el isOwner
+    return isOwner ? (
+      <PrivateProfile usuario={usuario} tab={tab} />
+    ) : (
+      <PublicProfile usuario={usuario} tab={tab} />
+    );
+  } else {
+    // Si el usuario no existe o está desactivado, mostrar un mensaje de error con un texto y un enlace
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="col-span-1 flex flex-col p-8 divide-y divide-gray-200 rounded-lg bg-white text-center shadow">
+          <p className="text-gray-500 text-2xl font-medium">
+            El usuario no existe o está inactivo.
+          </p>
+          <Link href="/">
+            <span className="text-emerald-500 hover:text-emerald-600">
+              Ir al inicio
+            </span>
+          </Link>
+        </div>
+      </div>
+    );
+  }
 }
 
 export async function getServerSideProps(context) {
