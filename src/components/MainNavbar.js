@@ -17,6 +17,7 @@ const routes = [
   { name: 'Mapa', url: '/map', permiso: null },
   { name: 'Ponte a Prueba', url: '/test', permiso: null },
   { name: 'Sobre nosotros', url: '/about', permiso: null },
+  { name: 'Buscar usuarios', url: '/search-users', permiso: null },
   { name: 'Gestionar usuarios', url: '/manage-users', permiso: 'MEN_01' },
   {
     name: 'Gestionar especies',
@@ -58,7 +59,7 @@ export default function MainNavbar() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 justify-between">
               <div className="flex">
-                <div className="-ml-2 mr-2 flex items-center md:hidden">
+                <div className="-ml-2 mr-2 flex items-center lg:hidden">
                   {/* Mobile menu button */}
                   <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-emerald-500">
                     <span className="sr-only">Open main menu</span>
@@ -81,7 +82,7 @@ export default function MainNavbar() {
                     alt="Your Company"
                   />
                 </div>
-                <div className="hidden md:ml-6 md:flex md:space-x-8">
+                <div className="hidden  lg:ml-6 lg:flex lg:space-x-8">
                   {/* Iterar sobre las rutas del menú y filtrar las que tienen permiso o no requieren permiso */}
                   {routes
                     .filter(
@@ -230,6 +231,7 @@ export default function MainNavbar() {
                               </Link>
                             )}
                           </Menu.Item>
+
                           <Menu.Item>
                             {({ active }) => (
                               <a
@@ -252,7 +254,7 @@ export default function MainNavbar() {
             </div>
           </div>
 
-          <Disclosure.Panel className="md:hidden">
+          <Disclosure.Panel className="lg:hidden">
             <div className="space-y-1 pt-2 pb-3">
               {routes
                 .filter(

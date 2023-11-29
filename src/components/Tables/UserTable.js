@@ -8,7 +8,6 @@ import {
   ArrowsRightLeftIcon,
   PencilSquareIcon
 } from '@heroicons/react/24/solid';
-import { Switch } from '@headlessui/react';
 import Pill from '../Pill';
 
 const UserTable = ({ data, loading, handleEdit, handleToggle }) => {
