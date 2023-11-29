@@ -3,9 +3,15 @@ import React from 'react';
 import DataTable from 'react-data-table-component';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
-import { PencilSquareIcon, TrashIcon } from '@heroicons/react/20/solid';
 
-const UserTable = ({ data, loading, handleEdit, handleDelete }) => {
+import {
+  ArrowsRightLeftIcon,
+  PencilSquareIcon
+} from '@heroicons/react/24/solid';
+import { Switch } from '@headlessui/react';
+import Pill from '../Pill';
+
+const UserTable = ({ data, loading, handleEdit, handleToggle }) => {
   const columns = [
     {
       name: 'Nombre',
@@ -32,6 +38,18 @@ const UserTable = ({ data, loading, handleEdit, handleDelete }) => {
       center: true
     },
     {
+      name: 'Estado',
+      button: true,
+      center: true,
+      cell: row => (
+        // Agregar una nueva columna que muestre el estado del usuario con un componente Pill
+        <Pill
+          color={row.estado ? 'green' : 'red'}
+          text={row.estado ? 'Activado' : 'Desactivado'}
+        />
+      )
+    },
+    {
       name: 'Acciones',
       button: true,
       center: true,
@@ -45,12 +63,16 @@ const UserTable = ({ data, loading, handleEdit, handleDelete }) => {
               <PencilSquareIcon className="h-5 w-5" />
             </button>
           </Tippy>
-          <Tippy content="Eliminar">
+          <Tippy content="Cambiar estado">
             <button
-              onClick={() => handleDelete(row.id)}
-              className="p-1 bg-red-500 text-white rounded-full"
+              onClick={() => handleToggle(row.id)}
+              className="p-1 bg-yellow-500 text-white rounded-full"
             >
-              <TrashIcon className="h-5 w-5" />
+              {row.estado ? (
+                <ArrowsRightLeftIcon className="h-5 w-5" />
+              ) : (
+                <ArrowsRightLeftIcon className="h-5 w-5" />
+              )}
             </button>
           </Tippy>
         </div>

@@ -24,7 +24,7 @@ const UsersPage = () => {
     currentUser,
     handleCreate,
     handleEdit,
-    handleDelete,
+    handleToggle,
     handleCloseModal,
     handleSubmit,
     handleChange
@@ -83,7 +83,7 @@ const UsersPage = () => {
             data={data}
             loading={loading}
             handleEdit={handleEdit}
-            handleDelete={handleDelete}
+            handleToggle={handleToggle}
           />
           <UserForm
             modalIsOpen={modalIsOpen}

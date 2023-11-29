@@ -62,7 +62,7 @@ const useUsers = () => {
     setIsOpen(true);
   };
 
-  const handleDelete = async id => {
+  const handleToggle = async id => {
     const token = Cookies.get('token');
     if (!token) {
       return;
@@ -70,15 +70,25 @@ const useUsers = () => {
     // decodificar token
     const { id: id_usuario } = JSON.parse(atob(token.split('.')[1]));
     if (id_usuario === id) {
-      toast.error('No puedes eliminar tu propio usuario');
+      toast.error('No puedes cambiar el estado de tu propio usuario');
       return;
     }
-    if (window.confirm('¿Estás seguro de que quieres eliminar este usuario?')) {
+    if (
+      window.confirm(
+        '¿Estás seguro de que quieres cambiar el estado de este usuario?'
+      )
+    ) {
       try {
-        await axios.delete(`http://localhost:3500/api/usuarios/${id}`);
-        setData(data.filter(user => user.id !== id));
+        // Llamar a la ruta de activar o desactivar usuario con el método put y el id del usuario
+        await axios.put(`http://localhost:3500/api/usuarios/activar/${id}`);
+        // Actualizar el estado del usuario en el array de data
+        setData(
+          data.map(user =>
+            user.id === id ? { ...user, estado: !user.estado } : user
+          )
+        );
       } catch (error) {
-        alert('Hubo un error al eliminar el usuario');
+        alert('Hubo un error al cambiar el estado del usuario');
       }
     }
   };
@@ -146,7 +156,7 @@ const useUsers = () => {
     currentUser,
     handleCreate,
     handleEdit,
-    handleDelete,
+    handleToggle,
     handleCloseModal,
     handleSubmit,
     handleChange
