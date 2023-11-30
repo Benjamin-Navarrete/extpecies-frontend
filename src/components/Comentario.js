@@ -3,7 +3,6 @@ import { Fragment, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { updateComment, deleteComment } from '@/api/commentApi';
 import { toast } from 'react-toastify';
-import Link from 'next/link';
 
 const Comentario = ({ comentario }) => {
   const queryClient = useQueryClient();
